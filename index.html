@@ -9,16 +9,140 @@
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
 		<link rel="stylesheet" href="dist/theme/black.css">
+		<!--<link rel="stylesheet" href="custom.css">-->
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		
 	</head>
 	<body>
+		<script>
+			// Defines the custom element with our appropriate name, <apocalyptic-warning>
+async function queryGPT (context, input, output) {
+	try {
+		const messages = [];
+		if(context) messages.push({"role": "system", "content": context})
+		if(input) messages.push({"role": "user", "content": input})
+		const response = await fetch('https://api.openai.com/v1/chat/completions', {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"Authorization": "Bearer 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"
+			},
+			body: JSON.stringify({
+				"model": "gpt-3.5-turbo",
+				"temperature": 0.7,
+				"max_tokens": 2000,
+				"messages":messages
+			})
+		});
+		const data = await response.json();
+		const outputData = data.choices[0].message.content;
+		console.log(outputData);
+		if(output) output.value = outputData;
+		return data;
+	} catch (ex) {
+		console.error(ex);
+		if(output) output.value = ex;
+	}
+}
+
+				customElements.define("gpt-input",
+
+ 
+// Ensures that we have all the default properties and methods of a built in HTML element
+class extends HTMLElement {
+
+  // Called anytime a new custom element is created
+  constructor() {
+
+	// Calls the parent constructor, i.e. the constructor for `HTMLElement`, so that everything is set up exactly as we would for creating a built in HTML element
+	super();
+
+	// Grabs the <template> and stores it in `warning`
+	let rawTemplate = document.getElementById("GPT");
+
+	// Stores the contents of the template in `mywarning`
+	let myTemplate = rawTemplate.content;
+
+	const shadowRoot = this.attachShadow({mode: "open"}).appendChild(myTemplate.cloneNode(true));
+	console.log("constructed");
+    this.sendGPT = this.sendGPT.bind(this);
+    
+  }
+  sendGPT() {
+    const { shadowRoot } = this;
+    const contextValue = shadowRoot.querySelector('.context')?.assignedNodes()[0].innerText;
+    const inputValue = shadowRoot.querySelector('#input').value;
+    const output = shadowRoot.querySelector('.output');
+	output.value = "";
+	output.setAttribute('placeholder', "...loading...");
+    console.log("sendGPT", contextValue, inputValue, output);
+    queryGPT(contextValue, inputValue, output);
+  }
+  connectedCallback() {
+    const { shadowRoot } = this;
+    const button = shadowRoot.querySelector('button');
+    
+    button.addEventListener('click', this.sendGPT);
+	console.log("attr", shadowRoot, this);//.getAttribute('data-show-input'));
+	if(this.getAttribute("data-show-input") === 'false') {
+		console.log("Hidable", shadowRoot, this);
+		shadowRoot.querySelectorAll(".input").forEach(x => x.setAttribute('class', "hidden"));
+	}
+  }
+});
+		</script>
+		
+	
+
+		<template id="GPT" data-show-input="true">
+			<style>
+				.hidden {
+					display: none;
+				}
+				small {
+					font-size: medium;
+				}
+				.gpt-form {
+					display: grid;
+					grid-template-columns: 200px 1fr;
+					grid-gap: 16px;
+				}
+				label {
+					text-align: right;
+					grid-column: 1 / 2;
+				}
+				input, button, textarea {
+					grid-column: 2 / 3;
+				}
+			</style>
+			<div class="gpt-form">
+				<label>Context</label>
+				<small><slot class="context" name="context">Example</slot></small>
+				<label class="input">Input</label>
+				<textarea class="input" placeholder="your input" id="input"></textarea>
+				<button>go</button>
+				<label>Output</label>
+				<textarea id="output" class="output"></textarea>
+			</div>
+		</template>
+
 		<div class="reveal">
 			<div class="slides">
-				<section>
-					<h2>Adam Hall</h2>
-
+				<section data-state="intro">
+					<section>
+						<h2>Adam Hall</h2>
+						<gpt-input data-show-input="false">
+							<span slot="context">I want you to respond as if you are the joker. How would the joker intervene in the way twitter is managed?</span>
+						</gpt-input>
+					</section>
+					<section>
+						Former Agile Coach
+					</section>
+					<section>
+						Technophile
+					</section>
 					<aside class="notes">
 						This is where you introduce yourself 📝
 						Maybe say about upskilling
@@ -26,31 +150,27 @@
 						Passion to automate all the things
 					</aside>
 				</section>
-				<section>
+				<section data-background="salmon">
 					<h1>Example</h1>
-					<p>This is an example Joker bot. Ask the joker anything....</p>
-					<textarea placeholder="What do you want to ask?" id="joker-input">
-					</textarea>
-					<button onclick="javascript:queryGPT('You are the joker', document.getElementById('joker-input').value, document.getElementById('joker-output'))">go</button>
-
-					<textarea id="joker-output">
-					</textarea>
+					<gpt-input data-show-input="true">
+						<span slot="context">You are writing an award winning rap. The rap should be about...</span>
+					</gpt-input>
 				</section>
 				
-				<section data-markdown="chapter1.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
+				<section  data-state="access" data-markdown="chapter1.md" data-separator="^\n\n\n" data-separator-vertical="^\n\n"></section>
 				
-				<section>
+				<section data-background="salmon">
 					<h2>You can even use it to write code</h2>
-					<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:6935628727208837120" height="656" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+					<iframe data-src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:6935628727208837120" height="656" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
 				</section>
 				<section>
 					<h2>A jira app</h2>
-					<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:6798019175789944833" height="719" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+					<iframe data-src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:6798019175789944833" height="719" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
 
 				</section>
 				<section>
 					<h2>Give your AI personality</h2>
-					<audio src="assets/joker.mp3?a" controls></audio>
+					<audio data-src="assets/joker.mp3?a" controls></audio>
 				</section>
 			</div>
 		</div>
@@ -60,36 +180,36 @@
 		<script src="plugin/markdown/markdown.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
 		<script>
-			async function queryGPT (context, input, output) {
-				const messages = [];
-				if(context) messages.push({"role": "system", "content": context})
-				if(input) messages.push({"role": "user", "content": input})
-				const response = await fetch('https://api.openai.com/v1/chat/completions', {
-					method: "POST",
-					headers: {
-      					"Content-Type": "application/json",
-						"Authorization": "Bearer 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"
-					},
-					body: JSON.stringify({
-						"model": "gpt-3.5-turbo",
-						"temperature": 0.7,
-						"max_tokens": 2000,
-						"messages":messages
-					})
-				});
-				const data = await response.json();
-				const outputData = data.choices[0].message.content;
-				console.log(outputData);
-				if(output) output.value = outputData;
-				return data;
-			}
+			
 			
 			Reveal.initialize({
 				hash: true,
-
 				// Learn about plugins: https://revealjs.com/plugins/
+				parallaxBackgroundImage: 'assets/adamhall.jpg', 
+				parallaxBackgroundSize: "1578px 1578px",
+				parallaxBackgroundHorizontal: 0,
+				
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});
+			
+			Reveal.addEventListener( 'intro', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/adamhall.jpg', 
+					parallaxBackgroundSize: "1578px 1578px",
+					
+				});
+			});
+			Reveal.addEventListener( 'access', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/invite-openai.png',
+					parallaxBackgroundSize: "946px 1578px"
+				});
+			});
+			
+			
+			 
 		</script>
 	</body>
 </html>
