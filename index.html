@@ -21,23 +21,31 @@
 async function queryGPT (context, input, output) {
 	try {
 		const messages = [];
-		if(context) messages.push({"role": "system", "content": context})
-		if(input) messages.push({"role": "user", "content": input})
-		const response = await fetch('https://api.openai.com/v1/chat/completions', {
+		const post = {
+			system: context,
+			prompt: input
+		}
+		// We can also have an array of "examples" which will basically be the conversation
+		/*
+		{
+			"system": "You are a famous cartoon character, and I have to guess who you are.",
+			"examples": [
+				"What do I have to do?",
+				"I'm a famous character. You have to guess who I am"
+			],
+			"prompt": "Are you in a movie?"
+		}
+		*/
+		
+		const response = await fetch('https://ai-prompt-writer.vercel.app/api/raw', {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/json",
-				"Authorization": "Bearer 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"
+				"Content-Type": "application/json"
 			},
-			body: JSON.stringify({
-				"model": "gpt-3.5-turbo",
-				"temperature": 0.7,
-				"max_tokens": 2000,
-				"messages":messages
-			})
+			body: JSON.stringify(post)
 		});
 		const data = await response.json();
-		const outputData = data.choices[0].message.content;
+		const outputData = data.output;
 		console.log(outputData);
 		if(output) output.value = outputData;
 		return data;
@@ -47,7 +55,7 @@ async function queryGPT (context, input, output) {
 	}
 }
 
-				customElements.define("gpt-input",
+customElements.define("gpt-input",
 
  
 // Ensures that we have all the default properties and methods of a built in HTML element
