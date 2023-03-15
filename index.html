@@ -181,17 +181,23 @@ class extends HTMLElement {
 		<div class="reveal">
 			<div class="slides">
 				<section data-state="intro">
-					<section data-state="focus-bg">
+					<section data-auto-animate data-state="focus-bg">
 						<h2>Adam Hall</h2>
 					</section>
-					<section data-state="blur-bg">
-						Former Agile Coach
+					<section data-auto-animate data-state="blur-bg">
+						<h2>Adam Hall</h2>
+						<p>Former Agile Coach</p>
 					</section>
 					<section>
-						Ametuer Artist
+						<h2>Adam Hall</h2>
+						<p>Former Agile Coach</p>
+						<p>Ametuer Artist</p>
 					</section>
 					<section>
-						Talkative Technophile
+						<h2>Adam Hall</h2>
+						<p>Former Agile Coach</p>
+						<p>Ametuer Artist</p>
+						<p>Talkative Technophile</p>
 					</section>
 					<section data-background="black">
 						when suddenly...
@@ -202,8 +208,6 @@ class extends HTMLElement {
 					
 					<section data-state="focus-bg">
 						<img src="assets/OpenAI_Logo.png" />
-						
-						
 						<aside class="notes">
 							On June 11, 2020, an AI research and deployment company OpenAI – founded by Elon Musk, Sam Altman, and others – announced its revolutionary language model, GPT-3. The news quickly created buzz in tech circles with demo videos of early GPT-3 prototypes going viral on Twitter, Reddit, and Hacker News.
 						</aside>
@@ -220,10 +224,67 @@ class extends HTMLElement {
 						<iframe width="560" height="315" data-src="https://www.youtube.com/embed/Zm9B-DvwOgw" title="YouTube video player" 
 						frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 					</section>
-					<section>
+					<section data-background="black">
+						CAN. NOT. WAIT.
+					</section>
+				</section>
+				<section data-state="art">
+					<section data-state="focus-bg">
+						<h1>Art</h1>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<img src="assets/art-example.jpg" style="width: 50%; height: 50%" />
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<img src="assets/art-example.jpg" style="width: 50%; height: 50%" />
+						<p>2 likes</p>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<img src="assets/art-example2.jpg" style="width: 50%; height: 50%" />
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<img src="assets/art-example2.jpg" style="width: 50%; height: 50%" />
+						<p>11 likes</p>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<img src="assets/example-wes1.jpeg" />
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<img src="assets/example-wes1.jpeg" />
+						<p>417,865 likes</p>
+					</section>
+					<section data-state="blur-bg">
+						<img src="assets/press.png" />
+					</section>
+					<section data-state="blur-bg">
+						<img src="assets/example-wes2.jpeg" />
+					</section>
+					<section data-state="blur-bg">
+						<img src="assets/example-wes3.jpeg" />
+					</section>
+					<section data-state="blur-bg">
+						<img src="assets/example-wes4.jpeg" />
+					</section>
+					<section data-background="black">
+						<p>what i learnt</p>
+						<aside class="notes">
+							Haters gonna Hate
+							Fear of change
+							Misunderstanding of what its doing
+							Learnt more about art as a result
+							Felt more of a community a a result
+
+						</aside>
+					</section>
+				</section>
+				<section data-state="openai">
+					<section data-state="focus-bg">
+						<h1>Invite</h1>
+					</section>
+					<section data-state="blur-bg">
 						<img src="assets/invite-openai.png" />
 					</section>
-					<section>
+					<section  data-state="blur-bg">
 						<gpt-input data-show-input="true">
 							<span slot="context" style="font-size: 1.6rem">You are writing an award winning rap. The rap should be about...</span>
 						</gpt-input>
@@ -356,6 +417,7 @@ So I don't have to log in every month to pay manually</pre>
 						<img src="assets/misinformation2.png">
 					</section>
 					<section data-auto-animate>
+						<img src="assets/misinformation2.png">
 						<img src="assets/misinformation3.png">
 					</section>
 					<section data-auto-animate>
@@ -381,7 +443,7 @@ So I don't have to log in every month to pay manually</pre>
 				</section>
 				
 
-				<section data-state="Conclusion">
+				<section data-state="conclusion">
 					<section data-state="focus-bg">
 						<h1>Conclusion</h1>
 					</section>
@@ -395,7 +457,7 @@ So I don't have to log in every month to pay manually</pre>
 						<p>by mitch0zᵍᵐ</p>
 					</section>
 					<section data-state="blur-bg">
-						<img src="assets/go-fast.jpg" />
+						<img src="assets/go-fast.jpg" style="width: 75%; height: 75%" />
 					</section>
 					<section data-state="blur-bg">
 						<h2>Does it have a sense of humour?</h2>
@@ -546,6 +608,20 @@ So I don't have to log in every month to pay manually</pre>
 					parallaxBackgroundSize: "1696px 928px"
 				});
 			});
+			Reveal.addEventListener( 'art', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/robot-art.png',
+					parallaxBackgroundSize: "1696px 928px"
+				});
+			});
+			Reveal.addEventListener( 'openai', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/robot-welcome.png',
+					parallaxBackgroundSize: "1696px 928px"
+				});
+			});
 			Reveal.addEventListener( 'app', function() {
 				// Called each time the slide with the "stats" state is made visible
 				Reveal.configure({ 
@@ -560,17 +636,17 @@ So I don't have to log in every month to pay manually</pre>
 					parallaxBackgroundSize: "1696px 928px"
 				});
 			});
-			Reveal.addEventListener( 'misinformation', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-sad.png',
-					parallaxBackgroundSize: "1696px 928px"
-				});
-			});
 			Reveal.addEventListener( 'sterotypes', function() {
 				// Called each time the slide with the "stats" state is made visible
 				Reveal.configure({ 
 					parallaxBackgroundImage: 'assets/robot-bully.png',
+					parallaxBackgroundSize: "1696px 928px"
+				});
+			});
+			Reveal.addEventListener( 'misinformation', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/robot-sad.png',
 					parallaxBackgroundSize: "1696px 928px"
 				});
 			});
@@ -581,21 +657,21 @@ So I don't have to log in every month to pay manually</pre>
 					parallaxBackgroundSize: "1696px 928px"
 				});
 			});
-			
-			Reveal.addEventListener( 'future', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-worry.png',
-					parallaxBackgroundSize: "1696px 928px"
-				});
-			});
 			Reveal.addEventListener( 'conclusion', function() {
 				// Called each time the slide with the "stats" state is made visible
 				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-worry.png',
+					parallaxBackgroundImage: 'assets/robot-future.png',
+					parallaxBackgroundSize: "1728px 864px"
+				});
+			});
+			Reveal.addEventListener( 'future', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/robot-future2.png',
 					parallaxBackgroundSize: "1696px 928px"
 				});
 			});
+			
 			
 			 
 		</script>
