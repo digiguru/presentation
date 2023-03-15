@@ -59,7 +59,7 @@ async function queryGPT (context, messages, input, output, processVoice) {
 		if(output) output.value = outputData;
 		if(processVoice) {
 			//ElevenLabs voice?
-			getAudio(outputData);
+			getAudio(outputData, output);
 		}
 		return data;
 	} catch (ex) {
@@ -67,7 +67,13 @@ async function queryGPT (context, messages, input, output, processVoice) {
 		if(output) output.value = ex;
 	}
 }
-async function getAudio(input) {
+async function getAudio(input, output) {
+	const link = document.createElement("a");
+	link.innerText = "loading audio...";
+
+	output.parentNode.appendChild(link);
+
+
 	var res = await fetch('https://ai-prompt-writer.vercel.app/api/voice', {
 		method: "POST",
 		headers: {
@@ -80,6 +86,10 @@ async function getAudio(input) {
 	console.log("AUDIO URL", blobURL);
 	var audio0 = new Audio(blobURL);
 	audio0.play();
+	link.innerText = "download";
+	link.download = "joker.mp3";
+	link.href = blobURL;
+	
 }
 
 customElements.define("gpt-input",
@@ -149,21 +159,55 @@ class extends HTMLElement {
 				.hidden {
 					display: none;
 				}
-				small {
-					font-size: medium;
-				}
-				.gpt-form {
-					display: grid;
-					grid-template-columns: 200px 1fr;
-					grid-gap: 16px;
-				}
-				label {
-					text-align: right;
-					grid-column: 1 / 2;
-				}
-				input, button, textarea {
-					grid-column: 2 / 3;
-				}
+				
+
+ .gpt-form {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    grid-gap: 20px;
+    align-items: start;
+    font-family: Arial, sans-serif;
+  }
+
+  label {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-weight:lighter;
+    font-size: 0.8rem;
+    text-align: top;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  textarea.input {
+    font-size: 1.6rem;
+    width: 100%;
+    resize: vertical;
+  }
+
+  button {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+  textarea.output {
+    width: 100%;
+    resize: vertical;
+    min-height: 229px;
+    font-size: 1rem;
+  }
 			</style>
 			<div class="gpt-form">
 				<label>Context</label>
@@ -172,7 +216,7 @@ class extends HTMLElement {
 				<div class="conversation"><slot class="context-conversation" name="conversation">Example</slot></div>
 				<label class="input">Input</label>
 				<textarea class="input" style="font-size: 1.6rem;" placeholder="your input" id="input"></textarea>
-				<button>go</button>
+				<label></label><button>go</button>
 				<label>Output</label>
 				<textarea id="output" style="font-size: 1rem;" class="output"></textarea>
 			</div>
@@ -250,7 +294,7 @@ class extends HTMLElement {
 						<img src="assets/example-wes1.jpeg" />
 					</section>
 					<section data-auto-animate data-state="blur-bg">
-						<img src="assets/example-wes1.jpeg" />
+						<img src="assets/example-wes1.jpeg" style="width: 80%; height: 80%" />
 						<p>417,865 likes</p>
 					</section>
 					<section data-state="blur-bg">
@@ -268,12 +312,15 @@ class extends HTMLElement {
 					<section data-background="black">
 						<p>what i learnt</p>
 						<aside class="notes">
+							Cons:
 							Haters gonna Hate
 							Fear of change
 							Misunderstanding of what its doing
+							Pros:
 							Learnt more about art as a result
 							Felt more of a community a a result
-
+							Increadibly productive
+							Rapidly prototyping
 						</aside>
 					</section>
 				</section>
@@ -440,6 +487,23 @@ So I don't have to log in every month to pay manually</pre>
 							Data scientists up
 						</aside>
 					</section>
+					<section data-state="focus-bg">
+						<p>Truck Drivers</p>
+						<img src="assets/truck-drivers.png" />
+					</section>
+					<section data-state="focus-bg">
+						<p>Accountants</p>
+						<img src="assets/finance.png" />
+					</section>
+					<section data-state="focus-bg">
+						<p>Developers</p>
+						<img src="assets/developers.png" />
+					</section>
+					<section data-state="focus-bg">
+						<p>Overall</p>
+						<img src="assets/jobs.png" />
+					</section>
+					
 				</section>
 				
 
@@ -464,7 +528,8 @@ So I don't have to log in every month to pay manually</pre>
 						<iframe data-src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:6935628727208837120" height="656" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
 					</section>
 					<section data-background="black">
-						<h2>Any questions?</h2>
+						<p>Any questions?</p>
+						<iframe width="768" height="432" src="https://miro.com/app/live-embed/uXjVMdQ442k=/?moveToViewport=-457,-438,1727,859&embedId=430798687077" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
 					</section>
 				</section>
 				<section data-state="future">
