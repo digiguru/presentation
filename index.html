@@ -16,6 +16,15 @@
 		
 	</head>
 	<body>
+		<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RZP8CG4KLJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-RZP8CG4KLJ');
+</script>
 		<style>
 			.blur {
 				filter: brightness(25%) blur(4px);
@@ -583,8 +592,19 @@ So I don't have to log in every month to pay manually</pre>
 					<section>
 						<blockquote class="twitter-tweet"><p lang="en" dir="ltr">DoNotPay is working on using GPT-4 to generate &quot;one click lawsuits&quot; to sue robocallers for $1,500. Imagine receiving a call, clicking a button, call is transcribed and 1,000 word lawsuit is generated. GPT-3.5 was not good enough, but GPT-4 handles the job extremely well: <a href="https://t.co/gplf79kaqG">pic.twitter.com/gplf79kaqG</a></p>&mdash; Joshua Browder (@jbrowder1) <a href="https://twitter.com/jbrowder1/status/1635720431091974157?ref_src=twsrc%5Etfw">March 14, 2023</a></blockquote>
 					</section>
+
 				</section>
-				
+				<section data-state="links">
+					<section data-auto-animate data-state="focus-bg">
+						<h1>Links</h1>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<p><a href="https://ai.com">ChatGPT</a></p>
+						<p><a href="https://beta.elevenlabs.io/">AI Voice Service</a></p>
+						<p><a href="https://midjourney.com/">AI Art Service</a></p>
+						<p>Me on <a href="https://linkedin.com/in/thedigiguru">LinkedIn</a>, <a href="https://twitter.com/thedigiguru">Twitter</a> and <a hre="https://sigmoid.social/@digiguru">Mastadon</a></p>
+					</section>
+				</section>
 			</div>
 		</div>
 <!--
@@ -736,7 +756,13 @@ So I don't have to log in every month to pay manually</pre>
 					parallaxBackgroundSize: "1696px 928px"
 				});
 			});
-			
+			Reveal.addEventListener( 'links', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/robot-admin.png',
+					parallaxBackgroundSize: "1456px 816px"
+				});
+			});
 			
 			 
 		</script>
