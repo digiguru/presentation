@@ -32,8 +32,29 @@
 			.focus {
 				filter: brightness(100%) blur(0px);
 			}
+			.collapsible {
+  cursor: pointer;
+}
 		</style>
 		<script>
+window.addEventListener("DOMContentLoaded", (event) => {
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
+
+	for (i = 0; i < coll.length; i++) {
+	coll[i].addEventListener("click", function() {
+		this.classList.toggle("active");
+		var content = this.nextElementSibling;
+		if (content.style.display === "none") {
+		content.style.display = "block";
+		} else {
+		content.style.display = "none";
+		}
+	});
+	}
+});
+
+
 			// Defines the custom element with our appropriate name, <apocalyptic-warning>
 async function queryGPT (context, messages, input, output, processVoice) {
 	try {
@@ -165,6 +186,8 @@ class extends HTMLElement {
 
 		<template id="GPT" data-show-input="true">
 			<style>
+				
+
 				.hidden {
 					display: none;
 				}
@@ -233,38 +256,39 @@ class extends HTMLElement {
 
 		<div class="reveal">
 			<div class="slides">
-				<section data-state="intro">
-					<section data-auto-animate data-state="focus-bg">
-						<h2>Adam Hall</h2>
-					</section>
-
-
-					<section data-auto-animate data-state="blur-bg">
-						<h2>Adam Hall</h2>
-						<p>Former Agile Coach</p>
-					</section>
-					
+				<section data-background="black">
+				<section data-background="black">
+					<h1>Iteration 3</h1>
+					<p>(first iteration made 8 days ago)</p>
+				</section>
 					<section data-auto-animate>
-						<h2>Adam Hall</h2>
-						<p>Former Agile Coach</p>
-						<p>Principal Technologist</p>
+						<p>Major AI product announcements since I first ran this talk</p>
 					</section>
 					<section data-auto-animate>
-						<h2>Adam Hall</h2>
-						<p>Former Agile Coach</p>
-						<p>Principal  <span>Technologist</span><div style="inline-size: 0px; overflow: hidden;">Agile Coach</div></p>
-						<p>Seconded Technologist</p>
+						<p>Major AI product announcements since I first ran this talk</p>
+						<h1>10</h1>
 					</section>
 					<section data-auto-animate>
-						<h2>Adam Hall</h2>
-						<p>Former Agile Coach</p>
-						<p>Principal Technologist</p>
-						<p>Seconded <span style="inline-size: 0px; overflow: hidden;">Technologist</span><span>Agile Coach</span></p>
+						<p>Major AI product announcements since I first ran this talk</p>
+						<h1>10</h1>
+						<p><small>Microsoft x2, Google, OpenAI, Notion, Adobe, NVida, RunwayML x2, Midjourney</small></p>
 					</section>
-					<section data-background="black">
-						when suddenly...
+					<section data-auto-animate>
+						<p>Major AI product announcements since I first ran this talk</p>
+						<h1>10</h1>
+						<p><small>Microsoft x2, Google, OpenAI, Notion, Adobe, NVida, RunwayML x2, Midjourney</small></p>
+						<p>Days since I first ran this talk</p>
+					</section>
+					<section data-auto-animate>
+						<p>Major AI product announcements since I first ran this talk</p>
+						<h1>10</h1>
+						<p><small>Microsoft x2, Google, OpenAI, Notion, Adobe, NVida, RunwayML x2, Midjourney</small></p>
+						<p>Days since I first ran this talk</p>
+						<h1>8</h1>
 					</section>
 				</section>
+
+			
 				<section data-state="robots">
 
 					
@@ -274,73 +298,23 @@ class extends HTMLElement {
 							On June 11, 2020, an AI research and deployment company OpenAI – founded by Elon Musk, Sam Altman, and others – announced its revolutionary language model, GPT-3. The news quickly created buzz in tech circles with demo videos of early GPT-3 prototypes going viral on Twitter, Reddit, and Hacker News.
 						</aside>
 					</section>
-					
-					<section data-auto-animate data-state="blur-bg">
-						<img src="assets/openai.png" />
-					</section>
 					<section data-auto-animate>
 						<img src="assets/openai.png" />
 						<img src="assets/Bloomberg-News.jpg" width="250" height="100" style="float: right;" />
 					</section>
-					
+					<section data-auto-animate >
+						<p>I think therefor...</p>
+					</section>
+					<section data-auto-animate >
+						<p>I think therefor...</p>
+						<p>I am</p>
+					</section>
 					<section>
 						<iframe width="560" height="315" data-src="https://www.youtube.com/embed/Zm9B-DvwOgw" title="YouTube video player" 
 						frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 					</section>
 					<section data-background="black">
 						CAN. NOT. WAIT.
-					</section>
-				</section>
-				<section data-state="art">
-					<section data-state="focus-bg">
-						<h1>Art</h1>
-					</section>
-					<section data-auto-animate data-state="blur-bg">
-						<img src="assets/art-example.jpg" style="width: 50%; height: 50%" />
-					</section>
-					<section data-auto-animate data-state="blur-bg">
-						<img src="assets/art-example.jpg" style="width: 50%; height: 50%" />
-						<p>2 likes</p>
-					</section>
-					<section data-auto-animate data-state="blur-bg">
-						<img src="assets/art-example2.jpg" style="width: 50%; height: 50%" />
-					</section>
-					<section data-auto-animate data-state="blur-bg">
-						<img src="assets/art-example2.jpg" style="width: 50%; height: 50%" />
-						<p>11 likes</p>
-					</section>
-					<section data-auto-animate data-state="blur-bg">
-						<img src="assets/example-wes1.jpeg" />
-					</section>
-					<section data-auto-animate data-state="blur-bg">
-						<img src="assets/example-wes1.jpeg" style="width: 80%; height: 80%" />
-						<p>417,865 likes</p>
-					</section>
-					<section data-state="blur-bg">
-						<img src="assets/press.png" />
-					</section>
-					<section data-state="blur-bg">
-						<img src="assets/example-wes2.jpeg" />
-					</section>
-					<section data-state="blur-bg">
-						<img src="assets/example-wes3.jpeg" />
-					</section>
-					<section data-state="blur-bg">
-						<img src="assets/example-wes4.jpeg" />
-					</section>
-					<section data-background="black">
-						<p>what i learnt</p>
-						<aside class="notes">
-							Cons:
-							Haters gonna Hate
-							Fear of change
-							Misunderstanding of what its doing
-							Pros:
-							Learnt more about art as a result
-							Felt more of a community a a result
-							Increadibly productive
-							Rapidly prototyping
-						</aside>
 					</section>
 				</section>
 				<section data-state="openai">
@@ -400,7 +374,7 @@ class extends HTMLElement {
 <pre>As a busy bride to be
 I want to create a seating plan for the wedding
 So everyone will know their place, and the day will be amazing</pre>
-								<i>New direct debit payment system on the app</i>
+								<p>New direct debit payment system on the app</p>
 <pre>As user on the app
 I want setup an automatic monthly payment system
 So I don't have to log in every month to pay manually</pre>
@@ -434,21 +408,50 @@ So I don't have to log in every month to pay manually</pre>
 					</section>
 					<section>
 						<gpt-input>
-							<span slot="context">Write the intro to a popular blog post about how scrum teams should never forget about sprint planning in the style of an angry gangster who is fed up with teams who forget to do it.</span>
+<div slot="context" style="text-align: left;"><p style="font-size: 1.6rem">On my todo list I have the following items...</p>
+<pre>* Train 120 people in the way we run our tech interviews
+* Kick off tech chapters across the whole business to ensure upskilling
+* Focus on revenue generation work
+* Do a lightning talk on ChatGPT </pre>
+<p style="font-size: 1.6rem">Tell me the order in which I should be prioritising these items and why in the style of an angry gangster who is fed up with me always forgetting to do things on my todo list.</p></pre>
 						</gpt-input>
 					</section>
-					<section>
-						<gpt-input>
-<div slot="context" style="text-align: left;"><p style="font-size: 1.6rem">On my todo list I have the following items...</p>
-<pre>* Paint the dining room
-* Buy a leaf blower
-* Buy a present for mother's day</pre>
-<p style="font-size: 1.6rem">Tell me which one I should be prioritising in the style of an angry gangster who is fed up with me always forgetting to do things on my todo list.</p></pre>
+					<section data-state="blur-bg">
+						<gpt-input data-show-conversation="true" data-show-input="true">
+							<div slot="context" style="text-align: left;"><p>I want an API for the characters for the movies I ask for. For example...</p></div>
+							<div slot="conversation" style="text-align: left;">
+								<p class="collapsible">Star Wars: Episode IV - A New Hope</p>
+<pre>{
+	"protagonist": {
+		"character": "Luke Skywalker",
+		"appearence": "White costume, weak",
+		"actor": "Mark Hamill"
+	},
+	"antagonist": {
+		"character": "Darth Vader",
+		"appearence": "Black costume, strong",
+		"actor": "David Prowse"
+	}
+}</pre>
+								<p class="collapsible">The Dark Knight</p>
+<pre>{
+	"protagonist": {
+		"character": "Bruce Wayne",
+		"appearence": "Black costume, strong",
+		"actor": "Christian Bale"
+	},
+	"antagonist": {
+		"character": "Joker",
+		"appearence": "Purple suit, weak",
+		"actor": "Heath Ledger"
+	}
+}</pre>
+								</div>
 						</gpt-input>
 					</section>
 					<section>
 						<gpt-input data-show-input="false" data-process-voice="true">
-							<span slot="context">I want you to respond as if you are the joker. How would the joker intervene in the way twitter is managed?</span>
+							<span slot="context">I want you to respond as if you are the joker. How would the joker instigate a plan for a Digital Consultancy business called "AND Digtial" that is trying to return to 10x growth?</span>
 						</gpt-input>
 					</section>
 					<section data-background="black">
@@ -462,11 +465,12 @@ So I don't have to log in every month to pay manually</pre>
 							<p slot="context">I'm writing a movie about a careworker. I want you to create a short chracter bio. Include their name, demographic and their appearence.</p>
 						</gpt-input>
 					</section>
-					<section>
+					<section data-state="blur-bg">
 						<gpt-input>
-							<p slot="context">I'm writing a movie about a Director of Technology. I want you to create a short chracter bio. Include their name, demographic and their appearence.</p>
+							<p slot="context">I'm writing a movie about a <b>male careworker in Soho</b>. I want you to create a short chracter bio. Include their name, demographic and their appearence.</p>
 						</gpt-input>
 					</section>
+					
 					<section data-background="black">
 						Actively pursue diversity
 					</section>
@@ -502,27 +506,28 @@ So I don't have to log in every month to pay manually</pre>
 						Are jobs safe in the new world?
 						<aside class="notes">
 							Truck drivers up
-							accountants up
+							Accountants up
 							Data scientists up
 						</aside>
 					</section>
-					<section data-state="focus-bg">
-						<p>Truck Drivers</p>
-						<img src="assets/truck-drivers.png" />
+					<section data-auto-animate>
+						<img src="assets/jobs-research.png" />
 					</section>
-					<section data-state="focus-bg">
-						<p>Accountants</p>
-						<img src="assets/finance.png" />
+					<section data-auto-animate>
+						<img src="assets/jobs-research.png" />
+						<p>up to 49% of workers could have half or more of their tasks exposed to LLMs.</p>
 					</section>
-					<section data-state="focus-bg">
-						<p>Developers</p>
-						<img src="assets/developers.png" />
+					<section data-auto-animate>
+						<img src="assets/jobs-research.png" />
+						<p>Better paying work has a higher chance of being automated by LLMs.</p>
 					</section>
-					<section data-state="focus-bg">
-						<p>Overall</p>
-						<img src="assets/jobs.png" />
+					<section data-auto-animate>
+						<img src="assets/jobs-research.png" />
+						<p>University educated workers have a higher chance of being automated by LLMs.</p>
 					</section>
-					
+					<section data-background="black">
+						Automation = Productivity
+					</section>
 				</section>
 				
 
