@@ -1,0 +1,904 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Fun with ChatGPT - UX - v3.3  - 22/03/2023</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+		<!--<link rel="stylesheet" href="custom.css">-->
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		
+	</head>
+	<body>
+		<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RZP8CG4KLJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-RZP8CG4KLJ');
+</script>
+		<style>
+			.blur {
+				filter: brightness(25%) blur(4px);
+			}
+			.focus {
+				filter: brightness(100%) blur(0px);
+			}
+			.collapsible {
+  cursor: pointer;
+}
+		</style>
+		<script>
+window.addEventListener("DOMContentLoaded", (event) => {
+	const collapsibles = document.getElementsByClassName("collapsible");
+	[...collapsibles].forEach(collapsible => {
+		collapsible.addEventListener("click", () => {
+			const content = collapsible.nextElementSibling;
+			content.style.display = content.style.display === "none" ? "block" : "none";
+		});
+	})
+});
+
+
+
+// Defines the custom element with our appropriate name, <apocalyptic-warning>
+async function queryImage (prompt, imgTag) {
+	try {
+		const response = await fetch('https://ai-prompt-writer.vercel.app/api/image', {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({prompt})
+		});
+		const data = await response.json();
+		const outputData = data.output;
+		
+		console.log(outputData);
+		
+		if(imgTag) {
+			imgTag.src = outputData;
+			imgTag.classList.remove("hidden");
+		}
+		return data;
+	} catch (ex) {
+		console.error(ex);
+		//if(output) output.value = ex;
+	}
+}
+
+			// Defines the custom element with our appropriate name, <apocalyptic-warning>
+async function queryGPT (context, messages, input, output, processVoice) {
+	try {
+		const post = {
+			system: context,
+			examples: messages,
+			prompt: input
+		}
+		const response = await fetch('https://ai-prompt-writer.vercel.app/api/raw', {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(post)
+		});
+		const data = await response.json();
+		const outputData = data.output;
+		
+		console.log(outputData);
+		
+		if(output) output.value = outputData;
+		if(processVoice) getAudio(outputData, output);
+		
+		return data;
+	} catch (ex) {
+		console.error(ex);
+		if(output) output.value = ex;
+	}
+}
+
+//Perform the API call
+async function fetchAudio(input) {
+	const response = await fetch('https://ai-prompt-writer.vercel.app/api/voice', {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({input})
+	});
+	return await response.blob();
+}
+
+async function getAudio(input, output) {
+	//Create temp link to the audio element
+	const link = document.createElement("a");
+	link.innerText = "loading audio...";
+	output.parentNode.appendChild(link);
+
+	var blob = await fetchAudio(input);
+	var blobURL = URL.createObjectURL(blob);
+	var audio0 = new Audio(blobURL);
+	audio0.play();
+	link.innerText = "download";
+	link.download = "voice.mp3";
+	link.href = blobURL;
+}
+
+customElements.define("gpt-input",
+
+ 
+	// Ensures that we have all the default properties and methods of a built in HTML element
+	class extends HTMLElement {
+
+		// Called anytime a new custom element is created
+		constructor() {
+
+			// Calls the parent constructor, i.e. the constructor for `HTMLElement`, so that everything is set up exactly as we would for creating a built in HTML element
+			super();
+
+			// Grabs the <template> and stores it in `warning`
+			let rawTemplate = document.getElementById("GPT");
+
+			// Stores the contents of the template in `mywarning`
+			let myTemplate = rawTemplate.content;
+
+			const shadowRoot = this.attachShadow({mode: "open"}).appendChild(myTemplate.cloneNode(true));
+			console.log("constructed");
+			this.sendGPT = this.sendGPT.bind(this);
+			
+		}
+		sendGPT() {
+			const { shadowRoot } = this;
+			const showConversation = this.getAttribute("data-show-conversation") === 'true';
+			const showImage = this.getAttribute("data-show-image") === 'true';
+			const processVoice = this.getAttribute("data-process-voice") === 'true';
+			const contextValue = shadowRoot.querySelector('.context')?.assignedNodes()[0].innerText;
+			const inputValue = shadowRoot.querySelector('#input').value;
+			const imgElement = shadowRoot.querySelector('img');
+			let messages = [];
+			const output = shadowRoot.querySelector('.output');
+			output.value = "";
+			output.setAttribute('placeholder', "...loading...");
+			console.log("sendGPT", contextValue, inputValue, output);
+			if(showConversation) {
+				console.log(shadowRoot?.querySelector('.context-conversation'));
+				var conversation = shadowRoot?.querySelector('.context-conversation')?.assignedNodes()[0];
+				console.log(conversation);
+				messages = [...conversation.children].map(x => x.innerText);
+				console.log(messages);
+			}
+			if (!showImage) {
+				queryGPT(contextValue, messages, inputValue, output, processVoice);
+			} else {
+				queryImage(inputValue, imgElement);
+			}
+		}
+		connectedCallback() {
+			const { shadowRoot } = this;
+			const button = shadowRoot.querySelector('button');
+			
+			button.addEventListener('click', this.sendGPT);
+			console.log("attr", this.getAttribute("data-show-conversation"), shadowRoot, this);//.getAttribute('data-show-input'));
+			if(this.getAttribute("data-show-input") !== 'true') {
+				shadowRoot.querySelectorAll(".input").forEach(x => x.setAttribute('class', "hidden"));
+			}
+			if(this.getAttribute("data-show-conversation") !== 'true') {
+				shadowRoot.querySelectorAll(".conversation").forEach(x => x.setAttribute('class', "hidden"));
+			}
+		}
+	}
+);
+		</script>
+		
+	
+
+		<template id="GPT" data-show-input="true">
+			<style>
+				
+
+				.hidden {
+					display: none;
+				}
+				
+
+ .gpt-form {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    grid-gap: 20px;
+    align-items: start;
+    font-family: Arial, sans-serif;
+  }
+
+  label {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-weight:lighter;
+    font-size: 0.8rem;
+    text-align: top;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  textarea.input {
+    font-size: 1.6rem;
+    width: 100%;
+    resize: vertical;
+  }
+
+  button {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+  textarea.output {
+    width: 100%;
+    resize: vertical;
+    min-height: 229px;
+    font-size: 1rem;
+  }
+			</style>
+			<div class="gpt-form">
+				<label>Context</label>
+				<div><slot class="context" name="context">Example</slot></div>
+				<label class="conversation">Chat</label>
+				<div class="conversation"><slot class="context-conversation" name="conversation">Example</slot></div>
+				<label class="input">Input</label>
+				<textarea class="input" style="font-size: 1.6rem;" placeholder="your input" id="input"></textarea>
+				<label></label><button>go</button>
+				<label>Output</label>
+				<textarea id="output" style="font-size: 1rem;" class="output"></textarea>
+				<img src="" class="hidden" />
+			</div>
+		</template>
+
+		<div class="reveal">
+			<div class="slides">
+				<section data-background="black">
+				<section data-background="black">
+					<h1>Iteration 3</h1>
+					<p>(first iteration made 8 days ago)</p>
+					<gpt-input data-show-input="true" data-show-image="true">
+						<span slot="context" style="font-size: 1.6rem">Image example</span>
+					</gpt-input>
+				</section>
+					<section data-auto-animate>
+						<p>Major AI product announcements since I first ran this talk</p>
+					</section>
+					<section data-auto-animate>
+						<p>Major AI product announcements since I first ran this talk</p>
+						<h1>10</h1>
+					</section>
+					<section data-auto-animate>
+						<p>Major AI product announcements since I first ran this talk</p>
+						<h1>10</h1>
+						<p><small>Microsoft x2, Google, OpenAI, Notion, Adobe, NVida, RunwayML x2, Midjourney</small></p>
+					</section>
+					<section data-auto-animate>
+						<p>Major AI product announcements since I first ran this talk</p>
+						<h1>10</h1>
+						<p><small>Microsoft x2, Google, OpenAI, Notion, Adobe, NVida, RunwayML x2, Midjourney</small></p>
+						<p>Days since I first ran this talk</p>
+					</section>
+					<section data-auto-animate>
+						<p>Major AI product announcements since I first ran this talk</p>
+						<h1>10</h1>
+						<p><small>Microsoft x2, Google, OpenAI, Notion, Adobe, NVida, RunwayML x2, Midjourney</small></p>
+						<p>Days since I first ran this talk</p>
+						<h1>8</h1>
+					</section>
+				</section>
+
+			
+				<section data-state="robots">
+
+					
+					<section data-state="focus-bg">
+						<img src="assets/OpenAI_Logo.png" />
+						<aside class="notes">
+							On June 11, 2020, an AI research and deployment company OpenAI – founded by Elon Musk, Sam Altman, and others – announced its revolutionary language model, GPT-3. The news quickly created buzz in tech circles with demo videos of early GPT-3 prototypes going viral on Twitter, Reddit, and Hacker News.
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/openai.png" />
+						<img src="assets/Bloomberg-News.jpg" width="250" height="100" style="float: right;" />
+					</section>
+					<section data-auto-animate >
+						<p>I think therefor...</p>
+					</section>
+					<section data-auto-animate >
+						<p>I think therefor...</p>
+						<p>I am</p>
+					</section>
+					<section>
+						<iframe width="560" height="315" data-src="https://www.youtube.com/embed/Zm9B-DvwOgw" title="YouTube video player" 
+						frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+					</section>
+					<section data-background="black">
+						CAN. NOT. WAIT.
+					</section>
+				</section>
+				<section data-state="openai">
+					<section data-state="focus-bg">
+						<h1>Invite</h1>
+					</section>
+					<section data-state="blur-bg">
+						<img src="assets/invite-openai.png" />
+					</section>
+					<section  data-state="blur-bg">
+						<gpt-input data-show-input="true">
+							<span slot="context" style="font-size: 1.6rem">You are writing an award winning rap. The rap should be about...</span>
+						</gpt-input>
+					</section>
+					
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption2.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption2.png">
+						<img src="assets/chat-gpt-adoption3.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption3.png">
+						<img src="assets/chat-gpt-adoption4.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption4.png">
+						<img src="assets/chat-gpt-adoption5.png">
+					</section>
+					<section data-auto-animate  data-background="black">
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption5.png">
+						<img src="assets/chat-gpt-adoption6.png">
+					</section>
+				</section>
+				<section data-state="app">
+					<section data-state="focus-bg">
+						<h1>My First App</h1>
+					</section>
+					<section data-state="blur-bg">
+						<gpt-input data-show-conversation="true" data-show-input="true">
+							<div slot="context" style="font-size: 1.6rem; text-align: left;">
+								<p>
+									You are working with a product team. I would like you to write a user story for each idea the team comes up with
+								</p>
+							</div>
+							<div slot="conversation" style="font-size: 1.6rem; text-align: left;">
+								<p>Wedding seating plan app</p>
+<pre>As a busy bride to be
+I want to create a seating plan for the wedding
+So everyone will know their place, and the day will be amazing</pre>
+								<p>New direct debit payment system on the app</p>
+<pre>As user on the app
+I want setup an automatic monthly payment system
+So I don't have to log in every month to pay manually</pre>
+								</div>
+							
+						</gpt-input>
+					</section>
+					<section  data-background="black">
+						doesn't this miss the point of user stories?
+						<aside class="notes">
+							Card
+							Conversation
+							Confirmation
+						</aside>
+					</section>
+				</section>
+
+				<section data-state="upskilling">
+					<section data-state="focus-bg">
+						<h1>Upskilling</h1>
+					</section>
+					<section data-state="blur-bg">
+						<gpt-input>
+							<span slot="context">Write the intro to a blog post about sprint planning</span>
+						</gpt-input>
+					</section>
+					<section>
+						<gpt-input>
+							<span slot="context">Write the intro to a popular blog post about sprint planning by starting with a dramatic story, and then teasing the golden rule</span>
+						</gpt-input>
+					</section>
+					<section>
+						<gpt-input>
+<div slot="context" style="text-align: left;"><p style="font-size: 1.6rem">On my todo list I have the following items...</p>
+<pre>* Train 120 people in the way we run our tech interviews
+* Kick off tech chapters across the whole business to ensure upskilling
+* Focus on revenue generation work
+* Do a lightning talk on ChatGPT </pre>
+<p style="font-size: 1.6rem">Tell me the order in which I should be prioritising these items and why in the style of an angry gangster who is fed up with me always forgetting to do things on my todo list.</p></pre>
+						</gpt-input>
+					</section>
+					<section data-state="blur-bg">
+						<gpt-input data-show-conversation="true" data-show-input="true">
+							<div slot="context" style="text-align: left;"><p>I want an API for the characters for the movies I ask for. For example...</p></div>
+							<div slot="conversation" style="text-align: left;">
+								<p class="collapsible">Star Wars: Episode IV - A New Hope</p>
+<pre>{
+	"protagonist": {
+		"character": "Luke Skywalker",
+		"appearence": "White costume, weak",
+		"actor": "Mark Hamill"
+	},
+	"antagonist": {
+		"character": "Darth Vader",
+		"appearence": "Black costume, strong",
+		"actor": "David Prowse"
+	}
+}</pre>
+								<p class="collapsible">The Dark Knight</p>
+<pre>{
+	"protagonist": {
+		"character": "Bruce Wayne",
+		"appearence": "Black costume, strong",
+		"actor": "Christian Bale"
+	},
+	"antagonist": {
+		"character": "Joker",
+		"appearence": "Purple suit, weak",
+		"actor": "Heath Ledger"
+	}
+}</pre>
+								</div>
+						</gpt-input>
+					</section>
+					<section>
+						<gpt-input data-show-input="false" data-process-voice="true">
+							<span slot="context">I want you to respond as if you are the joker. How would the joker instigate a plan for a Digital Consultancy business called "AND Digtial" that is trying to return to 10x growth?</span>
+						</gpt-input>
+					</section>
+					<section data-background="black">
+						Your scientists were so preoccupied with whether they could, they didn't stop to think if they should
+					</section>
+				</section>
+				<section data-state="sterotypes">
+					<section data-state="focus-bg"><h1>Stereotypes</h1></section>
+					<section data-state="blur-bg">
+						<gpt-input>
+							<p slot="context">I'm writing a movie about a careworker. I want you to create a short chracter bio. Include their name, demographic and their appearence.</p>
+						</gpt-input>
+					</section>
+					<section data-state="blur-bg">
+						<gpt-input>
+							<p slot="context">I'm writing a movie about a <b>male careworker in Soho</b>. I want you to create a short chracter bio. Include their name, demographic and their appearence.</p>
+						</gpt-input>
+					</section>
+					
+					<section data-background="black">
+						Actively pursue diversity
+					</section>
+				</section>
+				<section data-state="misinformation">
+					<section data-state="focus-bg">
+						<h1>Misinformation</h1>
+					</section>
+					<section data-state="blur-bg" data-auto-animate>
+						<img src="assets/misinformation1.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/misinformation1.png">
+						<img src="assets/misinformation2.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/misinformation2.png">
+						<img src="assets/misinformation3.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/misinformation3.png">
+						<img src="assets/misinformation4.png">
+					</section>
+					<section data-background="black">
+						Treat OpenAI like a junior
+					</section>
+				</section>
+				<section data-state="jobs">
+					<section data-state="focus-bg">
+						<h1>Jobs</h1>
+					</section>
+					<section data-state="blur-bg">
+						Are jobs safe in the new world?
+						<aside class="notes">
+							Truck drivers up
+							Accountants up
+							Data scientists up
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/jobs-research.png" />
+					</section>
+					<section data-auto-animate>
+						<img src="assets/jobs-research.png" />
+						<p>up to 49% of workers could have half or more of their tasks exposed to LLMs.</p>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/jobs-research.png" />
+						<p>Better paying work has a higher chance of being automated by LLMs.</p>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/jobs-research.png" />
+						<p>University educated workers have a higher chance of being automated by LLMs.</p>
+					</section>
+					<section data-background="black">
+						Automation = Productivity
+					</section>
+				</section>
+				
+
+				<section data-state="conclusion">
+					<section data-state="focus-bg">
+						<h1>Conclusion</h1>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Personal productivity</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Personal productivity</li>
+							<li>Amusing team collaboration</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Personal productivity</li>
+							<li>Amusing team collaboration</li>
+							<li>Mindful mentoring</li>
+							
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Personal productivity</li>
+							<li>Amusing team collaboration</li>
+							<li>Mindful mentoring</li>
+							<li>Spikes</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Personal productivity</li>
+							<li>Amusing team collaboration</li>
+							<li>Mindful mentoring</li>
+							<li>Spikes</li>
+							<li>Proof of concepts</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Personal productivity</li>
+							<li>Amusing team collaboration</li>
+							<li>Mindful mentoring</li>
+							<li>Spikes</li>
+							<li>Proof of concepts</li>
+							<li>Cheap</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Personal productivity</li>
+							<li>Amusing team collaboration</li>
+							<li>Mindful mentoring</li>
+							<li>Spikes</li>
+							<li>Proof of concepts</li>
+							<li>Cheap</li>
+							<li>Getting investors</li>
+							
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+						<ul>
+							<li>On Prem</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+						<ul>
+							<li>On Prem</li>
+							<li>Single source of Truth</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+						<ul>
+							<li>On Prem</li>
+							<li>Single source of Truth</li>
+							<li>Reliability</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+						<ul>
+							<li>On Prem</li>
+							<li>Single source of Truth</li>
+							<li>Reliability</li>
+							<li>Control</li>
+							
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<div>
+							<img src="assets/ginni.jpg" style="width: 80%; height: 80%" />
+						</div>
+					</section>
+					<section data-auto-animate>
+						<div style=" float: left; width: 30%; height: 30%">
+							<img src="assets/ginni.jpg" style="width: 80%; height: 80%" />
+							<p>Ginni Rometty</p>
+						</div>
+						<p>
+							Some people call this artificial intelligence, but the reality is this technology will enhance us. So instead of artificial intelligence, I think we'll augment our intelligence. 
+						</p>
+					</section>
+					<section data-state="blur-bg">
+						<img src="assets/ai-not-replace.jpg" />
+						<p>by mitch0zᵍᵐ</p>
+					</section>
+					<section data-auto-animate>
+						<h3>Old African Proverb</h3>
+					</section>
+					<section data-auto-animate>
+						<h3>Old African Proverb</h3>
+						<p>If you want to go fast</p>
+					</section>
+					<section data-auto-animate>
+						<h3>Old African Proverb</h3>
+						<p>If you want to go fast</p>
+						<p>go alone</p>
+					</section>
+					<section data-auto-animate>
+						<h3>Old African Proverb</h3>
+						<p>If you want to go fast</p>
+						<p>go alone</p>
+						<p>If you want to go far</p>
+					</section>
+					<section data-auto-animate>
+						<h3>Old African Proverb</h3>
+						<p>If you want to go fast</p>
+						<p>go alone</p>
+						<p>If you want to go far</p>
+						<p>go together</p>
+					</section>
+					<section data-auto-animate>
+						<h3>Old African Proverb</h3>
+						<p>If you want to go fast</p>
+						<p><s>go alone</s></p>
+						<p>If you want to go far</p>
+						<p><s>go together</s></p>
+					</section>
+					<section data-auto-animate>
+						<h3>Old African Proverb</h3>
+						<p>If you want to go fast</p>
+						<p><s>go alone</s></p>
+						<p>use AI</p>
+						<p>If you want to go far</p>
+						<p><s>go together</s></p>
+						<p>use AI</p>
+					</section>
+					
+					<section data-background="black">
+						<h1>Any questions?</h1>
+					</section>
+					<section data-state="blur-bg">
+						<h2>One more thing</h2>
+						<iframe data-src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:6935628727208837120" height="656" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+					</section>
+					
+				</section>
+				
+				<section data-state="links">
+					<section data-auto-animate data-state="focus-bg">
+						<h1>Links</h1>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<p><a href="https://ai.com">ChatGPT</a></p>
+						<p><a href="https://beta.elevenlabs.io/">AI Voice Service</a></p>
+						<p><a href="https://midjourney.com/">AI Art Service</a></p>
+						<p><a href="https://arxiv.org/abs/2303.10130">An Early Look at the Labor Market Impact</a></p>
+						<p>Me on <a href="https://linkedin.com/in/thedigiguru">LinkedIn</a>, <a href="https://twitter.com/thedigiguru">Twitter</a> and <a href="https://sigmoid.social/@digiguru">Mastadon</a></p>
+					</section>
+				</section>
+			</div>
+		</div>
+<!--
+		<aside class="notes">
+			Welcome everyone to the presentation! Today, we will be discussing Adam Hall's journey from a former Agile Coach to an amateur artist and a talkative technophile. Be prepared for an exciting story!
+			</aside>
+			<aside class="notes">
+			As we dive deeper into Adam's journey, we come across a pivotal moment when OpenAI announced its revolutionary language model, GPT-3. This event sparked widespread interest and engagement across various social media platforms.
+			</aside>
+			<aside class="notes">
+			GPT-3 caught the attention of not only tech enthusiasts but also influential media outlets like Bloomberg News, further amplifying its impact.
+			</aside>
+			<aside class="notes">
+			OpenAI then proceeded to invite people to try out GPT-3, providing an opportunity for users to experience the power of this groundbreaking AI technology.
+			</aside>
+			<aside class="notes">
+			As people started experimenting with GPT-3, they found it could be used in various creative ways, such as generating rap lyrics or even mimicking the Joker's response to a question about Twitter management.
+			</aside>
+			<aside class="notes">
+			GPT-3's versatility also extended to more practical applications, like writing user stories for product teams in an engaging and efficient manner.
+			</aside>
+			<aside class="notes">
+			The AI's potential to generate content, like intros to blog posts about sprint planning, became increasingly evident as users continued to explore its capabilities.
+			</aside>
+			<aside class="notes">
+			When given specific instructions, GPT-3 could even tailor its output to match the desired tone or style, such as writing a blog post intro in the voice of an angry gangster.
+			</aside>
+			<aside class="notes">
+			GPT-3's ability to adapt to various styles and tones made it especially useful for prioritizing tasks on a to-do list while maintaining an entertaining and engaging persona.
+			</aside>
+			<aside class="notes">
+			However, GPT-3 was not without its flaws. Bias could still be an issue, as demonstrated by the character bios generated for a careworker and a Director of Technology.
+			</aside>
+			<aside class="notes">
+			GPT-3's potential for spreading misinformation also became a growing concern as users continued to experiment with its capabilities.
+			</aside>
+			<aside class="notes">
+			Despite these concerns, GPT-3's ability to write code and integrate with other applications, like a Jira app, showcased its immense potential for transforming various industries.
+			</aside>
+			<aside class="notes">
+			GPT-3 could even be used to give AI a distinct personality, such as mimicking the voice of the Joker, further demonstrating its versatility and adaptability.
+			</aside>
+			<aside class="notes">
+			As we look towards the future and the development of GPT-4, we can expect significant improvements in content understanding, output length, and even image recognition capabilities.
+			</aside>
+-->
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			
+			
+			Reveal.initialize({
+				hash: true,
+				// Learn about plugins: https://revealjs.com/plugins/
+				parallaxBackgroundImage: 'assets/adamhall.jpg', 
+				parallaxBackgroundSize: "1578px 1578px",
+				parallaxBackgroundHorizontal: 0,
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+			Reveal.addEventListener( 'blur-bg', function() {
+				[...document.getElementsByClassName("backgrounds")].forEach(x => {
+					x.classList.add("blur")
+				})
+			});
+			Reveal.addEventListener( 'focus-bg', function() {
+				[...document.getElementsByClassName("backgrounds")].forEach(x => {
+					x.classList.remove("blur")
+				})
+			});
+			Reveal.addEventListener( 'intro', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/adamhall.jpg', 
+					parallaxBackgroundSize: "1578px 1578px",
+					
+				});
+			});
+			Reveal.addEventListener( 'robots', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/robot-wannabe.png',
+					parallaxBackgroundSize: "1696px 928px"
+				});
+			});
+			Reveal.addEventListener( 'art', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/robot-art.png',
+					parallaxBackgroundSize: "1696px 928px"
+				});
+			});
+			Reveal.addEventListener( 'openai', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/robot-welcome.png',
+					parallaxBackgroundSize: "1696px 928px"
+				});
+			});
+			Reveal.addEventListener( 'app', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/robot-dance.png',
+					parallaxBackgroundSize: "1696px 928px"
+				});
+			});
+			Reveal.addEventListener( 'upskilling', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/celebrate2.png',
+					parallaxBackgroundSize: "1696px 928px"
+				});
+			});
+			Reveal.addEventListener( 'sterotypes', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/robot-bully.png',
+					parallaxBackgroundSize: "1696px 928px"
+				});
+			});
+			Reveal.addEventListener( 'misinformation', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/robot-sad.png',
+					parallaxBackgroundSize: "1696px 928px"
+				});
+			});
+			Reveal.addEventListener( 'jobs', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/robot-worry.png',
+					parallaxBackgroundSize: "1696px 928px"
+				});
+			});
+			Reveal.addEventListener( 'conclusion', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/robot-future.png',
+					parallaxBackgroundSize: "1728px 864px"
+				});
+			});
+			Reveal.addEventListener( 'future', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/robot-future2.png',
+					parallaxBackgroundSize: "1696px 928px"
+				});
+			});
+			Reveal.addEventListener( 'links', function() {
+				// Called each time the slide with the "stats" state is made visible
+				Reveal.configure({ 
+					parallaxBackgroundImage: 'assets/robot-admin.png',
+					parallaxBackgroundSize: "1456px 816px"
+				});
+			});
+			
+			 
+		</script>
+	</body>
+</html>
