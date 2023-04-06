@@ -38,22 +38,14 @@
 		</style>
 		<script>
 window.addEventListener("DOMContentLoaded", (event) => {
-	var coll = document.getElementsByClassName("collapsible");
-	var i;
-
-	for (i = 0; i < coll.length; i++) {
-	coll[i].addEventListener("click", function() {
-		this.classList.toggle("active");
-		var content = this.nextElementSibling;
-		if (content.style.display === "none") {
-		content.style.display = "block";
-		} else {
-		content.style.display = "none";
-		}
-	});
-	}
+	const collapsibles = document.getElementsByClassName("collapsible");
+	[...collapsibles].forEach(collapsible => {
+		collapsible.addEventListener("click", () => {
+			const content = collapsible.nextElementSibling;
+			content.style.display = content.style.display === "none" ? "block" : "none";
+		});
+	})
 });
-
 
 			// Defines the custom element with our appropriate name, <apocalyptic-warning>
 async function queryGPT (context, messages, input, output, processVoice) {
@@ -63,19 +55,6 @@ async function queryGPT (context, messages, input, output, processVoice) {
 			examples: messages,
 			prompt: input
 		}
-		// We can also have an array of "examples" which will basically be the conversation
-		/*
-		{
-			"system": "You are a famous cartoon character, and I have to guess who you are.",
-			"examples": [
-				"What do I have to do?",
-				"I'm a famous character. You have to guess who I am"
-			],
-			"prompt": "Are you in a movie?"
-		}
-		*/
-		
-		//const response = await fetch('http://localhost:3000/api/raw', {
 		const response = await fetch('https://ai-prompt-writer.vercel.app/api/raw', {
 			method: "POST",
 			headers: {
@@ -85,101 +64,105 @@ async function queryGPT (context, messages, input, output, processVoice) {
 		});
 		const data = await response.json();
 		const outputData = data.output;
+		
 		console.log(outputData);
+		
 		if(output) output.value = outputData;
-		if(processVoice) {
-			//ElevenLabs voice?
-			getAudio(outputData, output);
-		}
+		if(processVoice) getAudio(outputData, output);
+		
 		return data;
 	} catch (ex) {
 		console.error(ex);
 		if(output) output.value = ex;
 	}
 }
-async function getAudio(input, output) {
-	const link = document.createElement("a");
-	link.innerText = "loading audio...";
 
-	output.parentNode.appendChild(link);
-
-
-	var res = await fetch('https://ai-prompt-writer.vercel.app/api/voice', {
+//Perform the API call
+async function fetchAudio(input) {
+	const response = await fetch('https://ai-prompt-writer.vercel.app/api/voice', {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify({input})
-	})
-	var blob = await res.blob()
+	});
+	return await response.blob();
+}
+
+async function getAudio(input, output) {
+	//Create temp link to the audio element
+	const link = document.createElement("a");
+	link.innerText = "loading audio...";
+	output.parentNode.appendChild(link);
+
+	var blob = await fetchAudio(input);
 	var blobURL = URL.createObjectURL(blob);
-	console.log("AUDIO URL", blobURL);
 	var audio0 = new Audio(blobURL);
 	audio0.play();
 	link.innerText = "download";
-	link.download = "joker.mp3";
+	link.download = "voice.mp3";
 	link.href = blobURL;
-	
 }
 
 customElements.define("gpt-input",
 
  
-// Ensures that we have all the default properties and methods of a built in HTML element
-class extends HTMLElement {
+	// Ensures that we have all the default properties and methods of a built in HTML element
+	class extends HTMLElement {
 
-  // Called anytime a new custom element is created
-  constructor() {
+		// Called anytime a new custom element is created
+		constructor() {
 
-	// Calls the parent constructor, i.e. the constructor for `HTMLElement`, so that everything is set up exactly as we would for creating a built in HTML element
-	super();
+			// Calls the parent constructor, i.e. the constructor for `HTMLElement`, so that everything is set up exactly as we would for creating a built in HTML element
+			super();
 
-	// Grabs the <template> and stores it in `warning`
-	let rawTemplate = document.getElementById("GPT");
+			// Grabs the <template> and stores it in `warning`
+			let rawTemplate = document.getElementById("GPT");
 
-	// Stores the contents of the template in `mywarning`
-	let myTemplate = rawTemplate.content;
+			// Stores the contents of the template in `mywarning`
+			let myTemplate = rawTemplate.content;
 
-	const shadowRoot = this.attachShadow({mode: "open"}).appendChild(myTemplate.cloneNode(true));
-	console.log("constructed");
-    this.sendGPT = this.sendGPT.bind(this);
-    
-  }
-  sendGPT() {
-    const { shadowRoot } = this;
-	const showConversation = this.getAttribute("data-show-conversation") === 'true';
-	const processVoice = this.getAttribute("data-process-voice") === 'true';
-    const contextValue = shadowRoot.querySelector('.context')?.assignedNodes()[0].innerText;
-    const inputValue = shadowRoot.querySelector('#input').value;
-	let messages = [];
-    const output = shadowRoot.querySelector('.output');
-	output.value = "";
-	output.setAttribute('placeholder', "...loading...");
-    console.log("sendGPT", contextValue, inputValue, output);
-	if(showConversation) {
-		console.log(shadowRoot?.querySelector('.context-conversation'));
-		var conversation = shadowRoot?.querySelector('.context-conversation')?.assignedNodes()[0];
-		console.log(conversation);
-		messages = [...conversation.children].map(x => x.innerText);
-		console.log(messages);
+			const shadowRoot = this.attachShadow({mode: "open"}).appendChild(myTemplate.cloneNode(true));
+			console.log("constructed");
+			this.sendGPT = this.sendGPT.bind(this);
+			
+		}
+		sendGPT() {
+			const { shadowRoot } = this;
+			const showConversation = this.getAttribute("data-show-conversation") === 'true';
+			const processVoice = this.getAttribute("data-process-voice") === 'true';
+			const contextValue = shadowRoot.querySelector('.context')?.assignedNodes()[0].innerText;
+			const inputValue = shadowRoot.querySelector('#input').value;
+			let messages = [];
+			const output = shadowRoot.querySelector('.output');
+			output.value = "";
+			output.setAttribute('placeholder', "...loading...");
+			console.log("sendGPT", contextValue, inputValue, output);
+			if(showConversation) {
+				console.log(shadowRoot?.querySelector('.context-conversation'));
+				var conversation = shadowRoot?.querySelector('.context-conversation')?.assignedNodes()[0];
+				console.log(conversation);
+				messages = [...conversation.children].map(x => x.innerText);
+				console.log(messages);
+			}
+
+			queryGPT(contextValue, messages, inputValue, output, processVoice);
+		}
+		connectedCallback() {
+			const { shadowRoot } = this;
+			const button = shadowRoot.querySelector('button');
+			
+			button.addEventListener('click', this.sendGPT);
+			console.log("attr", this.getAttribute("data-show-conversation"), shadowRoot, this);//.getAttribute('data-show-input'));
+			if(this.getAttribute("data-show-input") !== 'true') {
+				shadowRoot.querySelectorAll(".input").forEach(x => x.setAttribute('class', "hidden"));
+			}
+			if(this.getAttribute("data-show-conversation") !== 'true') {
+				shadowRoot.querySelectorAll(".conversation").forEach(x => x.setAttribute('class', "hidden"));
+			}
+		}
 	}
-
-    queryGPT(contextValue, messages, inputValue, output, processVoice);
-  }
-  connectedCallback() {
-    const { shadowRoot } = this;
-    const button = shadowRoot.querySelector('button');
-    
-    button.addEventListener('click', this.sendGPT);
-	console.log("attr", this.getAttribute("data-show-conversation"), shadowRoot, this);//.getAttribute('data-show-input'));
-	if(this.getAttribute("data-show-input") !== 'true') {
-		shadowRoot.querySelectorAll(".input").forEach(x => x.setAttribute('class', "hidden"));
-	}
-	if(this.getAttribute("data-show-conversation") !== 'true') {
-		shadowRoot.querySelectorAll(".conversation").forEach(x => x.setAttribute('class', "hidden"));
-	}
-  }
-});
+);
 		</script>
 		
 	
@@ -715,6 +698,7 @@ So I don't have to log in every month to pay manually</pre>
 						<p><a href="https://ai.com">ChatGPT</a></p>
 						<p><a href="https://beta.elevenlabs.io/">AI Voice Service</a></p>
 						<p><a href="https://midjourney.com/">AI Art Service</a></p>
+						<p><a href="https://arxiv.org/abs/2303.10130">An Early Look at the Labor Market Impact</a></p>
 						<p>Me on <a href="https://linkedin.com/in/thedigiguru">LinkedIn</a>, <a href="https://twitter.com/thedigiguru">Twitter</a> and <a href="https://sigmoid.social/@digiguru">Mastadon</a></p>
 					</section>
 				</section>
