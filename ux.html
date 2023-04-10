@@ -119,17 +119,22 @@ async function fetchAudio(input) {
 
 async function getAudio(input, output) {
 	//Create temp link to the audio element
-	const link = document.createElement("a");
-	link.innerText = "loading audio...";
-	output.parentNode.appendChild(link);
+	const audioDiv = document.createElement('div');
+	audioDiv.innerText = "loading audio...";
+
+	const node = output.parentNode;
+	node.appendChild(audioDiv);
 
 	var blob = await fetchAudio(input);
 	var blobURL = URL.createObjectURL(blob);
-	var audio0 = new Audio(blobURL);
-	audio0.play();
-	link.innerText = "download";
-	link.download = "voice.mp3";
-	link.href = blobURL;
+	//var audio0 = new Audio(blobURL);
+	//audio0.play();
+	audioDiv.innerHTML = 
+		`<audio controls="controls">
+			<source src=${blobURL} type="audio/mp3">
+		</audio>`
+	node.appendChild(audioDiv);
+	return blobURL;
 }
 
 customElements.define("gpt-input",
@@ -137,6 +142,32 @@ customElements.define("gpt-input",
  
 	// Ensures that we have all the default properties and methods of a built in HTML element
 	class extends HTMLElement {
+		$output;
+		$context;
+		$input;
+		$img;
+		$conversation;
+		$button;
+		$inputs;
+		$conversations;
+
+		// define getters and setters for attributes
+		get showConversation() {
+			return this.getAttribute('data-show-conversation') === 'true';
+		}
+
+		get processVoice() {
+			return this.getAttribute('data-process-voice') === 'true';
+		}
+
+		get showImage() {
+			return this.getAttribute('data-show-image') === 'true';
+		}
+
+		get showInput() {
+			return this.getAttribute('data-show-input') === 'true';
+		}
+
 
 		// Called anytime a new custom element is created
 		constructor() {
@@ -150,48 +181,69 @@ customElements.define("gpt-input",
 			// Stores the contents of the template in `mywarning`
 			let myTemplate = rawTemplate.content;
 
-			const shadowRoot = this.attachShadow({mode: "open"}).appendChild(myTemplate.cloneNode(true));
+			this.attachShadow({mode: "open"})
+			this.shadowRoot.appendChild(myTemplate.cloneNode(true));
 			console.log("constructed");
-			this.sendGPT = this.sendGPT.bind(this);
 			
+			this.sendGPT = this.sendGPT.bind(this);
+			this.$output = this.shadowRoot.querySelector('.output');
+			this.$context = this.shadowRoot.querySelector('.context');
+			this.$input = this.shadowRoot.querySelector('#input');
+			this.$img = this.shadowRoot.querySelector('img');
+			this.$conversation = this.shadowRoot.querySelector('.context-conversation');
+			this.$button = this.shadowRoot.querySelector('button');
+			this.$inputs = this.shadowRoot.querySelectorAll(".input");
+			this.$conversations = this.shadowRoot.querySelectorAll(".conversation");
 		}
+		// static get observedAttributes() {
+		// 	return ['data-show-conversation', 'data-process-voice', 'data-show-image', 'data-show-input'];
+		// }
+
+
+		
 		sendGPT() {
 			const { shadowRoot } = this;
-			const showConversation = this.getAttribute("data-show-conversation") === 'true';
-			const showImage = this.getAttribute("data-show-image") === 'true';
-			const processVoice = this.getAttribute("data-process-voice") === 'true';
-			const contextValue = shadowRoot.querySelector('.context')?.assignedNodes()[0].innerText;
-			const inputValue = shadowRoot.querySelector('#input').value;
-			const imgElement = shadowRoot.querySelector('img');
+			
+			//const showConversation = this.getAttribute("data-show-conversation") === 'true';
+			//const processVoice = this.getAttribute("data-process-voice") === 'true';
+			const contextValue = this.$context?.assignedNodes()[0].innerText;
+			const inputValue = this.$input.value;
 			let messages = [];
-			const output = shadowRoot.querySelector('.output');
-			output.value = "";
-			output.setAttribute('placeholder', "...loading...");
-			console.log("sendGPT", contextValue, inputValue, output);
-			if(showConversation) {
-				console.log(shadowRoot?.querySelector('.context-conversation'));
-				var conversation = shadowRoot?.querySelector('.context-conversation')?.assignedNodes()[0];
+			this.$output.value = "";
+			this.$output.setAttribute('placeholder', "...loading...");
+			console.log("sendGPT", contextValue, inputValue, this.$output);
+			if(this.showConversation) {
+				console.log(this.$conversation);
+				var conversation = this.$conversation?.assignedNodes()[0];
 				console.log(conversation);
 				messages = [...conversation.children].map(x => x.innerText);
 				console.log(messages);
 			}
-			if (!showImage) {
-				queryGPT(contextValue, messages, inputValue, output, processVoice);
+			console.log("TWO", this.showImage );
+			if (!this.showImage) {
+				console.log("queryGPT");
+				queryGPT(contextValue, messages, inputValue, this.$output, this.processVoice);
 			} else {
-				queryImage(inputValue, imgElement);
+				console.log("queryImage");
+				queryImage(inputValue, this.$img);
 			}
 		}
 		connectedCallback() {
 			const { shadowRoot } = this;
-			const button = shadowRoot.querySelector('button');
 			
-			button.addEventListener('click', this.sendGPT);
-			console.log("attr", this.getAttribute("data-show-conversation"), shadowRoot, this);//.getAttribute('data-show-input'));
-			if(this.getAttribute("data-show-input") !== 'true') {
-				shadowRoot.querySelectorAll(".input").forEach(x => x.setAttribute('class', "hidden"));
+			//this.showImage = this.getAttribute("data-show-image") === 'true';
+			if (this.showImage) {
+				this.$output.classList.add("hidden");
 			}
-			if(this.getAttribute("data-show-conversation") !== 'true') {
-				shadowRoot.querySelectorAll(".conversation").forEach(x => x.setAttribute('class', "hidden"));
+			console.log("ONE", this.showImage );
+
+			this.$button.addEventListener('click', this.sendGPT);
+			console.log("attr", this.showConversation, shadowRoot, this);//.getAttribute('data-show-input'));
+			if(!this.showInput) {
+				this.$inputs.forEach(x => x.setAttribute('class', "hidden"));
+			}
+			if(!this.showConversation) {
+				this.$conversations.forEach(x => x.setAttribute('class', "hidden"));
 			}
 		}
 	}
@@ -470,8 +522,8 @@ So I don't have to log in every month to pay manually</pre>
 						</gpt-input>
 					</section>
 					<section>
-						<gpt-input data-show-input="false" data-process-voice="true">
-							<span slot="context">I want you to respond as if you are the joker. How would the joker instigate a plan for a Digital Consultancy business called "AND Digtial" that is trying to return to 10x growth?</span>
+						<gpt-input data-show-input="true" data-process-voice="true">
+							<div slot="context" style="text-align: left; font-size: 1.4rem">I want you to respond as if you are the joker. In just one short paragraph - be as twisted and demented as possible explaining how the joker would run the following company ...</div>
 						</gpt-input>
 					</section>
 					<section data-background="black">
