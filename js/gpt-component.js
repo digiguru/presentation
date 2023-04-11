@@ -8,9 +8,13 @@ window.addEventListener("DOMContentLoaded", (event) => {
 	})
 });
 
+const baseURL = 'https://ai-prompt-writer.vercel.app/',
+    imageURL = baseURL + 'api/image',
+    textURL = baseURL + 'api/raw',
+    audioUrl = baseURL + 'api/voice';
 
 async function fetchImage (prompt) {
-	const response = await fetch('https://ai-prompt-writer.vercel.app/api/image', {
+	const response = await fetch(imageURL, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -25,7 +29,7 @@ async function fetchText (context, messages,input) {
 		examples: messages,
 		prompt: input
 	}
-	const response = await fetch('https://ai-prompt-writer.vercel.app/api/raw', {
+	const response = await fetch(textURL, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -34,9 +38,8 @@ async function fetchText (context, messages,input) {
 	});
 	return await response.json();
 }
-//Perform the API call
 async function fetchAudio(input) {
-	const response = await fetch('https://ai-prompt-writer.vercel.app/api/voice', {
+	const response = await fetch(audioUrl, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -52,7 +55,7 @@ async function queryImage (prompt, imgTag) {
 		const data = await fetchImage(prompt);
 		const outputData = data.output;
 		
-		console.log(outputData);
+		console.log("IMAGE:", outputData);
 		
 		if(imgTag) {
 			imgTag.src = outputData;
@@ -70,7 +73,7 @@ async function queryGPT (context, messages, input, output, processVoice) {
 		const data = await fetchText(context, messages, input);
 		const outputData = data.output;
 		
-		console.log(outputData);
+		console.log("TEXT:", outputData);
 		
 		if(output) output.value = outputData;
 		if(processVoice) getAudio(outputData, output);
@@ -93,8 +96,7 @@ async function getAudio(input, output) {
 
 	var blob = await fetchAudio(input);
 	var blobURL = URL.createObjectURL(blob);
-	//var audio0 = new Audio(blobURL);
-	//audio0.play();
+
 	audioDiv.innerHTML = 
 		`<audio controls="controls">
 			<source src=${blobURL} type="audio/mp3">
@@ -113,7 +115,6 @@ const setup = async () => {
 setup();
 function define(template) {
     customElements.define("gpt-input",
-        // Ensures that we have all the default properties and methods of a built in HTML element
         class extends HTMLElement {
             $output;
             $context;
@@ -124,7 +125,6 @@ function define(template) {
             $inputs;
             $conversations;
 
-            // define getters and setters for attributes
             get showConversation() {
                 return this.getAttribute('data-show-conversation') === 'true';
             }
@@ -147,19 +147,7 @@ function define(template) {
 
                 // Calls the parent constructor, i.e. the constructor for `HTMLElement`, so that everything is set up exactly as we would for creating a built in HTML element
                 super();
-
-                // Grabs the <template> and stores it in `warning`
-                //let rawTemplate = document.getElementById("GPT");
-
-                // Stores the contents of the template in `mywarning`
-                //let myTemplate = rawTemplate.content;
-
-                //var shadow = this.attachShadow({mode: "open"});
-                //shadow.innerHTML = template;
                 this.attachShadow({ mode: 'open'}).appendChild(template.content.cloneNode(true))
-                //this.shadowRoot.appendChild(myTemplate.cloneNode(true));
-                console.log("constructed");
-                
                 this.sendGPT = this.sendGPT.bind(this);
                 this.$output = this.shadowRoot.querySelector('.output');
                 this.$context = this.shadowRoot.querySelector('.context');
@@ -170,11 +158,6 @@ function define(template) {
                 this.$inputs = this.shadowRoot.querySelectorAll(".input");
                 this.$conversations = this.shadowRoot.querySelectorAll(".conversation");
             }
-            // static get observedAttributes() {
-            // 	return ['data-show-conversation', 'data-process-voice', 'data-show-image', 'data-show-input'];
-            // }
-
-
             
             sendGPT() {
                 
@@ -183,34 +166,27 @@ function define(template) {
                 let messages = [];
                 this.$output.value = "";
                 this.$output.setAttribute('placeholder', "...loading...");
-                console.log("sendGPT", contextValue, inputValue, this.$output);
                 if(this.showConversation) {
-                    console.log(this.$conversation);
                     var conversation = this.$conversation?.assignedNodes()[0];
-                    console.log(conversation);
                     messages = [...conversation.children].map(x => x.innerText);
-                    console.log(messages);
                 }
-                console.log("TWO", this.showImage );
-                if (!this.showImage) {
-                    console.log("queryGPT");
+                if (this.showImage) {
+                    console.log("queryGPT", {contextValue, messages, inputValue, output: this.$output, processVoice: this.processVoice});
                     queryGPT(contextValue, messages, inputValue, this.$output, this.processVoice);
                 } else {
-                    console.log("queryImage");
+                    console.log("queryImage", {inputValue, img: this.$img});
                     queryImage(inputValue, this.$img);
                 }
             }
+
+            //invoked each time the custom element is appended into a document-connected element
             connectedCallback() {
-                const { shadowRoot } = this;
                 
-                //this.showImage = this.getAttribute("data-show-image") === 'true';
                 if (this.showImage) {
                     this.$output.classList.add("hidden");
                 }
-                console.log("ONE", this.showImage );
-
+                
                 this.$button.addEventListener('click', this.sendGPT);
-                console.log("attr", this.showConversation, shadowRoot, this);//.getAttribute('data-show-input'));
                 if(!this.showInput) {
                     this.$inputs.forEach(x => x.setAttribute('class', "hidden"));
                 }
