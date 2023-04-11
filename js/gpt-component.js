@@ -171,11 +171,11 @@ function define(template) {
                     messages = [...conversation.children].map(x => x.innerText);
                 }
                 if (this.showImage) {
-                    console.log("queryGPT", {contextValue, messages, inputValue, output: this.$output, processVoice: this.processVoice});
-                    queryGPT(contextValue, messages, inputValue, this.$output, this.processVoice);
-                } else {
                     console.log("queryImage", {inputValue, img: this.$img});
                     queryImage(inputValue, this.$img);
+                } else {
+                    console.log("queryGPT", {contextValue, messages, inputValue, output: this.$output, processVoice: this.processVoice});
+                    queryGPT(contextValue, messages, inputValue, this.$output, this.processVoice);
                 }
             }
 
