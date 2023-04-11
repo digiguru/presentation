@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Fun with ChatGPT - UX - v3.3  - 22/03/2023</title>
+		<title>Fun with ChatGPT - UX - v3.4  - 14/04/2023</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
@@ -35,19 +35,24 @@
 			.collapsible {
   cursor: pointer;
 }
+			.slide-background-content {
+				transition: 2s filter ease-in-out;
+			}
 		</style>
 
 
 		<div class="reveal">
 			<div class="slides">
-				<section data-background="black">
-				<section data-background="black">
-					<h1>Iteration 3</h1>
-					<p>(first iteration made 8 days ago)</p>
-					<gpt-input data-show-input="true" data-show-image="true">
-						<span slot="context" style="font-size: 1.6rem">Image example</span>
-					</gpt-input>
-				</section>
+				<section data-background-image="assets/adamhall.jpg">
+					<section data-state="focus-bg">
+						<gpt-input data-show-input="true" data-show-image="true">
+							<span slot="context" style="font-size: 1.6rem">Image example</span>
+						</gpt-input>
+					</section>
+					<section data-background="black">
+						<h1>Iteration 4</h1>
+						<p>(first iteration made 8 days ago)</p>
+					</section>
 					<section data-auto-animate>
 						<p>Major AI product announcements since I first ran this talk</p>
 					</section>
@@ -74,11 +79,7 @@
 						<h1>8</h1>
 					</section>
 				</section>
-
-			
-				<section data-state="robots">
-
-					
+				<section data-background-image="assets/robot-wannabe.png">
 					<section data-state="focus-bg">
 						<img src="assets/OpenAI_Logo.png" />
 						<aside class="notes">
@@ -104,14 +105,14 @@
 						CAN. NOT. WAIT.
 					</section>
 				</section>
-				<section data-state="openai">
+				<section data-state="openai" data-background-image="assets/robot-welcome.png">
 					<section data-state="focus-bg">
 						<h1>Invite</h1>
 					</section>
-					<section data-state="blur-bg">
+					<section>
 						<img src="assets/invite-openai.png" />
 					</section>
-					<section  data-state="blur-bg">
+					<section>
 						<gpt-input data-show-input="true">
 							<span slot="context" style="font-size: 1.6rem">You are writing an award winning rap. The rap should be about...</span>
 						</gpt-input>
@@ -145,11 +146,11 @@
 						<img src="assets/chat-gpt-adoption6.png">
 					</section>
 				</section>
-				<section data-state="app">
+				<section data-state="app" data-background-image="assets/robot-dance.png">
 					<section data-state="focus-bg">
 						<h1>My First App</h1>
 					</section>
-					<section data-state="blur-bg">
+					<section>
 						<gpt-input data-show-conversation="true" data-show-input="true">
 							<div slot="context" style="font-size: 1.6rem; text-align: left;">
 								<p>
@@ -178,8 +179,7 @@ So I don't have to log in every month to pay manually</pre>
 						</aside>
 					</section>
 				</section>
-
-				<section data-state="upskilling">
+				<section data-state="upskilling" data-background-image="assets/celebrate2.png">
 					<section data-state="focus-bg">
 						<h1>Upskilling</h1>
 					</section>
@@ -245,7 +245,7 @@ So I don't have to log in every month to pay manually</pre>
 						Your scientists were so preoccupied with whether they could, they didn't stop to think if they should
 					</section>
 				</section>
-				<section data-state="sterotypes">
+				<section data-state="sterotypes" data-background-image="assets/robot-bully.png">
 					<section data-state="focus-bg"><h1>Stereotypes</h1></section>
 					<section data-state="blur-bg">
 						<gpt-input>
@@ -262,11 +262,11 @@ So I don't have to log in every month to pay manually</pre>
 						Actively pursue diversity
 					</section>
 				</section>
-				<section data-state="misinformation">
+				<section data-state="misinformation" data-background-image="assets/robot-sad.png">
 					<section data-state="focus-bg">
 						<h1>Misinformation</h1>
 					</section>
-					<section data-state="blur-bg" data-auto-animate>
+					<section data-auto-animate>
 						<img src="assets/misinformation1.png">
 					</section>
 					<section data-auto-animate>
@@ -285,7 +285,7 @@ So I don't have to log in every month to pay manually</pre>
 						Treat OpenAI like a junior
 					</section>
 				</section>
-				<section data-state="jobs">
+				<section data-state="jobs" data-background-image="assets/robot-worry.png">
 					<section data-state="focus-bg">
 						<h1>Jobs</h1>
 					</section>
@@ -316,9 +316,7 @@ So I don't have to log in every month to pay manually</pre>
 						Automation = Productivity
 					</section>
 				</section>
-				
-
-				<section data-state="conclusion">
+				<section data-state="conclusion" data-background-image="assets/robot-future.png">
 					<section data-state="focus-bg">
 						<h1>Conclusion</h1>
 					</section>
@@ -493,8 +491,7 @@ So I don't have to log in every month to pay manually</pre>
 					</section>
 					
 				</section>
-				
-				<section data-state="links">
+				<section data-state="links" data-background-image="assets/robot-admin.png">
 					<section data-auto-animate data-state="focus-bg">
 						<h1>Links</h1>
 					</section>
@@ -563,37 +560,32 @@ So I don't have to log in every month to pay manually</pre>
 			Reveal.initialize({
 				hash: true,
 				// Learn about plugins: https://revealjs.com/plugins/
-				parallaxBackgroundImage: 'assets/adamhall.jpg', 
-				parallaxBackgroundSize: "1578px 1578px",
-				parallaxBackgroundHorizontal: 0,
+				//parallaxBackgroundImage: 'assets/adamhall.jpg', 
+				//parallaxBackgroundSize: "1578px 1578px",
+				//parallaxBackgroundHorizontal: 0,
 				
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});
-			Reveal.addEventListener( 'blur-bg', function() {
-				[...document.getElementsByClassName("backgrounds")].forEach(x => {
-					x.classList.add("blur")
-				})
-			});
-			Reveal.addEventListener( 'focus-bg', function() {
-				[...document.getElementsByClassName("backgrounds")].forEach(x => {
-					x.classList.remove("blur")
-				})
-			});
-			Reveal.addEventListener( 'intro', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/adamhall.jpg', 
-					parallaxBackgroundSize: "1578px 1578px",
+
+			Reveal.on( 'slidechanged', event => {
+				const current = event.currentSlide;
+				const background = event.currentSlide.slideBackgroundContentElement.closest(".stack").querySelector(".slide-background-content")
+				console.log("SLIDE", event.currentSlide);
+				if(event.currentSlide.dataset.state == "focus-bg") {
+					//Reveal.dispatchEvent("focus-bg")
+					background.classList.add("focus");
+					background.classList.remove("blur");
 					
-				});
-			});
-			Reveal.addEventListener( 'robots', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-wannabe.png',
-					parallaxBackgroundSize: "1696px 928px"
-				});
-			});
+				} else {// if(event.currentSlide.dataset.state == "blur-bg") {
+					background.classList.add("blur");
+					background.classList.remove("focus");
+					
+					//Reveal.dispatchEvent("blur-bg")
+				}
+				// event.previousSlide, event.currentSlide, event.indexh, event.indexv
+			} );
+
+		
 			Reveal.addEventListener( 'art', function() {
 				// Called each time the slide with the "stats" state is made visible
 				Reveal.configure({ 
@@ -601,55 +593,12 @@ So I don't have to log in every month to pay manually</pre>
 					parallaxBackgroundSize: "1696px 928px"
 				});
 			});
-			Reveal.addEventListener( 'openai', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-welcome.png',
-					parallaxBackgroundSize: "1696px 928px"
-				});
-			});
-			Reveal.addEventListener( 'app', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-dance.png',
-					parallaxBackgroundSize: "1696px 928px"
-				});
-			});
-			Reveal.addEventListener( 'upskilling', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/celebrate2.png',
-					parallaxBackgroundSize: "1696px 928px"
-				});
-			});
-			Reveal.addEventListener( 'sterotypes', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-bully.png',
-					parallaxBackgroundSize: "1696px 928px"
-				});
-			});
-			Reveal.addEventListener( 'misinformation', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-sad.png',
-					parallaxBackgroundSize: "1696px 928px"
-				});
-			});
-			Reveal.addEventListener( 'jobs', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-worry.png',
-					parallaxBackgroundSize: "1696px 928px"
-				});
-			});
-			Reveal.addEventListener( 'conclusion', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-future.png',
-					parallaxBackgroundSize: "1728px 864px"
-				});
-			});
+			
+			
+
+		
+			
+			
 			Reveal.addEventListener( 'future', function() {
 				// Called each time the slide with the "stats" state is made visible
 				Reveal.configure({ 
@@ -664,7 +613,7 @@ So I don't have to log in every month to pay manually</pre>
 					parallaxBackgroundSize: "1456px 816px"
 				});
 			});
-			
+			//*/
 			 
 		</script>
 	</body>
