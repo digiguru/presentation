@@ -5,7 +5,30 @@ window.addEventListener("DOMContentLoaded", (event) => {
 			const content = collapsible.nextElementSibling;
 			content.style.display = content.style.display === "none" ? "block" : "none";
 		});
-	})
+	});
+    
+});
+
+Reveal.addEventListener( 'ready', function( event ) {
+    Reveal.add = function( content = ''){ 
+       
+        let newSlide;
+        const currentSlide = Reveal.getCurrentSlide();
+        if(content) {
+            newSlide = document.createElement( 'section' );
+            newSlide.classList.add( 'future' );
+            newSlide.setAttribute('data-auto-animate','');
+            newSlide.innerHTML = content;
+            currentSlide.insertAdjacentHTML("afterend", newSlide.outerHTML);
+        } 
+        
+        //const slides = Reveal.getSlidesElement();
+        //const index = Reveal.getIndices().v;
+       
+        
+        //slides.insertBefore(newSlide,slides.querySelectorAll('section:nth-child('+(index+1)+')')[0])
+        Reveal.sync()
+    }
 });
 
 const baseURL = 'https://ai-prompt-writer.vercel.app/',
@@ -70,12 +93,17 @@ async function queryImage (prompt, imgTag) {
 			// Defines the custom element with our appropriate name, <apocalyptic-warning>
 async function queryGPT (context, messages, input, output, processVoice) {
 	try {
+        const pushOutputToNextSlide = false;
 		const data = await fetchText(context, messages, input);
 		const outputData = data.output;
 		
 		console.log("TEXT:", outputData);
 		
-		if(output) output.value = outputData;
+		if(output) {
+            output.value = outputData;
+            output.appendChild(document.createTextNode(outputData));
+            if(pushOutputToNextSlide) Reveal.add(output.cloneNode(true).outerHTML);
+        }
 		if(processVoice) getAudio(outputData, output);
 		
 		return data;
