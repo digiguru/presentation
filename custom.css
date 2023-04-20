@@ -1,0 +1,26 @@
+.white-border {
+filter: drop-shadow(2px 2px 0 white)
+drop-shadow(-2px 2px 0 white)
+drop-shadow(2px -2px 0 white)
+drop-shadow(-2px -2px 0 white);
+}
+.blur {
+    filter: brightness(25%) blur(4px);
+}
+.focus {
+    filter: brightness(100%) blur(0px);
+}
+.collapsible {
+cursor: pointer;
+}
+.slide-background-content {
+    transition: 2s filter ease-in-out;
+}
+.reveal .standout {
+    color: #f0f0f0;
+    background-color: #666666;
+    text-shadow: 8px 4px 4px #555;
+    text-align: center;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+}
