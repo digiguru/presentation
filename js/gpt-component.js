@@ -177,14 +177,18 @@ function define(template) {
                 super();
                 this.attachShadow({ mode: 'open'}).appendChild(template.content.cloneNode(true))
                 this.sendGPT = this.sendGPT.bind(this);
+                this.toggleQuickHides = this.toggleQuickHides.bind(this);
                 this.$output = this.shadowRoot.querySelector('.output');
                 this.$context = this.shadowRoot.querySelector('.context');
+                this.$contextLabel = this.shadowRoot.querySelector('.context-label');
                 this.$input = this.shadowRoot.querySelector('#input');
                 this.$img = this.shadowRoot.querySelector('img');
                 this.$conversation = this.shadowRoot.querySelector('.context-conversation');
                 this.$button = this.shadowRoot.querySelector('button');
                 this.$inputs = this.shadowRoot.querySelectorAll(".input");
+                this.$inputLabel = this.shadowRoot.querySelectorAll(".input-label");
                 this.$conversations = this.shadowRoot.querySelectorAll(".conversation");
+                this.$quickHides = this.shadowRoot.querySelectorAll(".quick-hide");
             }
             
             sendGPT() {
@@ -206,7 +210,15 @@ function define(template) {
                     queryGPT(contextValue, messages, inputValue, this.$output, this.processVoice);
                 }
             }
-
+            toggleQuickHides() {
+                console.log("contextLabel clicked");
+                const hasInputHidden = this.$quickHides[0].classList.contains("hidden");
+                if(hasInputHidden) {
+                    this.$quickHides.forEach(x => x.classList.remove("hidden"));
+                } else {
+                    this.$quickHides.forEach(x => x.classList.add("hidden"));
+                }
+            }
             //invoked each time the custom element is appended into a document-connected element
             connectedCallback() {
                 
@@ -215,6 +227,7 @@ function define(template) {
                 }
                 
                 this.$button.addEventListener('click', this.sendGPT);
+                this.$contextLabel.addEventListener('click', this.toggleQuickHides);
                 if(!this.showInput) {
                     this.$inputs.forEach(x => x.setAttribute('class', "hidden"));
                 }
