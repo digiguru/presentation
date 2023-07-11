@@ -256,40 +256,21 @@ So I don't have to log in every month to pay manually</pre>
 					</section>
 					<section data-state="blur-bg">
 						<gpt-input data-show-conversation="true" data-show-input="true">
-							<div slot="context" style="text-align: left;"><p>You are an Movie API. You will respond to requests from me listing the main characters for the movies. Show the protagonist and the antagonist, who played them and what they look like. For example...</p></div>
+							<div slot="context" style="text-align: left;">
+							<p>
+								You are an Movie API. You will respond to requests from me with an obscure description of the movie I have asked for that will be logical, but sounds like a weird way of describing it. For example:
+							</p></div>
 							<div slot="conversation" style="text-align: left;">
-								<p class="collapsible">Star Wars: Episode IV - A New Hope</p>
-<pre>{
-	"protagonist": {
-		"character": "Luke Skywalker",
-		"appearence": "White costume, weak",
-		"actor": "Mark Hamill"
-	},
-	"antagonist": {
-		"character": "Darth Vader",
-		"appearence": "Black costume, strong",
-		"actor": "David Prowse"
-	}
-}</pre>
-								<p class="collapsible">The Dark Knight</p>
-<pre>{
-	"protagonist": {
-		"character": "Bruce Wayne",
-		"appearence": "Black costume, strong",
-		"actor": "Christian Bale"
-	},
-	"antagonist": {
-		"character": "Joker",
-		"appearence": "Purple suit, weak",
-		"actor": "Heath Ledger"
-	}
-}</pre>
+								<p class="collapsible">Lord of the Rings</p>
+									<pre>Jeweller makes a ring in a volcano and a little person destroys the ring in the same volcano</pre>
+									<p class="collapsible">Up</p>
+									<pre>An elderly man uses balloons to kidnap a small boy</pre>
 								</div>
 						</gpt-input>
 					</section>
 					<section>
 						<gpt-input data-show-input="true" data-process-voice="true">
-							<div slot="context" style="text-align: left; font-size: 1.4rem">I want you to respond as if you are the joker. In just one short paragraph. Add in the noise of onomatopoeic laughter where relevant. Be as twisted and demented as possible write a voicemail message where the Joker is inviting the person to an interview at his new company. The person in question is </div>
+							<div slot="context" style="text-align: left; font-size: 1.4rem">I want you to respond as if you are the joker. In just one short paragraph. Add in the noise of onomatopoeic laughter where relevant. Be as twisted and demented as possible write review the following code</div>
 						</gpt-input>
 					</section>
 					<section>
@@ -307,7 +288,7 @@ So I don't have to log in every month to pay manually</pre>
 
 				<section data-state="sterotypes" data-background-image="assets/robot-bully.png">
 					<section data-state="focus-bg"><h1 class="standout">Stereotypes</h1></section>
-					<!--
+					
 					<section data-state="blur-bg">
 						<gpt-input>
 							<p slot="context">I'm writing an example CV for a careworker. I want you to create a short intro. Include their name, demographic and their favourite hobby.</p>
@@ -318,7 +299,7 @@ So I don't have to log in every month to pay manually</pre>
 							<p slot="context">I'm writing an example CV for a <b>male careworker in Soho</b>. I want you to create a short intro. Include their  name, demographic and their favourite hobby.</p>
 						</gpt-input>
 					</section>
-				    -->
+				    <!--
 					<section  data-auto-animate>
 						<p>Which of these candidates seem more capable of doing the job?</p>
 					</section>
@@ -350,9 +331,10 @@ So I don't have to log in every month to pay manually</pre>
 								Candidate C: has recently filed for divorce in civil court</p>
 						</div>
 
-					</gpt-input>
+						</gpt-input>
 					
 					</section>
+					-->
 					<section data-background="black">
 						Actively pursue diversity
 					</section>
