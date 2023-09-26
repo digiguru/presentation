@@ -108,7 +108,7 @@ class extends HTMLElement {
   sendGPT() {
     const { shadowRoot } = this;
 	const showConversation = this.getAttribute("data-show-conversation") === 'true';
-	const processVoice = this.getAttribute("data-process-voice") === 'true';
+	const processVoice = this.getAttribute("data-process-voice");
     const contextValue = shadowRoot.querySelector('.context')?.assignedNodes()[0].innerText;
     const inputValue = shadowRoot.querySelector('#input').value;
 	let messages = [];
