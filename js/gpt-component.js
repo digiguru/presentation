@@ -61,8 +61,8 @@ async function fetchText (context, messages,input) {
 	});
 	return await response.json();
 }
-async function fetchAudio(input) {
-	const response = await fetch(audioUrl, {
+async function fetchAudio(input, voice) {
+	const response = await fetch(audioUrl + "?voice=" + voice, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -104,7 +104,9 @@ async function queryGPT (context, messages, input, output, processVoice) {
             output.appendChild(document.createTextNode(outputData));
             if(pushOutputToNextSlide) Reveal.add(output.cloneNode(true).outerHTML);
         }
-		if(processVoice) getAudio(outputData, output);
+		if(processVoice) {
+            getAudio(outputData, processVoice, output);
+        }
 		
 		return data;
 	} catch (ex) {
@@ -114,7 +116,7 @@ async function queryGPT (context, messages, input, output, processVoice) {
 }
 
 
-async function getAudio(input, output) {
+async function getAudio(input, voice, output) {
 	//Create temp link to the audio element
 	const audioDiv = document.createElement('div');
 	audioDiv.innerText = "loading audio...";
@@ -122,7 +124,7 @@ async function getAudio(input, output) {
 	const node = output.parentNode;
 	node.appendChild(audioDiv);
 
-	var blob = await fetchAudio(input);
+	var blob = await fetchAudio(input, voice);
 	var blobURL = URL.createObjectURL(blob);
 
 	audioDiv.innerHTML = 
@@ -158,7 +160,7 @@ function define(template) {
             }
 
             get processVoice() {
-                return this.getAttribute('data-process-voice') === 'true';
+                return this.getAttribute('data-process-voice');
             }
 
             get showImage() {
