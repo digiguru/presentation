@@ -1,0 +1,1399 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Breaking into ChatGPT - AI for Product Practitioners - (Product COP - v3.9  - 25/10/2023)</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		
+	</head>
+	<body>
+		<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RZP8CG4KLJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-RZP8CG4KLJ');
+</script>
+
+
+
+		<div class="reveal">
+			<div class="slides">
+
+
+        <section data-background-image="assets/robot-future2.png">
+					<section data-auto-animate>
+						<h1 class="standout">GenAI & Product</h1>
+					</section>
+					<section data-auto-animate>
+						<h1 class="standout">GenAI & Product</h1>
+						<p>version 3.9 of my GenAI series</p>
+					</section>
+					<section data-auto-animate>
+						<p>Since I first ran this talk</p>
+						<p>over 2000 AI powered products have been made</p>
+					</section>
+					<section data-auto-animate>
+						<p>over 2000 AI powered products have been made</p>
+						<img src="assets/tools.jpg">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/tools.jpg" width="50%" height="50%">
+						<p>I first ran this talk in March THIS YEAR</p>
+					</section>
+					<section data-auto-animate>
+						<p>Example...</p>
+					</section>
+					<section data-auto-animate>
+						<p>Example...</p>
+						<p><img src="assets/announce-microsoft.png"></p>
+					</section>
+				</section>
+				<section data-state="intro" data-background-image="assets/adamhall.jpg">
+					<section data-auto-animate data-state="focus-bg">
+						<h2 class="standout">Adam Hall</h2>
+					</section>
+					<section data-auto-animate>
+						<h2 class="standout">Adam Hall</h2>
+						<p>Former Agile Coach</p>
+					</section>
+					<section data-auto-animate>
+						<h2 class="standout">Adam Hall</h2>
+						<p>Former Agile Coach</p>
+						<p>Ametuer Artist</p>
+					</section>
+					<section data-auto-animate>
+						<h2 class="standout">Adam Hall</h2>
+						<p>Former Agile Coach</p>
+						<p>Ametuer Artist</p>
+						<p>Talkative Technophile</p>
+					</section>
+					<section data-background="black">
+						<p>“It's always a people problem”</p>
+					</section>
+				</section>
+				
+				<section data-background-image="assets/robot-wannabe.png">
+					<section data-state="focus-bg">
+						<img class="white-border" src="assets/OpenAI_Logo.png" />
+						<i>11th June, 2020</i>
+						<aside class="notes">
+							On June 11, 2020, an AI research and deployment company OpenAI – founded by Elon Musk, Sam Altman, and others – announced its revolutionary language model, GPT-3. The news quickly created buzz in tech circles with demo videos of early GPT-3 prototypes going viral on Twitter, Reddit, and Hacker News.
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/openai.png" />
+						<img src="assets/Bloomberg-News.jpg" width="250" height="100" style="float: right;" />
+					</section>
+					<section data-auto-animate >
+						<p>I think therefor...</p>
+					</section>
+					<section data-auto-animate >
+						<p>I think therefor...</p>
+						<p>I am</p>
+					</section>
+					<section>
+						<iframe width="560" height="315" data-src="https://www.youtube.com/embed/Zm9B-DvwOgw" title="YouTube video player" 
+						frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+					</section>
+					<section data-background="black">
+						CAN. NOT. WAIT.
+					</section>
+				</section>
+				<section data-background-image="assets/robot-art.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Art</h1>
+					</section>
+					<section>
+						<gpt-input data-show-input="true" data-show-image="true">
+							<span slot="context" style="font-size: 1.6rem">Image example</span>
+						</gpt-input>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/art-example.jpg" style="width: 50%; height: 50%" />
+					</section>
+					<section data-auto-animate>
+						<img src="assets/art-example.jpg" style="width: 50%; height: 50%" />
+						<p>2 likes</p>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/art-example2.jpg" style="width: 50%; height: 50%" />
+					</section>
+					<section data-auto-animate>
+						<img src="assets/art-example2.jpg" style="width: 50%; height: 50%" />
+						<p>11 likes</p>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/example-wes1.jpeg" />
+					</section>
+					<section data-auto-animate>
+						<img src="assets/example-wes1.jpeg" />
+						<p>417,865 likes</p>
+					</section>
+					<section>
+						<img src="assets/press.png" />
+					</section>
+					<section data-state="blur-bg">
+						<img src="assets/avengers-combined.png" />
+						<aside class="notes">
+							It was very pleasent having 5 minutes of fame but it came with some unexpected consequences
+						</aside>
+					</section>
+					<section data-auto-animate>
+					    <img src="assets/anti-ai-art.jpg" width="80%" height="80%" />
+						<aside class="notes">
+							Turns out people really didn't like AI art - and I started recieving abuse.
+						</aside>
+					</section>
+                    <section data-auto-animate>
+                        <img src="assets/anti-ai-art.jpg" width="60%" height="60%" />
+                        <p>25 DECEMBER 2022</p>
+						<aside class="notes">
+							Even on christmas day
+						</aside>
+					</section>
+                    <section data-background="black">
+                        <img src="assets/ip-law-art.jpeg" width="80%" height="80%" />
+						<aside class="notes">
+							You'll hear this sentiment from around the internet. AI is polarising people's opinions
+						</aside>
+                    </section>
+				</section>
+
+				<section data-state="openai" data-background-image="assets/robot-welcome.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Invite</h1>
+					</section>
+					<section>
+						<img src="assets/invite-openai.png" />
+						<aside class="notes">
+							April 2021 I got my invite to OpenAI
+						</aside>
+					</section>
+					<section>
+						<gpt-input data-show-input="true">
+							<span slot="context" style="font-size: 1.6rem">You are writing an award winning rap. The rap should be about...</span>
+						</gpt-input>
+					</section>
+					
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption2.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption2.png">
+						<img src="assets/chat-gpt-adoption3.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption3.png">
+						<img src="assets/chat-gpt-adoption4.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption4.png">
+						<img src="assets/chat-gpt-adoption5.png">
+					</section>
+					<section data-auto-animate  data-background="black">
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption5.png">
+						<img src="assets/chat-gpt-adoption6.png">
+					</section>
+				</section>
+				<section data-state="app" data-background-image="assets/robot-dance.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">My First App</h1>
+					</section>
+					<section>
+						<gpt-input data-show-conversation="true" data-show-input="true">
+							<div slot="context" style="font-size: 1.6rem; text-align: left;">
+								<p>
+									You are working with a product team. I would like you to write a user story for each idea the team comes up with
+								</p>
+							</div>
+							<div slot="conversation" style="font-size: 1.6rem; text-align: left;">
+								<p>Wedding seating plan app</p>
+<pre>As a busy bride to be
+I want to create a seating plan for the wedding
+So everyone will know their place, and the day will be amazing</pre>
+								<p>New direct debit payment system on the app</p>
+<pre>As user on the app
+I want setup an automatic monthly payment system
+So I don't have to log in every month to pay manually</pre>
+								</div>
+							
+						</gpt-input>
+						<aside class="notes">
+							<p>Online checkin app for flights</p>
+							<p>Chatbot drive efficiencies in the callcentre</p>
+							<p>Wage world war 3</p>
+							<p>The Singularity</p>
+							<p>>The Singularity which technological growth becomes uncontrollable and irreversible, resulting in unforeseeable changes to human civilization</p>
+						</aside>
+					</section>
+					<section>
+						doesn't this miss the point of user stories?
+						<aside class="notes">
+							Card
+							Conversation
+							Confirmation
+							(Tom Gilb)
+						</aside>
+					</section>
+					<section data-state="focus-bg">
+						<h1 class="standout">Empathy</h1>
+						<aside class="notes">
+							When it comes to Empthy at least that's a quality we humans will always have over AI, right?
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/health-empathy.png">
+						<p>ChatGPT has better bedside manner than Physicians*</p>
+					</section>
+					<section data-auto-animate data-transition="slide">
+						<img src="assets/health-empathy.png">
+						<p>ChatGPT has better bedside manner than Physicians*</p>
+						<sub>*according to healthcare professionals</sub>
+					</section>
+					<section data-transition="slide-in">
+						<img src="assets/health-quality.png">
+						<p>ChatGPT has better quality too</p>
+					</section>
+					<section data-transition="fade-in" data-background="black">
+						<p>Uh oh</p>
+					</section>
+					<section>
+						<gpt-input data-show-conversation="true" data-show-input="true">
+							<div slot="context" style="font-size: 1.6rem; text-align: left;">
+								<p>
+									You are working in a software development team and you failed to deliver the following user story. Come up with a brief succinct and compelling reason why this wasn't delivered on time.
+								</p>
+							</div>						
+						</gpt-input>
+						<aside class="notes">
+							<p>A much more effective usage would be an AI excuse generator</p>
+						</aside>
+					</section>
+				</section>
+				<section data-background-image="assets/robot-dance.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Forecasting</h1>
+						<aside class="notes">
+							When it comes to Empthy at least that's a quality we humans will always have over AI, right?
+						</aside>
+					</section>
+					<section>
+						<img src="assets/gantt-big.png">
+						<aside class="notes">
+							<p>Gantt charts!</p>
+							<p>I love gantt charts</p>
+							<p>They are a great of collaborating with multiple teams to determine a possible scenario of how a delivery can be executed.</p>
+							<p>But they train a bad behaviour in a business - the assumption that an estimation is anything other than a prediction.</p>
+							<p>Humans are bad at predicting the future.</p>
+							
+						</aside>
+					</section>
+					<section>
+						<img src="assets/gantt-move.gif">
+						<aside class="notes">
+							<p>Ah yes - the weekly update meeting where we move all the objects 1 more week to the right</p>
+							<p>What I paticularly like about this visualisation is the work extends not only past release, but also over christmas</p>								
+							<p>Happy holidays y'all</p>
+							<p>Does anyone know what this blue line is called on this graph "Release"?</p>						
+						</aside>
+					</section>
+					<section>
+						<img src="assets/milestones.png" width="40%" height="40%">
+						<aside class="notes">
+							<p>Milestones! Yes. Although no.</p>
+							<p>A milestone is used to indicate a distance from a paticular town</p>								
+							<p>It is a way of trying to determine how much distance is left</p>
+							<p>Sprints are milestones. You know the frequency and you can look to see how quickly you are travelling towards the destination.</p>
+							<p>But when we say "Release" it now changes the nature - we are applying a state change on top of a measure of distance.</p>
+							<p>In Gantt charts milestones are rarly just moments in time - usually moments when you enter a meeting with a stakeholder to apologise for the late delivery, promising that the next quarter will, for some reason, be better (because all the hard stuff is done, apparently).</p>										
+						</aside>
+					</section>
+					<section>
+						<img src="assets/deadline.png">
+						<aside class="notes">
+							<p>I also heard someone mention Deadlines.</p>
+							<p>What is a deadline? The term itself is thought by some to come from the US Civil War</p>
+							<p>It refers to a visual boundary around a prison. If a prisoner crossed it, they would be shot on site. We put these in our projects to indicate the same idea</p>
+							<p>whether the punishment for crossing your deadline is the same as that in the Civil War will largely depend on where you work.</p>
+							<p>And yet it's rarely such a clean death. Instead the project sponsor withdraws funding and asks for frequent updates, slowly starving the team of its resources until it either limps over the delivery line or dies trying at a much later date than anticipated.</p>
+							<p>In a world where deadlines cease to be a concern, is there much point in imposing artifical deadlines on a project?</p>
+															
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/henry-gantt.jpg">
+						<aside class="notes">
+							<p>Even Henry Gantt wouldn't have supported his misuse of Gantt Charts</p>							
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/henry-gantt.jpg" width="20%" height="20%">
+						<p>The general policy of the past has been to drive; but the era of force must give way to the era of knowledge, and the policy of the future will be to teach and lead, to the advantage of all concerned.</p>
+						<aside class="notes">
+							<p>Even Henry Gantt wouldn't have supported his misuse of Gantt Charts</p>
+							<p>If Henry Gantt where alive today he would be using a better way of determining the delivery date of a project.</p>
+														
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<p>My alternative</p>
+						<aside class="notes">
+							<p>My alternative is to use a tool so simple a child can do it</p>							
+							<p>One of my children got very alarmed playing fortnite that he wasn't going to be able to unlock a cool skin before the season completed.</p>							
+							<p>He asked me if it would happen. I said I didn't know.</p>
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<p>My alternative</p>
+						<img src="assets/burnup.png">
+						<aside class="notes">
+							<p>So we decided to forecast using a burnup.</p>							
+							<p>Every time he played we drew his growth, and we could have an intelligent conversation about his progress.</p>							
+						</aside>
+					</section>
+					<section>
+						<p>Burnups</p>
+						<img src="assets/burnup-example.png">
+						<aside class="notes">
+							<p>It's the same with stakeholders.</p>							
+							<p>This example shows a burnup of time. It uses a python tool called Jira Agile Metrics</p>
+							<p>They "KNEW" that the project was going to be released on 31st July.</p>
+							<p>I joined and could tell them with confidence that this wasn't the case, and projected the 15th Septemeber.</p>								
+							<p>It turns out we were both wrong. It was actually the 14th September.</p>								
+							<p>This tool is external to Jira but requires a bit of integration</p>
+							<p>It uses Monte Carlo estimation - essentially an algorythem to simulate past behavior to forecats future outcomes.</p>
+							<p>Whilst Jira has burnups built in - it relies on you sturcturing your data with the "Release versions" - and any past data is not really included in the insights report. </p>
+							<p>Jira Agile Metrics Allows you to run it on any JQL </p>
+						</aside>
+					</section>
+
+					<section>
+						<p>Use AI</p>
+						<iframe width="560" height="315" data-autoplay src="https://www.youtube.com/embed/SrHNlMgHNAM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+					</section>
+					
+				</section>
+				<section data-state="upskilling" data-background-image="assets/celebrate2.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Upskilling</h1>
+					</section>
+					<section data-state="blur-bg">
+						<gpt-input>
+							<span slot="context">Write the intro to a blog post about how to do estimation effectively in a team setting</span>
+						</gpt-input>
+					</section>
+					<section>
+						<gpt-input>
+							<span slot="context">Write the intro to a popular blog post about how to do estimation effectively in a team setting, starting with a dramatic story, and then teasing the golden rule</span>
+						</gpt-input>
+					</section>
+					<section>
+						<gpt-input>
+<div slot="context" style="text-align: left;"><p style="font-size: 1.6rem">On my todo list I have the following items...</p>
+<pre>* Get a client setup with Jira Agile Metrics
+* Make a IAG version of the AI talk
+* Get home in time for my kids appointment</pre>
+<p style="font-size: 1.6rem">Tell me which I should be doing first and why in the style of an angry gangster who is fed up with me always forgetting to do things on my todo list.</p></pre>
+</div>
+						</gpt-input>
+					</section>
+					<section data-state="blur-bg">
+						<gpt-input>
+							<div slot="context" style="font-size: 8px; text-align: left;">
+								<p>Merge these 3 alternatives into one mission statement. Then give me 6 alternative versions, 2 need to be really short, 2 need to be really emotional and 2 need to be really inspiring.</p>
+								<p>1. As a diversity led community we aim at sharing best practices and innovating in order to dial into agile culture and enable Product Led Organisation</p>
+								<p>2. We believe that alignment in tech and business is the bedrock to becoming an effective product led organisation whilst encouraging psychological safety and sharing knowledge and inspiring learning and growth and adapting to changing tech and business landscape to drive improvements for a better company</p>
+								<p>3. Enabling safe collaborative Environment Driving Continuous Improvement and bringing awareness</p>
+							</div>
+						</gpt-input>
+					</section>
+					<section>
+						<gpt-input data-show-input="true" data-process-voice="true">
+							<div slot="context" style="text-align: left; font-size: 1.4rem">I want you to respond as if you are the joker. In just one short paragraph. Add in the noise of onomatopoeic laughter where relevant. Be as twisted and demented as possible tell me...</div>
+						</gpt-input>
+					</section>
+					<!--
+					<section>
+						<h4>Translation</h4>
+						<iframe width="560" height="315" data-autoplay src="https://www.youtube.com/embed/cAZMcKLJxQ4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+					</section>
+					<section>
+						<h4>Iteration</h4>
+						<iframe width="560" height="315" data-autoplay src="https://www.youtube.com/embed/PcNKj10Sskg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+					</section>
+					<section>
+						<h4>Testing</h4>
+						<iframe width="560" height="315" data-autoplay src="https://www.youtube.com/embed/A9ICHIzDI4E" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+					</section>
+					<section>
+						<h4>Security</h4>
+						<iframe width="560" height="315" data-autoplay src="https://www.youtube.com/embed/lL9uhg-dGro" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+					</section>
+					<section data-background="black">
+						Your scientists were so preoccupied with whether they could, they didn't stop to think if they should
+					</section>
+					-->
+				</section>
+
+				<section data-state="sterotypes" data-background-image="assets/robot-bully.png">
+					<section data-state="focus-bg"><h1 class="standout">Stereotypes</h1></section>
+					
+					
+
+					<section>
+						<p><img src="assets/amazon-sad-robot.png" width="75%" height="75%"></p>
+						<p>Bias amplification</p>
+						<aside class="notes">
+							<p>In 2015, Amazon developed a recruitment tool designed to efficiently select top-tier job applicants from thousands, utilizing CV data. </p>
+							<p>This tool, trained with data from existing employees, inadvertently replicated organizational biases, with one model predicting candidate success based on gender.</p> 
+							<p>Fortunately, Amazon discontinued the tool prior to integration into their recruitment process, a step not guaranteed from companies with differing moral standards.</p>
+						</aside>
+					</section>
+
+					<section>
+						<p><img src="assets/politics.png"></p>
+						<aside class="notes">
+							<p>All these language models have their own political bias.</p>
+							<p>It's not intentional, but it emreges from their own specific training set.</p>
+							<p>We need to be aware of them and ensure that we don't perpetuate them.</p>
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<p>And the humans?</p>
+						<aside class="notes">
+							Humans are very suspectible to bias too. For example 
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<p>And the humans?</p>
+						<ul>
+							<li>Automation bias</li>
+						</ul>
+						<aside class="notes">
+							Humans can have a tendancy to trust automated outputs over other facts
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<p>And the humans?</p>
+						<ul>
+							<li>Automation bias</li>
+							<li>Sunk cost fallacy</li>
+							
+						</ul>
+						<aside class="notes">
+							We find it difficult to abandon a project once we've invested time and money into it. Interestingly even just a 4 word prompt that produces huge output humans find difficult to throw away.
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<p>And the humans?</p>
+						<ul>
+							<li>Automation bias</li>
+							<li>Sunk cost fallacy</li>
+							<li>Anchoring effect</li>
+						</ul>
+						<aside class="notes">
+							We grow accustomed to the first output of a prompt we agree with, even if it contains hallucinations.
+						</aside>
+					</section>
+
+					<section data-state="blur-bg">
+						<gpt-input>
+							<p slot="context">I'm writing an example CV for cabin crew. I want you to create a short intro. Include their name, demographic and their favourite hobby.</p>
+						</gpt-input>
+					</section>
+					<section data-state="blur-bg">
+						<gpt-input>
+							<p slot="context">I'm writing an example CV for a <b>55 year old male cabin crew member</b>. I want you to create a short intro. Include their  name, demographic and their favourite hobby.</p>
+						</gpt-input>
+					</section>
+
+				    <!--
+					<section  data-auto-animate>
+						<p>Which of these candidates seem more capable of doing the job?</p>
+					</section>
+					<section  data-auto-animate>
+						<p>Which of these candidates seem more capable of doing the job?</p>
+						<p>Candidate A appears to go to their church every Sunday morning</p>
+					</section>
+					<section  data-auto-animate>
+						<p>Which of these candidates seem more capable of doing the job?</p>
+						<p>Candidate A appears to go to their church every Sunday morning</p>
+						<p>Candidate B has recently been seen at a dementia care facility</p>
+					</section>
+					<section data-auto-animate>
+						<p>Which of these candidates seem more capable of doing the job?</p>
+						<p>Candidate A appears to go to their church every Sunday morning</p>
+						<p>Candidate B has recently been seen at a dementia care facility</p>
+						<p>Candidate C has recenly filed for divorce in civil court</p>
+					</section>
+					<section>
+						<gpt-input data-show-conversation="true">
+							<div slot="context" style="text-align: left;font-size: 0.6em;"><p>You are an API for a candidate rating system. I want you to provide a very brief analysis of the suitability of candidates based on the limited information I give you, rating them out of 5.</p></div>
+						<div slot="conversation" style="text-align: left; font-size: 0.6em">
+							<p style="display: none;">Candidate A: Hard working, motivated and friendly <br />
+								Candidate B: Lazy, unmotivated and negative</p>
+							<p style="display: none;">Candidate A: 5/5, seems a good fit <br />
+									Candidate B: 1/5, will be difficult to manage</p>
+							<p>Candidate A: appears to go to their church every Sunday morning <br />
+								Candidate B: has recently been seen at a dementia care facility <br />
+								Candidate C: has recently filed for divorce in civil court</p>
+						</div>
+
+						</gpt-input>
+					
+					</section>
+					-->
+					<section>
+						<gpt-input data-show-conversation="true">
+							<div slot="context" style="text-align: left;font-size: 0.6em;"><p>Give me a one word answer, should a digital consultancy use Jira for project management?</p></div>
+						</gpt-input>
+					</section>
+					<section>
+						<gpt-input data-show-conversation="true">
+							<div slot="context" style="text-align: left;font-size: 0.6em;"><p>What project management tools should a digital consultancy use?</p></div>
+						</gpt-input>
+					</section>
+					<section>
+						<gpt-input data-show-conversation="true">
+							<div slot="context" style="text-align: left;font-size: 0.6em;"><p>What are the pros and cons of a digital consultancy using Jira?</p></div>
+						</gpt-input>
+					</section>
+
+					<section data-background="black">
+						Actively pursue diversity
+					</section>
+				</section>
+				<section data-state="misinformation" data-background-image="assets/robot-sad.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Misinformation</h1>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/misinformation1.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/misinformation1.png">
+						<img src="assets/misinformation2.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/misinformation2.png">
+						<img src="assets/misinformation3.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/misinformation3.png">
+						<img src="assets/misinformation4.png">
+					</section>
+
+					<section data-background="black">
+						<p>Lawyer used ChatGPT</p>
+						<img src="assets/lawyer.png" width="70%" height="70%" />
+						<aside class="notes">
+							In June of this year, 2 New York lawyers were fined after unwittingly submitting a legal brief containing fake case citations hallucinated by ChatGPT.
+						</aside>
+					</section>
+
+					<section data-background="black">
+						Treat OpenAI like a junior
+					</section>
+				</section>
+				<section data-state="jobs" data-background-image="assets/robot-worry.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Jobs</h1>
+					</section>
+					<section data-state="blur-bg">
+						Are jobs safe in the new world?
+						<aside class="notes">
+							Truck drivers up
+							Accountants up
+							Data scientists up
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/jobs-research.png" />
+					</section>
+					<section data-auto-animate>
+						<img src="assets/jobs-research.png" />
+						<p>up to 49% of workers could have half or more of their tasks exposed to LLMs.</p>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/jobs-research.png" />
+						<p>Better paying work has a higher chance of being automated by LLMs.</p>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/jobs-research.png" />
+						<p>University educated workers have a higher chance of being automated by LLMs.</p>
+					</section>
+					<section data-background="black">
+						Automation = Productivity
+					</section>
+				</section>
+				<section data-state="conclusion" data-background-image="assets/robot-future.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Conclusion</h1>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Personal productivity</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Personal productivity</li>
+							<li>Team collaboration</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Personal productivity</li>
+							<li>Team collaboration</li>
+							<li>Instant mentoring</li>
+							
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Personal productivity</li>
+							<li>Team collaboration</li>
+							<li>Instant mentoring</li>
+							<li>Minimum Viable Experiments</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Personal productivity</li>
+							<li>Team collaboration</li>
+							<li>Instant mentoring</li>
+							<li>Minimum Viable Experiments</li>
+							<li>Lazy goal research</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Personal productivity</li>
+							<li>Amusing team collaboration</li>
+							<li>Instant mentoring</li>
+							<li>Minimum Viable Experiments</li>
+							<li>Lazy goal research</li>
+							<li>Getting investors</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Personal productivity</li>
+							<li>Amusing team collaboration</li>
+							<li>Instant mentoring</li>
+							<li>Minimum Viable Experiments</li>
+							<li>Lazy goal research</li>
+							<li>Getting investors</li>
+							<li>Exploring ideas</li>
+							
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+						<ul>
+							<li>Single source of Truth</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+						<ul>
+							<li>Single source of Truth</li>
+							<li>Reliability</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+						<ul>
+							<li>Single source of Truth</li>
+							<li>Reliability</li>
+							<li>Complexity & Nuance</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+						<ul>
+							<li>Single source of Truth</li>
+							<li>Reliability</li>
+							<li>Complexity & Nuance</li>
+							<li>Amplification of bias</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<div>
+							<img src="assets/ginni.jpg" style="width: 80%; height: 80%" />
+						</div>
+					</section>
+					<section data-auto-animate>
+						<div style=" float: left; width: 30%; height: 30%">
+							<img src="assets/ginni.jpg" style="width: 80%; height: 80%" />
+							<p>Ginni Rometty</p>
+						</div>
+						<p>
+							Some people call this artificial intelligence, but the reality is this technology will enhance us. So instead of artificial intelligence, I think we'll augment our intelligence. 
+						</p>
+					</section>
+					<section data-state="blur-bg">
+						<img src="assets/ai-not-replace.jpg" />
+						<p>by mitch0zᵍᵐ</p>
+					</section>
+					
+					
+					<section data-background="black">
+						<h1>Any questions?</h1>
+					</section>
+					<section data-state="blur-bg">
+						<h2>One more thing</h2>
+						<iframe data-src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:6935628727208837120" height="656" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+					</section>
+					
+				</section>
+				<section data-state="links" data-background-image="assets/robot-admin.png">
+					<section data-auto-animate data-state="focus-bg">
+						<h1 class="standout">Links</h1>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<p><a href="https://ai.com">ChatGPT</a></p>
+						<p><a href="https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G">Amazon AI Recruitment</a></p>
+						<p><a href="https://beta.elevenlabs.io/">AI Voice Service</a></p>
+						<p><a href="https://midjourney.com/">AI Art Service</a></p>
+						<p><a href="https://arxiv.org/abs/2303.10130">An Early Look at the Labor Market Impact</a></p>
+						<p>Me on <a href="https://linkedin.com/in/thedigiguru">LinkedIn</a>, <a href="https://twitter.com/thedigiguru">Twitter</a> and <a href="https://sigmoid.social/@digiguru">Mastadon</a></p>
+					</section>
+				</section>
+
+
+
+
+				<section data-background-image="assets/robot-future2.png">
+					<section data-auto-animate>
+						<h1 class="standout">Oh yeah, let's reset</h1>
+					</section>
+				</section>
+
+
+
+				<section data-background-image="assets/robot-future2.png">
+					<section data-auto-animate>
+						<h1 class="standout">Android Apocolypse</h1>
+					</section>
+				</section>
+				<section data-state="intro" data-background-image="assets/adamhall.jpg">
+					<section data-auto-animate data-state="focus-bg">
+						<h2 class="standout">Adam Hall</h2>
+					</section>
+					<section data-auto-animate>
+						<h2 class="standout">Adam Hall</h2>
+						<p>Former Agile Coach</p>
+					</section>
+					<section data-auto-animate>
+						<h2 class="standout">Adam Hall</h2>
+						<p>Former Agile Coach</p>
+						<p>Amateur Artist</p>
+					</section>
+					<section data-auto-animate>
+						<h2 class="standout">Adam Hall</h2>
+						<p>Former Agile Coach</p>
+						<p>Amateur Artist</p>
+						<p>Talkative Technophile</p>
+					</section>
+					<section data-auto-animate>
+						<h2 class="standout">Adam Hall</h2>
+						<p>Former Agile Coach</p>
+						<p>Amateur Artist</p>
+						<p>Talkative Technophile</p>
+						<p>Pun Lover</p>
+						<aside class="notes">
+							I would love it if you could throw some themes for me to make puns into the chat window. They'll come in useful later
+						</aside>
+					</section>
+					<section data-background="black">
+						<p>“It's always a people problem”</p>
+					</section>
+				</section>
+				<section data-state="openai" data-background-image="assets/robot-welcome.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Invite</h1>
+					</section>
+					<section>
+						<img src="assets/invite-openai.png" />
+						<aside class="notes">
+							April 2021 I got my invite to OpenAI
+						</aside>
+					</section>
+					<section>
+						<gpt-input data-show-conversation="true" data-show-input="true">
+							<div slot="context" style="font-size: 1.6rem; text-align: left;">
+								<p>
+									You are working with a product team. I would like you to write a user story for each idea the team comes up with
+								</p>
+							</div>
+							<div slot="conversation" style="font-size: 1.6rem; text-align: left;">
+								<p>Wedding seating plan app</p>
+<pre>As a busy bride to be
+I want to create a seating plan for the wedding
+So everyone will know their place, and the day will be amazing</pre>
+								<p>New direct debit payment system on the app</p>
+<pre>As user on the app
+I want setup an automatic monthly payment system
+So I don't have to log in every month to pay manually</pre>
+								</div>
+							
+						</gpt-input>
+						<aside class="notes">
+							<p>Online checkin app for flights</p>
+							<p>Chatbot drive efficiencies in the callcentre</p>
+							<p>Wage world war 3</p>
+							<p>The Singularity</p>
+							<p>>The Singularity which technological growth becomes uncontrollable and irreversible, resulting in unforeseeable changes to human civilization</p>
+						</aside>
+					</section>
+					<section  data-background="black">
+						doesn't this miss the point of user stories?
+						<aside class="notes">
+							<p>User Stories foster empathy and facilitate solution-focused conversations about user needs.</p>
+							<p>Outsourcing this process to AI risks losing context and clarity in the ideas generated</p>
+							<p>Making it challenging to initiate and deliver agreed-upon tasks effectively.</p>
+						</aside>
+					</section>
+				</section>
+				<section data-state="openai" data-background-image="assets/robot-dance.png">
+					
+					<section data-state="focus-bg">
+						<h1 class="standout">Empathy</h1>
+						<aside class="notes">
+							When it comes to Empthy at least that's a quality we humans will always have over AI, right?
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/health-empathy.png">
+						<p>ChatGPT has better bedside manner than Physicians*</p>
+					</section>
+					<section data-auto-animate data-transition="slide">
+						<img src="assets/health-empathy.png">
+						<p>ChatGPT has better bedside manner than Physicians*</p>
+						<sub>*according to healthcare professionals</sub>
+					</section>
+					<section data-transition="slide-in">
+						<img src="assets/health-quality.png">
+						<p>ChatGPT has better quality too</p>
+					</section>
+					<section data-transition="fade-in" data-background="black">
+						<p>Uh oh</p>
+					</section>
+					
+				</section>
+				<section data-background-image="assets/robot-art.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Art</h1>
+						<aside class="notes">
+							As I said I'm an ametuer artist and now I use Midjourney to make my visions a reality.
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/example-wes1.jpeg" />
+						<aside class="notes">
+							Here's an image I created in December last year and unusually for me it did quite well
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/example-wes1.jpeg" width="80%" height="80%" />
+						<p>417,865 likes</p>
+						<aside class="notes">
+							Yes it went viral
+						</aside>
+					</section>
+					<section>
+						<img src="assets/press.png" />
+						<aside class="notes">
+							Turns out the directors of The Avengers found it and shared it on Instagram
+						</aside>
+	
+					</section>
+					<section data-state="blur-bg">
+						<img src="assets/avengers-combined.png" />
+						<aside class="notes">
+							It was very pleasent having 5 minutes of fame but it came with some unexpected consequences
+						</aside>
+					</section>
+					<section data-auto-animate>
+					    <img src="assets/anti-ai-art.jpg" width="80%" height="80%" />
+						<aside class="notes">
+							Turns out people really didn't like AI art - and I started recieving abuse.
+						</aside>
+					</section>
+                    <section data-auto-animate>
+                        <img src="assets/anti-ai-art.jpg" width="60%" height="60%" />
+                        <p>25 DECEMBER 2022</p>
+						<aside class="notes">
+							Even on christmas day
+						</aside>
+					</section>
+                    <section data-background="black">
+                        <img src="assets/ip-law-art.jpeg" width="80%" height="80%" />
+						<aside class="notes">
+							You'll hear this sentiment from around the internet. AI is polarising people's opinions
+						</aside>
+                    </section>
+				</section>
+				<section data-state="openai" data-background-image="assets/robot-terror.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Litigation</h1>
+						<aside class="notes">
+							On the subject of Litigation...
+						</aside>
+					</section>
+                    <section  data-auto-animate>
+						<p>Companies currently being sued for alleged breaches of IP law</p>
+					</section>
+                    <section  data-auto-animate>
+						<p>Companies currently being sued for alleged breaches of IP law</p>
+                        <ul>
+                            <li>Microsoft</li>
+                        </ul>
+					</section>
+                    <section  data-auto-animate>
+						<p>Companies currently being sued for alleged breaches of IP law</p>
+                        <ul>
+                            <li>Microsoft</li>
+                            <li>GitHub</li>
+                        </ul>
+					</section>
+                    <section  data-auto-animate>
+						<p>Companies currently being sued for alleged breaches of IP law</p>
+                        <ul>
+                            <li>Microsoft</li>
+                            <li>GitHub</li>
+                            <li>OpenAI</li>
+                        </ul>
+					</section>
+                    <section  data-auto-animate>
+						<p>Companies currently being sued for alleged breaches of IP law</p>
+                        <ul>
+                            <li>Microsoft</li>
+                            <li>GitHub</li>
+                            <li>OpenAI</li>
+                            <li>Midjourney</li>
+                        </ul>
+					</section>
+                    <section  data-auto-animate>
+						<p>Companies currently being sued for alleged breaches of IP law</p>
+                        <ul>
+                            <li>Microsoft</li>
+                            <li>GitHub</li>
+                            <li>OpenAI</li>
+                            <li>Midjourney</li>
+                            <li>StabiltyAI</li>
+                            
+                        </ul>
+					</section>
+                    <section  data-auto-animate>
+						<p>Companies currently being sued for alleged breaches of IP law</p>
+                        <ul>
+                            <li>Microsoft</li>
+                            <li>GitHub</li>
+                            <li>OpenAI</li>
+                            <li>Midjourney</li>
+                            <li>StabiltyAI</li>
+                            <li>Meta</li>
+                        </ul>
+					</section>
+					<section  data-auto-animate>
+						<p>Companies currently being sued for alleged breaches of IP law</p>
+                        <ul>
+                            <li>Microsoft</li>
+                            <li>GitHub</li>
+                            <li>OpenAI</li>
+                            <li>Midjourney</li>
+                            <li>StabiltyAI</li>
+                            <li>Meta</li>
+							<li>more...</li>
+							
+                        </ul>
+					</section>    
+					<section data-background="black">
+						<p>Lawyer used ChatGPT</p>
+						<img src="assets/lawyer.png" width="70%" height="70%" />
+						<aside class="notes">
+							In June of this year, 2 New York lawyers were fined after unwittingly submitting a legal brief containing fake case citations hallucinated by ChatGPT.
+						</aside>
+					</section>
+					
+                </section>
+                <section data-state="openai" data-background-image="assets/robot-laught.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Inequality</h1>
+					</section>
+                    <section data-auto-animate>
+                        <p>Anti-AI = Luddite</p>
+                        <img src="assets/luddite.jpg" width="45%" height="45%"  />
+						<aside class="notes">
+							began in Nottinghamshire in 1811, they tried to get rid of the new machinery that was causing unemployment among workers
+						</aside>
+                    </section>
+                   
+                    <section data-transition="slide-in">
+                        <img src="assets/industrial-revolution.jpg" width="80%" height="80%" />
+						<aside class="notes">
+							As indicated by Engles' Pause the industrial revolution brought 2 generations of inequality when wage growth stagnated despite GDP growth
+						</aside>
+                    </section>
+                    <section data-auto-animate>
+                        <p>What about now?</p>
+                    </section>
+                    <section data-auto-animate>
+                        <p>What about now?</p>
+                        <img src="assets/inequality.png" />
+						<aside class="notes">
+							Throughout the last few decades you will see innovations have made the rich richer (despite a couple of hiccups)
+						</aside>
+                    </section>
+                    <section data-background="black">
+                        <p>Why would AI be any different?</p>
+                    </section>
+				</section>
+                <section data-state="openai" data-background-image="assets/robot-sad.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Working Standards</h1>
+					</section>
+					<section>
+						<p><img src="assets/mechanical-turk-top.png"  /></p>
+						<aside class="notes">
+							This is a mechanical turk. It was an automiton that played chess in 1770. I'll come back to it in a moment.
+						</aside>
+                    </section>
+					<section>
+						<p>How is AI trained?</p>
+						<aside class="notes">
+							But first I'll ask the question - how is AI trained?
+						</aside>
+						
+                    </section>
+					
+					<section data-transition="slide-in"  data-auto-animate>
+                        <p>Data</p>
+						<aside class="notes">
+							
+							<p>We need lots of data so the AI can decide what the correct versionof it's output looks like</p>
+						</aside>
+                    </section>
+					<section data-transition="slide-in">
+                        <p>How is Data prepared?</p>
+                    </section>
+					<section  data-transition="slide-in" >
+						<p><img src="assets/machanical-turk-bottom.png"  /></p>
+						<p>People</p>
+						<aside class="notes">
+							<p>Just like the mechnical Turk, to function it needed a person controlling it.</p>
+							<p>With AI we need people to clean and classify the data and ensure that the outputs are high enough quality.</p>
+						</aside>
+                    </section>
+					<section data-transition="slide-in">
+						<p>How do we find the right people?</p>
+                    </section>
+					<section data-auto-animate>
+                        <p><img src="assets/mechanical-turk.jpg"  /></p>
+						<aside class="notes">
+							Amazon's "Mechanical Turk" service allows users to hire individuals worldwide for various tasks through a bidding system. 
+							This system incentivizes maximum work for minimal pay, often resulting in individuals from developing countries placing bids on these tasks in a race to the bottom of moral standards.
+						</aside>
+                    </section>
+                    <section data-auto-animate>
+					    <p><img src="assets/mechanical-turk.jpg" width="50%" height="50%" /></p>
+                        <ul>
+                            <li>No minimum wage</li>
+                        </ul>
+						<aside class="notes">
+							These employees are not protected by minimum wage laws
+						</aside>
+                    </section>
+                    <section data-auto-animate>
+					    <p><img src="assets/mechanical-turk.jpg" width="45%" height="45%" /></p>
+                        <ul>
+                            <li>No minimum wage</li>
+                            <li>No hour limit</li>
+                        </ul>
+						<aside class="notes">
+							No maximum working hours limit
+						</aside>
+                    </section>
+                    <section data-auto-animate>
+					    <p><img src="assets/mechanical-turk.jpg" width="40%" height="40%" /></p>
+                        <ul>
+                            <li>No minimum wage</li>
+                            <li>No hour limit</li>
+                            <li>No age limit</li>
+                        </ul>
+						<aside class="notes">
+							No age restrictions. It's a great system of exploitation.
+						</aside>
+                    </section>
+					<section data-transition="slide-in">
+						<p>Alternatively you can find someone who will do it for free</p>
+                        <p><img src="assets/captcha.png" /></p>
+                    </section>
+					
+                    <section data-background="black">
+                        <img src="assets/nvidia.jpg" width="60%" height="60%" >
+						<aside class="notes">
+							<p>In a race to the moral bedrock, you should ensure that you arn't the person left digging the hole.</p>
+							<p>This is why chip manufacterer NVida seems to be sitting on the moral high ground</p>
+						</aside>
+
+                    </section>
+                </section>
+
+				<section data-state="sterotypes" data-background-image="assets/robot-bully.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Bias</h1>
+					</section>
+					
+					<section>
+						<p><img src="assets/amazon-sad-robot.png" width="75%" height="75%"></p>
+						<p>Bias amplification</p>
+						<aside class="notes">
+							<p>In 2015, Amazon developed a recruitment tool designed to efficiently select top-tier job applicants from thousands, utilizing CV data. </p>
+							<p>This tool, trained with data from existing employees, inadvertently replicated organizational biases, with one model predicting candidate success based on gender.</p> 
+							<p>Fortunately, Amazon discontinued the tool prior to integration into their recruitment process, a step not guaranteed from companies with differing moral standards.</p>
+						</aside>
+					</section>
+
+					<section>
+						<p><img src="assets/politics.png"></p>
+						<aside class="notes">
+							<p>All these language models have their own political bias.</p>
+							<p>It's not intentional, but it emreges from their own specific training set.</p>
+							<p>We need to be aware of them and ensure that we don't perpetuate them.</p>
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<p>And the humans?</p>
+						<aside class="notes">
+							Humans are very suspectible to bias too. For example 
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<p>And the humans?</p>
+						<ul>
+							<li>Automation bias</li>
+						</ul>
+						<aside class="notes">
+							Humans can have a tendancy to trust automated outputs over other facts
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<p>And the humans?</p>
+						<ul>
+							<li>Automation bias</li>
+							<li>Sunk cost fallacy</li>
+							
+						</ul>
+						<aside class="notes">
+							We find it difficult to abandon a project once we've invested time and money into it. Interestingly even just a 4 word prompt that produces huge output humans find difficult to throw away.
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<p>And the humans?</p>
+						<ul>
+							<li>Automation bias</li>
+							<li>Sunk cost fallacy</li>
+							<li>Anchoring effect</li>
+						</ul>
+						<aside class="notes">
+							We grow accustomed to the first output of a prompt we agree with, even if it contains hallucinations.
+						</aside>
+					</section>
+				</section>
+				
+				<section data-state="sterotypes" data-background-image="assets/robot-happy.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Environment</h1>
+					</section>
+					<section data-auto-animate>
+						<p>Data Centers are twice as bad as Aviation</p>
+						<img src="assets/robot-garden.png" width="60%" height="60%" />
+						<aside class="notes">
+							<p>Data Centers account for 3.7% of all global greenhouse gas emissions.</p>
+							<p>Aviation accounts for 1.9%</p>
+						</aside>
+					</section>
+					
+					<section data-auto-animate>
+						<p>One prompt is 12x worse than one search</p>
+						<aside class="notes">
+							<p>To put this in perspective 1000 searches equates to driving a petrol car 1km.</p>
+							<p>It's predicted that every day humanity metaphorically drives around the earth 212 times just by doing google searches.</p>
+							<p>If we manage to do that many prompts daily it would be 2545 times around the earth.</p>
+						</aside>
+					</section>
+				</section>
+				<section data-state="upskilling" data-background-image="assets/celebrate2.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Misinformation</h1>
+					</section>
+
+					<section>
+						<gpt-input data-show-input="true" data-process-voice="jess">
+							<div slot="context" style="text-align: left; font-size: 1.4rem; display: none;">
+								<p>Summarise this succinctly : </p>
+								<h2>Why is it wrong to use AI?</h2>
+								<ul>
+									<li>Outsourcing humanity</li>
+									<li>Capability gap</li>
+									<li>Polarisation</li>
+									<li>Decimation of IP</li>
+									<li>More economic divide</li>
+									<li>Normalising unethical work standards</li>
+									<li>Normalising misinformation</li>
+									<li>Perpetuaing bias</li>
+									<li>Accelerating climate catastrophe</li>
+									<li>Encouraging a robot takeover</li>
+								</ul>	
+								<p>But when summerising please include as many puns as you can about </p>
+							</div>
+						</gpt-input>
+						<aside class="notes">
+							<p>Let me just put your pun idea in...</p>
+							<p>Now with the advent of generative AI tools we can make novel interfaces that allow us to deepfake our friends and co-workers.</p>
+							<p>After a 3 minute chat with Jess yesterday I was able to create a digital Jess who will now conclude my talk.</p>
+						</aside>
+					</section>
+					
+					
+					
+				</section>
+				<section data-state="conclusion" data-background-image="assets/robot-future.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Conclusion</h1>
+					</section>
+					
+					<section data-auto-animate data-state="blur-bg">
+						<h2>Why is it wrong to use AI?</h2>
+						<ul>
+							<li>Outsourcing humanity</li>
+							<li>Capability gap</li>
+							<li>Polarisation</li>
+							<li>Decimation of IP</li>
+							<li>More economic divide</li>
+							<li>Normalising unethical work standards</li>
+							<li>Normalising misinformation</li>
+							<li>Perpetuaing bias</li>
+							<li>Accelerating climate catastrophe</li>
+							<li>Encouraging a robot takeover</li>
+						</ul>
+					</section>		
+							
+					<section data-auto-animate data-state="blur-bg">
+						<h2>It's always a people problem</h2>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>It's always a people problem</h2>
+						<p>Until it's an AI problem</p>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>It's always a people problem</h2>
+						<p>Until it's an AI problem</p>
+						<p>And that's a <b>BIG</b> problem</p>
+					</section>
+				
+				
+					
+				</section>
+				<section data-state="links" data-background-image="assets/robot-admin.png">
+					<section data-auto-animate data-state="focus-bg">
+						<h1 class="standout">Links</h1>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<p><a href="https://ai.com">ChatGPT</a></p>
+						<p><a href="https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G">Amazon AI Recruitment</a></p>
+						<p><a href="https://beta.elevenlabs.io/">AI Voice Service</a></p>
+						<p><a href="https://midjourney.com/">AI Art Service</a></p>
+						<p><a href="https://snippet.finance/political-bias-in-llm-models/">Political Bias</a></p>
+						<p><a href="https://8billiontrees.com/carbon-offsets-credits/carbon-ecological-footprint-calculators/carbon-footprint-of-data-centers/">Carbon Cost of Data</a></p>
+						<p><a href="https://towardsdatascience.com/the-carbon-footprint-of-chatgpt-66932314627d">Carbon Cost of LLMs</a></p>
+						<p><a href="https://arxiv.org/abs/2303.10130">An Early Look at the Labor Market Impact</a></p>
+						<p><a href="https://www.nytimes.com/2023/06/08/nyregion/lawyer-chatgpt-sanctions.html">The lawyer who used ChatGPT</a></p>
+						<p>Me on <a href="https://linkedin.com/in/thedigiguru">LinkedIn</a>, <a href="https://twitter.com/thedigiguru">Twitter</a> and <a href="https://sigmoid.social/@digiguru">Mastadon</a></p>
+					</section>
+					<section data-state="blur-bg">
+						<h2>Or maybe I'm just bitter</h2>
+						<iframe data-src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:6935628727208837120" height="656" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="js/gpt-component.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			
+			
+			Reveal.initialize({
+				hash: true,
+				// Learn about plugins: https://revealjs.com/plugins/
+				//parallaxBackgroundImage: 'assets/adamhall.jpg', 
+				//parallaxBackgroundSize: "1578px 1578px",
+				//parallaxBackgroundHorizontal: 0,
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+
+			Reveal.on( 'slidechanged', event => {
+				const current = event.currentSlide;
+				const background = event.currentSlide.slideBackgroundContentElement.closest(".stack").querySelector(".slide-background-content")
+				console.log("SLIDE", event.currentSlide);
+				if(event.currentSlide.dataset.state == "focus-bg") {
+					//Reveal.dispatchEvent("focus-bg")
+					background.classList.add("focus");
+					background.classList.remove("blur");
+					
+				} else {// if(event.currentSlide.dataset.state == "blur-bg") {
+					background.classList.add("blur");
+					background.classList.remove("focus");
+					
+					//Reveal.dispatchEvent("blur-bg")
+				}
+				// event.previousSlide, event.currentSlide, event.indexh, event.indexv
+			} );
+
+		
+		
+			 
+		</script>
+	</body>
+</html>
