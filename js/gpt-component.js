@@ -16,6 +16,7 @@ Reveal.addEventListener( 'ready', function( event ) {
         const currentSlide = Reveal.getCurrentSlide();
         if(content) {
             newSlide = document.createElement( 'section' );
+            newSlide.que
             newSlide.classList.add( 'future' );
             newSlide.setAttribute('data-auto-animate','');
             newSlide.innerHTML = content;
@@ -146,15 +147,6 @@ setup();
 function define(template) {
     customElements.define("gpt-input",
         class extends HTMLElement {
-            $output;
-            $context;
-            $input;
-            $img;
-            $conversation;
-            $button;
-            $inputs;
-            $conversations;
-
             get showConversation() {
                 return this.getAttribute('data-show-conversation') === 'true';
             }
@@ -191,9 +183,22 @@ function define(template) {
                 this.$inputLabel = this.shadowRoot.querySelectorAll(".input-label");
                 this.$conversations = this.shadowRoot.querySelectorAll(".conversation");
                 this.$quickHides = this.shadowRoot.querySelectorAll(".quick-hide");
+                this.$history = this.shadowRoot.querySelector(".context-history");
+                this.$contextHasHistory = this.shadowRoot.querySelector(".context-has-history");
+                this.uniqueID = this.MakeUniqueID() + "_GPT";
+
+                //this.$quickHides.forEach(x => x.classList.add("hidden"));
             }
-            
-            sendGPT() {
+
+            MakeUniqueID() {
+                if(window.uniqueID) {
+                    return window.uniqueID++;
+                } else {
+                    window.uniqueID = 1;
+                    return window.uniqueID;
+                }
+            }
+            async sendGPT() {
                 
                 const contextValue = this.$context?.assignedNodes()[0].innerText;
                 const inputValue = this.$input.value;
@@ -206,10 +211,12 @@ function define(template) {
                 }
                 if (this.showImage) {
                     console.log("queryImage", {inputValue, img: this.$img});
-                    queryImage(inputValue, this.$img);
+                    let image = await queryImage(inputValue, this.$img);
+                    this.addHistory({title: inputValue, raw: image});
                 } else {
                     console.log("queryGPT", {contextValue, messages, inputValue, output: this.$output, processVoice: this.processVoice});
-                    queryGPT(contextValue, messages, inputValue, this.$output, this.processVoice);
+                    let output = await queryGPT(contextValue, messages, inputValue, this.$output, this.processVoice);
+                    this.addHistory({title: inputValue, raw: output});
                 }
             }
             toggleQuickHides() {
@@ -221,12 +228,50 @@ function define(template) {
                     this.$quickHides.forEach(x => x.classList.add("hidden"));
                 }
             }
+            getHistory() {
+                if(localStorage && localStorage.getItem(this.uniqueID)) {
+                    return JSON.parse(localStorage.getItem(this.uniqueID));
+                }
+                return [];
+            }
+            addHistory(rawData) {
+                let history = this.getHistory();
+                history.push(rawData);
+                if(localStorage) {
+                    localStorage.setItem(this.uniqueID, JSON.stringify(history));
+                }
+                this.renderHistory();
+            }
+            renderHistory() {
+                let history = this.getHistory();
+                if(history.length > 0) {
+                    this.$contextHasHistory.classList.remove("hidden");
+                    let list = document.createElement('ul');
+                    
+                    history.forEach((x, i) => {
+                        let li = document.createElement('li');
+                        li.setAttribute('data-raw', window.btoa(JSON.stringify(x.raw)));
+                        li.innerText = i + ". " + x.title.slice(0, 16);
+                        li.addEventListener('click', function() { 
+                            let raw = JSON.parse(window.atob(this.getAttribute('data-raw')));
+                            console.log("clicked", raw, this); 
+                            
+                        });
+                        list.appendChild(li);
+                    });
+                    this.$history.appendChild(list);
+                } else {
+                    this.$contextHasHistory.classList.add("hidden");
+                }
+            }
+
             //invoked each time the custom element is appended into a document-connected element
             connectedCallback() {
                 
                 if (this.showImage) {
                     this.$output.classList.add("hidden");
                 }
+                this.renderHistory();
                 
                 this.$button.addEventListener('click', this.sendGPT);
                 this.$contextLabel.addEventListener('click', this.toggleQuickHides);
