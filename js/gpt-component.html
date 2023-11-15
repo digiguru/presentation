@@ -60,6 +60,7 @@ font-size: 1rem;
 }
     </style>
     <div class="gpt-form">
+       
         <label class="context-label clickable">Context</label>
         <div class="quick-hide"><slot class="context" name="context">Example</slot></div>
         <label class="conversation quick-hide">Chat</label>
@@ -69,6 +70,9 @@ font-size: 1rem;
         <label class="quick-hide"></label><button class="quick-hide">go</button>
         <label class="quick-hide">Output</label>
         <textarea id="output" style="font-size: 1rem;" class="output"></textarea>
+        <label class="hidden context-has-history">History</label>
+        <ul class="context-history"></ul>
         <p><img src="" class="hidden" /></p>
+       
     </div>
 </template>
