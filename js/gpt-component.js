@@ -202,7 +202,9 @@ function define(template) {
                 this.$output.setAttribute('placeholder', "...loading...");
                 if(this.showConversation) {
                     var conversation = this.$conversation?.assignedNodes()[0];
-                    messages = [...conversation.children].map(x => x.innerText);
+                    if(conversation) {
+                        messages = [...conversation.children].map(x => x.innerText);
+                    }
                 }
                 if (this.showImage) {
                     console.log("queryImage", {inputValue, img: this.$img});
