@@ -267,7 +267,7 @@ function define(template) {
                         });
                         list.appendChild(li);
                     });
-                    this.$history.appendChild(list);
+                    this.$history.replaceChildren(...[list]);
                 } else {
                     this.$contextHasHistory.classList.add("hidden");
                 }
