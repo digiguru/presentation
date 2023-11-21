@@ -99,12 +99,7 @@ async function queryGPT (context, messages, input, output, processVoice) {
 		const outputData = data.output;
 		
 		console.log("TEXT:", outputData);
-		
-		if(output) {
-            output.value = outputData;
-            output.appendChild(document.createTextNode(outputData));
-            if(pushOutputToNextSlide) Reveal.add(output.cloneNode(true).outerHTML);
-        }
+		setOutput(output, outputData, pushOutputToNextSlide);
 		if(processVoice) {
             getAudio(outputData, processVoice, output);
         }
@@ -115,7 +110,13 @@ async function queryGPT (context, messages, input, output, processVoice) {
 		if(output) output.value = ex;
 	}
 }
-
+function setOutput(output, outputData, pushOutputToNextSlide) {
+    if(output) {
+        output.value = outputData;
+        output.appendChild(document.createTextNode(outputData));
+        if(pushOutputToNextSlide) Reveal.add(output.cloneNode(true).outerHTML);
+    }
+}
 
 async function getAudio(input, voice, output) {
 	//Create temp link to the audio element
@@ -147,6 +148,11 @@ setup();
 function define(template) {
     customElements.define("gpt-input",
         class extends HTMLElement {
+
+            get fallback() {
+                return this.getAttribute('data-fallback');
+            }
+
             get showConversation() {
                 return this.getAttribute('data-show-conversation') === 'true';
             }
@@ -247,14 +253,16 @@ function define(template) {
                 if(history.length > 0) {
                     this.$contextHasHistory.classList.remove("hidden");
                     let list = document.createElement('ul');
-                    
+                    let output = this.$output;
                     history.forEach((x, i) => {
                         let li = document.createElement('li');
-                        li.setAttribute('data-raw', window.btoa(JSON.stringify(x.raw)));
+                        li.setAttribute('data-raw', Base64.encode(JSON.stringify(x.raw)));
                         li.innerText = i + ". " + x.title.slice(0, 16);
                         li.addEventListener('click', function() { 
-                            let raw = JSON.parse(window.atob(this.getAttribute('data-raw')));
+
+                            let raw = JSON.parse(Base64.decode(this.getAttribute('data-raw')));
                             console.log("clicked", raw, this); 
+                            setOutput(output, raw.output, false);
                             
                         });
                         list.appendChild(li);
