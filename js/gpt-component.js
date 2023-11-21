@@ -191,14 +191,19 @@ function define(template) {
                 this.$quickHides = this.shadowRoot.querySelectorAll(".quick-hide");
                 this.$history = this.shadowRoot.querySelector(".context-history");
                 this.$contextHasHistory = this.shadowRoot.querySelector(".context-has-history");
-                this.uniqueID = this.MakeUniqueID() + "_GPT";
-
+               
+                
+                navigator.locks.request('unique_id', (lock) => {
+                    
+                    this.uniqueID = this.MakeUniqueID() + "_GPT";
+                    this.renderHistory();
+                });
                 //this.$quickHides.forEach(x => x.classList.add("hidden"));
             }
-
+            //function 
             MakeUniqueID() {
                 if(window.uniqueID) {
-                    return window.uniqueID++;
+                    return ++window.uniqueID;
                 } else {
                     window.uniqueID = 1;
                     return window.uniqueID;
@@ -277,6 +282,7 @@ function define(template) {
 
             //invoked each time the custom element is appended into a document-connected element
             connectedCallback() {
+                //this.uniqueID = this.MakeUniqueID() + "_GPT";
                 
                 if (this.showImage) {
                     this.$output.classList.add("hidden");
