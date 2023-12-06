@@ -1,0 +1,42 @@
+
+digraph RegulatoryToolsArchitecture {
+    rankdir=LR;
+    node [shape=box, style=filled, color=lightgrey];
+    edge [color=black, arrowhead=open];
+
+    MainWebsite [label="Main Website" shape=ellipse color=lightblue];
+    RegulatoryTools [label="Regulatory Tools Section"];
+    RiskLocatorTool [label="Risk Locator Tool"];
+    CrystalFrontEnd [label="Crystal Front-End"];
+    CrystalBackEnd [label="Crystal Back-End\n(Sitecore CMS)"];
+    StampDecisionTool [label="Stamp Decision Tool"];
+    ITSupport [label="IT Department Support" shape=ellipse color=orange];
+    UserProfile [label="User Profile Customization"];
+    InquiryHistory [label="Inquiry History & Reporting"];
+    TerritoryManuals [label="Territory Manuals and Authorization Info"];
+    WhatIsNewArchive [label="What's New Archive"];
+    ComplianceGuidance [label="Regulatory & Tax Compliance Guidance"];
+    HelpFAQs [label="Help Section & FAQs"];
+    
+    MainWebsite -> RegulatoryTools;
+    RegulatoryTools -> RiskLocatorTool;
+    RegulatoryTools -> CrystalFrontEnd;
+    RegulatoryTools -> StampDecisionTool;
+
+    RiskLocatorTool -> UserProfile;
+    RiskLocatorTool -> InquiryHistory;
+    InquiryHistory -> UserProfile [dir=none, constraint=false];
+    UserProfile -> RiskLocatorTool [dir=none, constraint=false];
+
+    CrystalFrontEnd -> TerritoryManuals;
+    CrystalFrontEnd -> WhatIsNewArchive;
+    CrystalFrontEnd -> HelpFAQs [dir=back];
+    CrystalFrontEnd -> ComplianceGuidance;
+    CrystalFrontEnd -> CrystalBackEnd [label=" Edits & Publishes", fontcolor=blue];
+    
+    CrystalBackEnd -> ITSupport [label=" Raises Tickets for Edits & Issues", fontcolor=red];
+
+    StampDecisionTool -> ITSupport [label=" Changes & Maintenance", fontcolor=red];
+
+    ComplianceGuidance -> RiskLocatorTool [label=" Informs", fontcolor=green, dir=back];
+}

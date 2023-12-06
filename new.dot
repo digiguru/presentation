@@ -1,0 +1,82 @@
+digraph InHouseRegulatoryToolsArchitecture {
+    rankdir=LR;
+    node [shape=box, style=filled, color=lightgrey];
+    edge [color=black, arrowhead=open];
+
+    Client [label="Client\n(Web Browser)" shape=ellipse color=lightblue];
+
+    WebApp [label="Web Application UI"];
+    APIGateway [label="API Gateway"];
+    
+    AuthService [label="Authentication Service"];
+    UserProfileService [label="User Profile Service"];
+    InquiryService [label="Inquiry Service"];
+    ReportService [label="Reporting Service"];
+    ContentService [label="Content Management Service"];
+    RuleEngine [label="Rule Engine"];
+    SearchEngine [label="Search Engine\n(Elasticsearch)"];
+
+    Database [label="Database"];
+    CMSDatabase [label="CMS Database"];
+    Logger [label="Logging Service"];
+    Monitor [label="Monitoring Service"];
+    Deployment [label="Deployment & Orchestration\n(Docker, Kubernetes)"];
+
+    AuthService -> Database;
+    UserProfileService -> Database;
+    InquiryService -> Database;
+    ReportService -> Database;
+    ContentService -> CMSDatabase;
+
+    APIGateway -> AuthService;
+    APIGateway -> UserProfileService;
+    APIGateway -> InquiryService;
+    APIGateway -> ReportService;
+    APIGateway -> ContentService;
+    APIGateway -> RuleEngine;
+    APIGateway -> SearchEngine;
+
+    Client -> WebApp;
+    WebApp -> APIGateway;
+
+    edge [color=blue, style=dotted];
+    Logger -> Monitor [label="Alerts & Metrics"];
+    WebApp -> Logger [label="Logs UI Activities"];
+    APIGateway -> Logger [label="Logs API Requests"];
+    
+    Deployment -> Monitor [label="Manages Services"];
+    Deployment -> { AuthService UserProfileService InquiryService ReportService ContentService RuleEngine SearchEngine Logger };
+    Monitor -> Deployment [label="Scaling & Health Checks"];
+
+    subgraph cluster_security {
+        label="Security & Compliance Layer";
+        AuthService;
+        edge [style=dashed];
+        AuthService -> UserProfileService [dir=both];
+        AuthService -> ContentService [dir=both];
+        AuthService -> InquiryService [dir=both];
+        AuthService -> ReportService [dir=both];
+    }
+
+    subgraph cluster_data_persistence {
+        label="Data Persistence Layer";
+        Database;
+        CMSDatabase;
+    }
+
+    subgraph cluster_services {
+        label="Internal Services";
+        UserProfileService;
+        InquiryService;
+        ReportService;
+        ContentService;
+        RuleEngine;
+    }
+
+    subgraph cluster_infrastructure {
+        label="Infrastructure & Operations";
+        Logger;
+        Monitor;
+        Deployment;
+    }
+}
