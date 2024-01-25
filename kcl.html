@@ -1106,12 +1106,10 @@ class Realtime {
 		this.data = {
 			'one': {
 				'labels': ['Red', 'Blue', 'Yellow', 'Green'],
-				'data':[0, 0, 0, 0],
 				'raw': {}
 			},
 			'two': {
 				'labels': ['Have use AI', 'Have not used AI'],
-				'data':[12, 3],
 				'raw': {}
 			},
 		};
@@ -1128,12 +1126,14 @@ class Realtime {
 	}
 	async hideChart() {
 		this.chart.destroy();
+		await this.channel.publish("show", "none");
 		await this.channel.unsubscribe();
 	}
 	async showChart(question, ctx) {
 		if(!this.channel) {
 			await this.start();
 		}
+		await this.channel.publish("show", question);
 		this.chart = new Chart(ctx, {
 			type: 'bar',
 			data: {
