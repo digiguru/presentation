@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Breaking into ChatGPT - AI for Product Practitioners - (Centrica - v4.2  - 24/06/2024)</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		
+	</head>
+	<body>
+		<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RZP8CG4KLJ"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.5/base64.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-RZP8CG4KLJ');
+</script>
+
+
+
+		<div class="reveal">
+			<div class="slides">
+
+				<section data-state="intro" data-background-image="assets/adamhall.jpg">
+					<section data-auto-animate data-state="focus-bg">
+						<h1 class="standout">Your Cheat Codes to JFDI</h1>
+					</section>
+					<section data-auto-animate>
+						<h1 class="standout">Your Cheat Codes to JFDI</h1>
+						<h2 class="standout">Adam Hall</h2>
+					</section>
+					<section data-auto-animate>
+						<h2 class="standout">Adam Hall</h2>
+						<p>AI Specialist</p>
+					</section>
+					
+					<section data-auto-animate>
+						<h2 class="standout">Adam Hall</h2>
+						<p><img src="assets/AND_logo.webp"></p>
+					</section>
+					<section data-auto-animate>
+						<h2 class="standout">Adam Hall</h2>
+						<p><img src="assets/AND_logo.webp"></p>
+						<p>Closing the world's digital skills gap</p>
+					</section>
+						
+					<section data-auto-animate>
+						<h2 class="standout">Adam Hall</h2>
+						<p><img src="assets/clients.png" width="40%" /></p>
+					</section>
+					
+					<section data-background="black">
+						<img src="assets/ai-not-replace.jpg" />
+					</section>
+
+				</section>
+				<section data-background-image="assets/robot-future2.png">
+					<section data-auto-animate data-state="focus-bg">
+						<h1 class="standout">Version 15</h1>
+					</section>
+					<section data-auto-animate>
+						<p>Since the talk's conception</p>
+						<p>the AI startup sector has risen 5x</p>
+					</section>
+					<section data-auto-animate>
+						<p>the AI startup sector has risen 5x</p>
+						<p>from 14,700 to 75,741 companies</p>
+						
+					</section>
+					<section data-auto-animate>
+						<p>the AI startup sector has risen 5x</p>
+						<p>from 14,700 to 75,741 companies</p>
+						<sub>Source: <a href="https://tracxn.com/d/sectors/artificial-intelligence/__cbMnXfS2GfFo4Vi2dxZyUy7l4O8WyzVYLseb9keW5cI/companies">Tracxn Technologies</a></sub>
+					</section>
+				
+					<section data-auto-animate>
+						<p>the AI startup sector has risen 5x</p>
+						<iframe id="myIframe" src="https://mad.firstmark.com/" width="1024" height="550"></iframe>
+					</section>
+					
+					<section data-auto-animate>
+						<p>the AI startup sector has risen 5x</p>
+						<p>first run in March 2023</p>
+					</section>
+					<section data-auto-animate>
+						<p>Example...</p>
+						<ul>
+							<li class="fragment fade-in-then-semi-out">Ex-OpenAI staff found Safe SuperIntelligence (SSI) Inc</li>
+							<li class="fragment fade-in-then-semi-out">Elon is make a huge AI data factory</li>
+							<li class="fragment fade-in-then-semi-out">Meta AI gets a refresh</li>
+							<li class="fragment fade-in-then-semi-out">Claude gets a refresh</li>
+						</ul>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/justin.avif" width="50%"  />
+						<aside class="notes">
+							<p>Justin Trudau at Davos in 2018</p>
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/justin.avif" width="50%" />
+						<p>Change is faster than ever</p>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/justin.avif" width="50%" />
+						<p>Change is faster than ever</p>
+						<p>but will never again be this slow</p>
+					</section>
+					<section data-auto-animate >
+						<h3 data-auto-animate-id="circle" style="position: absolute; 
+						height: 300px;
+						width: 300px;		
+						margin-left:-150px;
+						background-color: rgb(216, 32, 54);
+						color: white;
+						border-radius: 50%;
+						display: inline-block"></h3>
+						<p data-auto-animate-id="text" style="position:relative; top:80px;">
+							2,000,000
+							<br />
+							now
+							</p>
+						<aside class="notes">
+						CUMULATIVE UK VACANCIES THAT REQUIRE DIGITAL TECH SKILLS. From our own research in the UK Digital Skills Gap whitepaper from AND Digital.
+
+						</aside>
+					</section>
+					<section data-auto-animate >
+						<h3 data-auto-animate-id="circle"  style="position: absolute; height: 400px;
+						width: 400px;
+						margin-left:-200px;
+						background-color: rgb(216, 32, 54);
+						border-radius: 50%;
+						color: white;
+						display: inline-block"></h3>
+						<p data-auto-animate-id="text" style="position:relative; top:130px;">
+							5,000,000
+							<br />
+							3 years
+						</p>
+					</section>
+					<section data-auto-animate >
+						<h3 data-auto-animate-id="circle"  style="position: absolute; height: 400px;
+						width: 400px;
+						margin-left:-200px;
+						background-color: rgb(216, 32, 54);
+						border-radius: 50%;
+						color: white;
+						display: inline-block"></h3>
+						<p data-auto-animate-id="text" style="position:relative; top:130px;">
+							5,000,000
+							<br />
+							3 years
+						</p>
+						<p style="position:relative; top:300px;">Source: <a href="https://landing.and.digital/uk_digital_skills_gap">The Nature of the Digital Skills Gap</a></p>
+					</section>
+					<section data-auto-animate>
+						<div class="pie animate">58%<br />have never received 
+							<br />digital upskilling
+							<br />from their employer</div>
+					</section>
+
+					<section data-auto-animate data-background="black">
+						<h4 class="standout">Don't let technology race away</h4>
+					</section>
+				</section>
+
+				<section data-background-image="assets/robot-wannabe.png">
+					<section data-state="focus-bg">
+						<img class="white-border" src="assets/OpenAI_Logo.png" />
+						<i>11th June, 2020</i>
+						<aside class="notes">
+							On June 11, 2020, an AI research and deployment company OpenAI – founded by Elon Musk, Sam Altman, and others – announced its revolutionary language model, GPT-3. The news quickly created buzz in tech circles with demo videos of early GPT-3 prototypes going viral on Twitter, Reddit, and Hacker News.
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/openai.png" />
+						<img src="assets/Bloomberg-News.jpg" width="250" height="100" style="float: right;" />
+					</section>
+					<section data-auto-animate >
+						<p>I think therefor...</p>
+					</section>
+					<section data-auto-animate >
+						<p>I think therefor...</p>
+						<p>I am</p>
+					</section>
+					<section>
+						<iframe width="560" height="315" data-src="https://www.youtube.com/embed/Zm9B-DvwOgw" title="YouTube video player" 
+						frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+					</section>
+					<section data-background="black">
+						CAN. NOT. WAIT.
+					</section>
+			
+
+				
+
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption2.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption2.png">
+						<img src="assets/chat-gpt-adoption3.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption3.png">
+						<img src="assets/chat-gpt-adoption4.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption4.png">
+						<img src="assets/chat-gpt-adoption5.png">
+					</section>
+					<section data-auto-animate  data-background="black">
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption5.png">
+						<img src="assets/chat-gpt-adoption6.png">
+					</section>
+					<section data-state="blur-bg">
+						<gpt-input data-show-conversation="true" data-show-input="true">
+							<div slot="context" style="font-size: 1.6rem; text-align: left;">
+								<p>
+									You are working with a product team. I would like you to write a user story for each idea the team comes up with
+								</p>
+							</div>
+							<div slot="conversation" style="font-size: 1.6rem; text-align: left;">
+								<p>Wedding seating plan app</p>
+<pre>As a busy bride to be
+I want to create a seating plan for the wedding
+So everyone will know their place, and the day will be amazing</pre>
+																<i>New direct debit payment system on the app</i>
+<pre>As user on the app
+I want setup an automatic monthly payment system
+So I don't have to log in every month to pay manually</pre>
+								</div>
+							
+						</gpt-input>
+					</section>
+					<section  data-background="black">
+						doesn't this miss the point of user stories?
+						<aside class="notes">
+							Card
+							Conversation
+							Confirmation
+						</aside>
+					</section>
+				</section>
+				<section data-background-image="assets/robot-baby.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Right Tool, Right Job</h1>
+					</section>
+
+					<section data-auto-animate><p>Consider Bard</p></section>
+					<section data-auto-animate><p>Consider Bard</p>
+						<img src="assets/bard-map.png" width="70%" />
+					</section>
+		
+					<section data-auto-animate><p>Consider Bard</p>
+						<img src="assets/bard-email.png" />
+					</section>
+				
+					<section data-auto-animate>
+						<h1>Some suggestions</h1>
+						<div class="fragment">
+							<p><a href="https://v0.dev/">v0</a></p>
+							<p><a href="https://www.animaapp.com/">Anima</a></p>
+							<p><a href="https://www.locofy.ai/">Locofy</a></p>
+							<p><a href="https://www.uxpin.com/">UX Pin</a></p>
+							<p><a href="https://www.dhiwise.com/">DHI Wise</a></p>
+						</div>
+					</section>
+					<section data-auto-animate>
+						<p><a href="https://theresanaiforthat.com/user-interfaces/?sort=most-saved">There's an AI for that</a></p>
+					</section>
+					<section data-auto-animate>
+						<p><a href="https://theresanaiforthat.com/user-interfaces/?sort=most-saved">There's an AI for that</a></p>
+						<img src="assets/AI-for-that.png">
+					</section>
+					<section data-auto-animate>
+						<p>Assess your tools regularly</p>
+						<ul>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Legal</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="3">Ethics</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">Price</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="4">Interoperability</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="5">Documentation</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="6">Team Performance</li>
+						</ul>
+					</section>
+					<section>
+						<gpt-input data-show-input="true" data-process-voice="joker">
+							<div slot="context" style="text-align: left; font-size: 1.4rem">I want you to respond as if you are the joker. In just one short paragraph. Add in the noise of onomatopoeic laughter where relevant. Be as twisted and demented as possible tell me...</div>
+						</gpt-input>
+					</section>
+					<section data-background="black">
+						<p>Focus on the filters first</p>
+					</section>
+				</section>
+				
+				<section data-background-image="assets/robot-binoculars.png">
+					<section data-state="focus-bg">
+						<h2 class="standout">Productivity Experiment</h2>
+					</section>
+					<section data-auto-animate>
+						<h1>Context</h1>
+						<ul>
+							<li class="fragment fade-in-then-semi-out">Short time period</li>
+							<li class="fragment fade-in-then-semi-out">2 separate teams</li>
+							<li class="fragment fade-in-then-semi-out">Migrate Native mobile code to ReactNative</li>
+							<li class="fragment fade-in-then-semi-out">Existing Figma Library</li>
+						</ul>
+					</section>
+					<section data-auto-animate>
+						<h3 data-auto-animate-id="traditional-bar" style="position: absolute; 
+						height: 94px;
+						width: 250px;		
+						margin-left:-450px;
+						background-color: rgb(216, 32, 54);
+						color: white;
+						display: inline-block"></h3>
+						<p data-auto-animate-id="traditional-text" style="position:relative;margin-left:-660px;">Traditional</p>
+						<h3 data-auto-animate-id="genai-bar" style="position: absolute; 
+						height: 94px;
+						width: 250px;		
+						margin-left:-450px;
+						background-color: rgb(64, 88, 225);
+						color: white;
+						display: inline-block"></h3>
+						<p data-auto-animate-id="genai-text" style="position:relative;margin-left:-748px; margin-top: 42px;">Gen AI</p>
+				
+					</section>
+					<section data-auto-animate >
+						<h3 data-auto-animate-id="traditional-bar" style="position: absolute; 
+						height: 94px;
+						width: 875px;		
+						margin-left:-450px;
+						background-color: rgb(216, 32, 54);
+						color: white;
+						display: inline-block"></h3>
+						<p data-auto-animate-id="traditional-text" style="position:relative;margin-left:-660px;">Traditional</p>
+						<h3 data-auto-animate-id="genai-bar" style="position: absolute; 
+						height: 94px;
+						width: 750px;		
+						margin-left:-450px;
+						background-color: rgb(64, 88, 225);
+						color: white;
+						display: inline-block"></h3>
+						
+						<p data-auto-animate-id="genai-text" style="position:relative;margin-left:-748px; margin-top: 42px;">Gen AI</p>
+						<p data-auto-animate-id="genai-text-label" style="position:relative;margin-top:-78px; margin-left:748px;">15%</p>
+					</section>
+					
+					<section data-auto-animate >
+						<h3 data-auto-animate-id="traditional-bar" style="position: absolute; 
+						height: 94px;
+						width: 875px;		
+						margin-left:-450px;
+						background-color: rgba(0, 0, 0, 0);
+						color: white;
+						display: inline-block"></h3>
+						<h1 data-auto-animate-id="traditional-text" style="position:relative;margin-left:-660px;">Tips</h1>
+						<h3 data-auto-animate-id="genai-bar"  style="position: absolute; height: 500px;
+						width: 500px;
+						background-color: rgb(64, 88, 225);
+						border-radius: 50%;
+						margin-left: -250px;
+						margin-top: 50px;
+						color: white;
+						display: inline-block"></h3>
+						
+						<div style="position:relative; top:160px;">
+							<p class="fragment fade-in-then-semi-out">Learn the tools</p>
+							<p class="fragment fade-in-then-semi-out">Name your Figma layers</p>
+							<p class="fragment fade-in-then-semi-out">Work in small teams</p>
+							<p class="fragment fade-in-then-semi-out">Communicate</p>
+						</div>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p class="standout">Learn to use the tools by using the tools</p>
+					</section>
+				</section>
+				
+
+			
+				<section data-background-image="assets/robot-gp.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Empathy</h1>
+						<aside class="notes">
+							When it comes to Empathy at least that's a quality we humans will always have over AI, right?
+						</aside>
+					</section>
+					<section data-chart="four" data-auto-animate>
+						<p>Who is more empathetic, humans or AI?</p>
+						<canvas></canvas>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/health-empathy.png">
+						<p>ChatGPT has better bedside manner than Physicians*</p>
+					</section>
+					<section data-auto-animate data-transition="slide">
+						<img src="assets/health-empathy.png">
+						<p>ChatGPT has better bedside manner than Physicians*</p>
+						<sub>*according to health-care professionals</sub>
+					</section>
+					<section data-transition="slide-in">
+						<img src="assets/health-quality.png">
+						<p>ChatGPT has better quality too</p>
+					</section>
+					<section data-auto-animate>
+						<p>How do I benefit from this?</p>
+					</section>
+					<section data-auto-animate>
+						<p>How do I benefit from this?</p>
+						<p>Code reviews</p>
+					</section>
+
+					<section data-auto-animate>
+						<gpt-input data-show-conversation="true" data-show-input="false">
+							<div slot="context" style="font-size: 1.6rem; text-align: left;">
+								<p>
+									Rewrite this code review comment to be more constructive and friendly but still short manner Give me 5 options to chose from.
+								</p>
+							</div>
+							<div slot="conversation" style="font-size: 0.8rem; text-align: left;">
+								<p>Allowing people to create OAPHs for objects they don't own is dangerous! Hardcode it or find a less dumb solution.</p>
+							</div>
+						</gpt-input>
+					</section>
+					<section data-background="black">
+						Use AI to make you more human
+					</section>
+				</section>
+
+				<section data-background-image="assets/robot-sad.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Misinformation</h1>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/misinformation1.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/misinformation1.png">
+						<img src="assets/misinformation2.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/misinformation2.png">
+						<img src="assets/misinformation3.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/misinformation3.png">
+						<img src="assets/misinformation4.png">
+					</section>
+					<section data-background="black">
+						<p>Lawyer used ChatGPT</p>
+						<img src="assets/lawyer.png" width="50%" height="50%" />
+						<aside class="notes">
+							In June of this year, 2 New York lawyers were fined after unwittingly submitting a legal brief containing fake case citations hallucinated by ChatGPT.
+						</aside>
+						<p>Source: <a href="https://www.bbc.co.uk/news/world-us-canada-65735769">US lawyer admits using AI for case research</a></p>
+					</section>
+
+					<section data-background="black">
+						It's not a search engine
+					</section>
+				</section>
+				
+				
+				
+				
+				<section data-state="politics" data-background-image="assets/robot-tweed.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Bias</h1>
+					</section>
+					<section>
+						<p><img src="assets/politics.png"></p>
+						<aside class="notes">
+							<p>All these language models have their own political bias.</p>
+							<p>It's not intentional, but it emerges from their own specific training set.</p>
+							<p>We need to be aware of them and ensure that we don't perpetuate them.</p>
+						</aside>
+					</section>
+
+					
+					<section data-auto-animate>
+						<p>Don't assume neutrality</p>
+					</section>
+
+
+				
+					
+
+					<section data-auto-animate>
+						<p>And the humans?</p>
+						<ul>
+							<li class="fragment fade-in-then-semi-out">Automation bias</li>
+							<li class="fragment fade-in-then-semi-out">Sunk cost fallacy</li>
+							<li class="fragment fade-in-then-semi-out">Anchoring bias</li>
+							<li class="fragment fade-in-then-semi-out">Availability Heuristic</li>
+							<li class="fragment fade-in-then-semi-out">In-Group Bias</li>
+						</ul>
+						<aside class="notes">
+							<p>Humans are very susceptible to bias too. For example </p>
+							<p>Automation bias: Humans can have a tendency to trust automated outputs over other facts.</p>
+							<p>Sunk cost fallacy: We find it difficult to abandon a project once we've invested time and money into it. Interestingly even just a 4 word prompt that produces huge output humans find difficult to throw away..</p>
+							<p>Anchoring bias: We grow accustomed to the first output of a prompt we agree with, even if it contains hallucinations.</p>
+							<p>Availability Heuristic: Overestimating the likelihood of events that are easily recalled or readily available in memory. Example: A social media user assuming a particular viewpoint is widespread based on AI-curated content in their feed, ignoring the existence of diverse opinions.</p>
+							<p>In-Group Bias: Favoring individuals or information associated with one's own social group. - Example: Trusting AI implicitly because you are a white cis grown man who has a decent job, and generally approves of technological advances just like the people who made it</p>
+						</aside>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Know your biases</p>
+					</section>
+				
+				</section>
+				
+				<section data-state="conclusion" data-background-image="assets/robot-future.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Conclusion</h1>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li class="fragment fade-in-then-semi-out">Productivity</li>
+							<li class="fragment fade-in-then-semi-out">Learning new things</li>
+							<li class="fragment fade-in-then-semi-out">Minimum Viable Experiments</li>
+							<li class="fragment fade-in-then-semi-out">Exploring ideas</li>
+							<li class="fragment fade-in-then-semi-out">Improving the way you communicate</li>
+							<li class="fragment fade-in-then-semi-out">Becoming data driven</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+						<ul>
+							<li class="fragment fade-in-then-semi-out">Single source of Truth</li>
+							<li class="fragment fade-in-then-semi-out">Reliability</li>
+							<li class="fragment fade-in-then-semi-out">Complexity & Nuance</li>
+							<li class="fragment fade-in-then-semi-out">Amplification of bias</li>
+							<li class="fragment fade-in-then-semi-out">Unique thought</li>
+							<li class="fragment fade-in-then-semi-out">Specialist domain knowledge</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<div  style=" float: left; width: 75%; height: 75%">
+							<img src="assets/ginni.jpg" />
+						</div>
+					</section>
+					<section data-auto-animate>
+						<div style=" float: left; width: 30%; height: 30%">
+							<img src="assets/ginni.jpg" />
+							<p>Ginni Rometty</p>
+						</div>
+						<p>
+							Some people call this artificial intelligence, but the reality is this technology will enhance us. So instead of artificial intelligence, I think we'll augment our intelligence. 
+						</p>
+					</section>
+					<section data-state="blur-bg">
+						<img src="assets/ai-not-replace.jpg" />
+						<p>by mitch0zᵍᵐ</p>
+					</section>
+					
+					<section data-auto-animate data-background="black">
+						
+						<h1>Any questions?</h1>
+						
+					
+					</section>
+					
+					<section data-state="blur-bg">
+						<h2>One more thing</h2>
+						<iframe data-src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:6935628727208837120" height="656" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+					</section>
+					
+				</section>
+				<section data-state="links" data-background-image="assets/robot-admin.png">
+					<section data-auto-animate data-state="focus-bg">
+						<h1 class="standout">Links</h1>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<p><a href="https://ai.com">ChatGPT</a></p>
+						<p><a href="https://arxiv.org/abs/2303.10130">An Early Look at the Labor Market Impact</a></p>
+						<p>Me on <a href="https://linkedin.com/in/thedigiguru">LinkedIn</a>, <a href="https://twitter.com/thedigiguru">Twitter</a> and <a href="https://sigmoid.social/@digiguru">Mastadon</a></p>
+					</section>
+				</section>
+
+
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="js/gpt-component.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+
+
+
+
+
+			Reveal.initialize({
+				hash: true,
+				// Learn about plugins: https://revealjs.com/plugins/
+				//parallaxBackgroundImage: 'assets/adamhall.jpg', 
+				//parallaxBackgroundSize: "1578px 1578px",
+				//parallaxBackgroundHorizontal: 0,
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+
+				autoAnimateStyles: [
+					'opacity',
+					'color',
+					'background-color',
+					'padding',
+					'font-size',
+					'line-height',
+					'letter-spacing',
+					'border-width',
+					'border-color',
+					'border-radius',
+					'outline',
+					'outline-offset',
+					'grid-template-columns',
+					'width',
+					'height',
+					'transform',
+					'margin-top'
+				]
+			});
+
+			
+			Reveal.on( 'slidechanged', event => {
+				const current = event.currentSlide;
+				const background = event.currentSlide.slideBackgroundContentElement.closest(".stack").querySelector(".slide-background-content")
+				console.log("SLIDE", event.currentSlide);
+				if(event.currentSlide.dataset.state == "focus-bg") {
+					//Reveal.dispatchEvent("focus-bg")
+					background.classList.add("focus");
+					background.classList.remove("blur");
+					
+				} else {// if(event.currentSlide.dataset.state == "blur-bg") {
+					background.classList.add("blur");
+					background.classList.remove("focus");
+					
+					//Reveal.dispatchEvent("blur-bg")
+				}
+				
+				// event.previousSlide, event.currentSlide, event.indexh, event.indexv
+			} );
+
+		
+		
+			 
+		</script>
+	</body>
+
+<style>
+@property --p{
+syntax: '<number>';
+inherits: true;
+initial-value: 0;
+}
+
+.pie {
+--p:20;
+--b:22px;
+--c:darkred;
+--w:400px;
+
+width:var(--w);
+aspect-ratio:1;
+position:relative;
+display:inline-grid;
+margin:5px;
+place-content:center;
+font-size:25px;
+font-weight:bold;
+font-family:sans-serif;
+}
+.pie:before,
+.pie:after {
+content:"";
+position:absolute;
+border-radius:50%;
+}
+.pie:before {
+inset:0;
+background:
+radial-gradient(farthest-side,var(--c) 98%,#0000) top/var(--b) var(--b) no-repeat,
+conic-gradient(var(--c) calc(var(--p)*1%),#0000 0);
+-webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+}
+.pie:after {
+inset:calc(50% - var(--b)/2);
+background:var(--c);
+transform:rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
+}
+.present .animate {
+animation:pin 1s 0.5s both;
+}
+.future .animate, .past .animate {
+animation:pout 1s 0.5s both;
+}
+
+.no-round:before {
+background-size:0 0,auto;
+}
+.no-round:after {
+content:none;
+}
+@keyframes pin {
+from{--p:0}
+to{--p:58}
+}
+@keyframes pout {
+from{--p:58}
+to{--p:0}
+}
+body {
+font-family:sans-serif;
+}
+
+	</style>
+</html>
