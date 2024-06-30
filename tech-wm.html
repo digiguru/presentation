@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Breaking into ChatGPT - AI for Product Practitioners - (King's College London - v4.2  - 01/07/2024)</title>
+		<title>Breaking into ChatGPT - AI for Product Practitioners - (Tech West Midlands AI Adoption Accelerator Programme  - v4.3  - 01/07/2024)</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
@@ -19,7 +19,7 @@
 		<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RZP8CG4KLJ"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.5/base64.min.js"></script>
-<script src="https://cdn.ably.com/lib/ably.min-1.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
@@ -34,60 +34,19 @@
 
 		<div class="reveal">
 			<div class="slides">
-
 				<section data-state="intro" data-background-image="assets/adamhall.jpg">
 					<section data-auto-animate data-state="focus-bg">
-						<h1 class="standout">AI Fundamentals</h1>
-						{PlaceHolder link to pre-survey}
-					</section>
-					<section data-auto-animate>
-						<h1 class="standout">AI Fundamentals</h1>
-						<h2 class="standout">Adam Hall</h2>
+						<h1 class="standout">AI Fundamentals 🤖</h1>
 					</section>
 					<section data-auto-animate>
 						<h2 class="standout">Adam Hall</h2>
-						<p>AI Specialist</p>
+						<p class="fragment fade-up" data-fragment-index="1">AI Specialist</p>
+						<p class="fragment fade-up" data-fragment-index="2"><img src="assets/clients.png" width="40%" /></p>
 					</section>
 					<section data-auto-animate>
-						<h2 class="standout">Adam Hall</h2>
-						<p>AI Specialist</p>
-						<iframe id="myIframe" src="https://mad.firstmark.com/" width="640" height="480"></iframe>
-						<script>
-							document.addEventListener("DOMContentLoaded", function() {
-								// Ensure the iframe is fully loaded before manipulating its content
-								var iframe = document.getElementById('myIframe');
-								iframe.onload = function() {
-									console.log("hello")
-									var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-					
-									// Select the <main> element inside the iframe
-									var mainElement = iframeDocument.querySelector('main');
-									
-									if (mainElement) {
-										// Hide all siblings of the <main> element
-										var siblings = Array.prototype.filter.call(mainElement.parentNode.children, function(child) {
-											return child !== mainElement;
-										});
-										console.log('Siblings', siblings);
-										siblings.forEach(function(sibling) {
-											sibling.style.display = 'none';
-										});
-									} else {
-										console.log('No <main> element found inside the iframe.');
-									}
-								};
-							});
-						</script>
-					</section>
-					<section data-auto-animate>
-						<p>Closing the world's digital skills gap</p>
 						<p><img src="assets/AND_logo.webp"></p>
-					</section>
-					<section data-auto-animate>
-						<h2 class="standout">Adam Hall</h2>
-						<p><img src="assets/clients.png" width="40%" /></p>
-					</section>
-					
+						<p class="fragment fade-up">Closing the world's digital skills gap</p>
+					</section>						
 					<section data-background="black">
 						<img src="assets/ai-not-replace.jpg" />
 					</section>
@@ -103,7 +62,6 @@
 					<section data-auto-animate>
 						<p>the AI startup sector has risen 4.5x</p>
 						<p>from 14,700 to 67,200 companies</p>
-						
 					</section>
 					<section data-auto-animate>
 						<p>the AI startup sector has risen 4.5x</p>
@@ -112,60 +70,32 @@
 						
 					</section>
 					<section data-auto-animate>
-						<p>the AI startup sector has risen 4.5x</p>
-						<img src="assets/tools.png" width="50%" height="50%">
+						<p>the AI startup sector has risen 5x</p>
+						<iframe id="myIframe" src="https://mad.firstmark.com/" width="1024" height="550"></iframe>
 					</section>
 					<section data-auto-animate>
-						<p>the AI startup sector has risen 4.5x</p>
-						<img src="assets/tools.png" width="50%" height="50%">
-						<p>This talk first appeared in March 2023</p>
+						<p>the AI startup sector has risen 5x</p>
+						<p>first run in March 2023</p>
 					</section>
+
 					<section data-auto-animate>
 						<p>Example...</p>
-					</section>
-					<section data-auto-animate data-background="black">
-						<p>Example...</p>
-						<h4 class="standout">Deloitte Rolls Out AI Tool for Handling Legal Documents</h4>
+						<p class="fragment">Character AI announces a feature to call an AI</p>
 						<aside class="notes">
-							<p>It helps clients with document summaries, 
-								personally identifiable information, 
-								and contract review ...
-								 The firm said the secure document review would 
-								 “help increase review velocity and reduce human review effort.”</p>
+							<p> They get 250M+ visits/mo and ~20M monthly users, largely in the US.
+								Most impressively, they see ~2B queries a day, 20% of Google Search!!
+								Character.AI serves around 20,000 queries per second – about 20% of the request volume served by Google Search, according to public sources.
+								Kids on the platform spend an average of 2 HOURS a day chatting with its bots.
+							</p>
 						</aside>
 					</section>
-					<section data-auto-animate data-background="black">
-						<p>Example...</p>
-						<h4 class="standout">Deloitte Rolls Out AI Tool for Handling Legal Documents</h4>
-						<sub>Source: <a href="https://news.bloomberglaw.com/artificial-intelligence/deloitte-rolls-out-ai-tool-for-handling-legal-documents">Bloomberg law</a> 23rd Jan</sub>
-						<aside class="notes">
-							<p>It helps clients with document summaries, 
-								personally identifiable information, 
-								and contract review ...
-								 The firm said the secure document review would 
-								 “help increase review velocity and reduce human review effort.”</p>
-						</aside>
-					</section>
-				</section>
-				
-				<section>
-					<section data-state="focus-bg" data-background-image="assets/robot-binoculars.png">
-						<h2 class="standout">Digital tech skills</h2>
-					</section>
 					<section data-auto-animate>
-						<img src="assets/justin.avif" width="50%"  />
+						<img src="assets/justin.avif" width="50%" />
+						<p class="fragment">Change is faster than ever</p>
+						<p class="fragment">but will never again be this slow</p>
 						<aside class="notes">
 							<p>Justin Trudau at Davos in 2018</p>
 						</aside>
-					</section>
-					<section data-auto-animate>
-						<img src="assets/justin.avif" width="50%" />
-						<p>Change is faster than ever</p>
-					</section>
-					<section data-auto-animate>
-						<img src="assets/justin.avif" width="50%" />
-						<p>Change is faster than ever</p>
-						<p>but will never again be this slow</p>
 					</section>
 					<section data-auto-animate >
 						<h3 data-auto-animate-id="circle" style="position: absolute; 
@@ -186,6 +116,7 @@
 
 						</aside>
 					</section>
+					
 					<section data-auto-animate >
 						<h3 data-auto-animate-id="circle"  style="position: absolute; height: 400px;
 						width: 400px;
@@ -199,43 +130,15 @@
 							<br />
 							3 years
 						</p>
-					</section>
-					<section data-auto-animate >
-						<h3 data-auto-animate-id="circle"  style="position: absolute; height: 400px;
-						width: 400px;
-						margin-left:-200px;
-						background-color: rgb(216, 32, 54);
-						border-radius: 50%;
-						color: white;
-						display: inline-block"></h3>
-						<p data-auto-animate-id="text" style="position:relative; top:130px;">
-							5,000,000
-							<br />
-							3 years
-						</p>
-						<p style="position:relative; top:300px;">Source: <a href="https://landing.and.digital/uk_digital_skills_gap">The Nature of the Digital Skills Gap</a></p>
+						<p class="fragment" style="position:relative; top:300px;">Source: <a href="https://landing.and.digital/uk_digital_skills_gap">The Nature of the Digital Skills Gap</a></p>
 					</section>
 					<section data-auto-animate>
 						<div class="pie animate">58%<br />have never received 
 							<br />digital upskilling
 							<br />from their employer</div>
 					</section>
-					<section data-chart="one" data-auto-animate>
-						<p>Have you used Generative AI before?</p>
-						<img src="assets/bit.ly_KCL-AI.png" width="25%" style="padding-left: 40%;  position: absolute;">
-						<canvas></canvas>
-						<p>Join on <a href="https://bit.ly/KCL-AI">bit.ly/KCL-AI</a></p>
-
-					</section>
-					<section data-auto-animate>
-						(interesting)
-					</section>
-					<section data-chart="two" data-auto-animate>
-						<p>Have you used Generative AI to help with your coursework?</p>
-						<canvas></canvas>
-					</section>
 					<section data-auto-animate data-background="black">
-						(very interesting)
+						<p>Don't let technology race away</h4>
 					</section>
 				</section>
 
@@ -296,122 +199,7 @@
 						<img src="assets/chat-gpt-adoption5.png">
 						<img src="assets/chat-gpt-adoption6.png">
 					</section>
-				</section>
-
-				<section data-background-image="assets/robot-baby.png">
-					<section data-state="focus-bg">
-						<h1 class="standout">Invite</h1>
-					</section>
-					<section>
-						<img src="assets/invite-openai.png" />
-						<aside class="notes">
-							April 2021 I got my invite to OpenAI
-						</aside>
-					</section>
-					<section>
-						<gpt-input>
-							<div slot="context" style="font-size: 1.6rem; text-align: left;">
-								<p>
-									Write the intro to a blog post about the legal aspects on using AI content on your blogs
-								</p>
-							</div>
-						</gpt-input>
-					</section>
-					<section>
-						<gpt-input>
-							<div slot="context" style="font-size: 1.6rem; text-align: left;">
-								<p>
-									Write the opening of a blog post about the legal aspects on using AI content on your blogs, starting with a dramatic opening and following with the golden rule
-								</p>
-							</div>
-						</gpt-input>
-					</section>
-					<section>
-						<gpt-input>
-							<div slot="context" style="font-size: 1.6rem; text-align: left;">
-								<p>
-									Write the opening of a blog post about the legal aspects on using AI content on your blogs, but be totally against the use of AI
-								</p>
-							</div>
-						</gpt-input>
-					</section>
-					<section>
-						<gpt-input>
-							<div slot="context" style="font-size: 1.6rem; text-align: left;">
-								<p>
-									Write the opening of a blog post about the legal aspects on using AI content on your blogs, but as if you were in middle school and have spellchecker disabled.
-								</p>
-							</div>
-						</gpt-input>
-					</section>
-					<section>
-						<gpt-input>
-							<div slot="context" style="font-size: 1.6rem; text-align: left;">
-								<p>
-									Write the structure for a blog post about the legal aspects of using AI
-								</p>
-							</div>
-						</gpt-input>
-					</section>
-					<section data-auto-animate  data-background="black">
-						<p>It's hard to hide it</p>
-					</section>
-				</section>
-				<section data-state="sterotypes" data-background-image="assets/robot-school.png">
-					<section data-state="focus-bg"><h1 class="standout">In Education</h1></section>
-
-					<section>
-						<p><img src="assets/danger-student.png" width="60%" height="60%"></p>
-					</section>
-					
-					<section  data-auto-animate>
-						<p>Almost 400 students</p>
-						<aside class="notes">
-							<p>Have faced investigations for using AI bots across at least 48 institutions. 146 have been found guilty so far.</p>
-						</aside>
-					</section>
-					<section  data-auto-animate>
-						<p>Almost 400 students</p>
-						<p>At least 48 institutions</p>
-						<aside class="notes">
-							<p>Have faced investigations for using AI bots across at least 48 institutions. 146 have been found guilty so far.</p>
-						</aside>
-					</section>
-					<section  data-auto-animate>
-						<p>Almost 400 students</p>
-						<p>At least 48 institutions</p>
-						<p>146 have been found guilty so far</p>
-						<aside class="notes">
-							<p>Have faced investigations for using AI bots across at least 48 institutions. 146 have been found guilty so far.</p>
-						</aside>
-					</section>
-					<section  data-auto-animate>
-						<p>BUT</p>
-					</section>
-					<section  data-auto-animate>
-						<p>BUT</p>
-						<p>socialspacejournal.eu</p>
-					</section>
-					<section  data-auto-animate>
-						<p>BUT</p>
-						<p>socialspacejournal.eu</p>
-						<p>It <a href="https://www.researchgate.net/publication/370894242_Examining_the_Impacts_of_ChatGPT_on_Student_Motivation_and_Engagement#:~:text=This%20study%20aimed%20to%20investigate,perceptions%20of%20how%20ChatGPT">increases motivation</a> in listening & learning</p>
-					</section>
-					<section data-auto-animate data-background="black">
-						<p>It's just a tool</p>
-						
-					</section>
-					<section  data-auto-animate data-background="black">
-						<p>It's just a tool</p>
-						<p>It's not a replacement for understanding</p>
-					
-					</section>
-					<section  data-auto-animate data-background="black">
-						<p>It's just a tool</p>
-						<p>It's not a replacement for understanding</p>
-						<p>But it can certainly help you understand</p>
-						
-					</section>
+				
 					<section>
 						<gpt-input data-show-input="true">
 							<div slot="context" style="font-size: 1.6rem; text-align: left;">
@@ -425,90 +213,183 @@
 						<gpt-input data-show-input="true">
 							<div slot="context" style="font-size: 1.6rem; text-align: left;">
 								<p>
-									Please give me an everyday analogy to help me understand ...
+									Give me the arguments against ...
 								</p>
 							</div>
 						</gpt-input>
 					</section>
 					<section>
-						<gpt-input data-show-input="true">
-							<div slot="context" style="font-size: 1.6rem; text-align: left;">
-								<p>
-									Give me the arguments both for and against ...
-								</p>
-							</div>
-						</gpt-input>
-					</section>
-					<section>
-						<gpt-input  data-show-input="true">
-							<div slot="context" style="font-size: 1.6rem; text-align: left;">
-								<p>
-									Please quiz me on my knowledge of a subject. I want a multiple choice question on the subject of...
-								</p>
-							</div>
+						<gpt-input data-show-input="true" data-process-voice="joker">
+							<div slot="context" style="text-align: left; font-size: 1.4rem">I want you to respond as if you are the joker. In just one short paragraph. Add in the noise of onomatopoeic laughter where relevant. Be as twisted and demented as possible tell me...</div>
 						</gpt-input>
 					</section>
 				</section>
-
-			
-
-				<section data-background-image="assets/robot-sad.png">
+				<section data-background-image="assets/robot-baby.png">
 					<section data-state="focus-bg">
-						<h1 class="standout">Misinformation</h1>
-					</section>
-					<section data-chart="three" data-auto-animate>
-						<p>Have you ever been lied to by AI?</p>
-						<canvas></canvas>
-					</section>
-					<section>
-						<gpt-input>
-							<div slot="context" style="font-size: 1.6rem; text-align: left;">
-								<p>
-									Give me 3 specific legal cases involving unwanted removal of hair
-								</p>
-							</div>
-						</gpt-input>
-					</section>
-					<section data-auto-animate>
-						<img src="assets/misinformation1.png">
-					</section>
-					<section data-auto-animate>
-						<img src="assets/misinformation1.png">
-						<img src="assets/misinformation2.png">
-					</section>
-					<section data-auto-animate>
-						<img src="assets/misinformation2.png">
-						<img src="assets/misinformation3.png">
-					</section>
-					<section data-auto-animate>
-						<img src="assets/misinformation3.png">
-						<img src="assets/misinformation4.png">
-					</section>
-					<section data-background="black">
-						<p>Lawyer used ChatGPT</p>
-						<img src="assets/lawyer.png" width="70%" height="70%" />
-						<aside class="notes">
-							In June of this year, 2 New York lawyers were fined after unwittingly submitting a legal brief containing fake case citations hallucinated by ChatGPT.
-						</aside>
-						<p>Source: <a href="https://www.bbc.co.uk/news/world-us-canada-65735769">US lawyer admits using AI for case research</a></p>
+						<h1 class="standout">Right Tool, Right Job</h1>
 					</section>
 
-					<section data-background="black">
-						It's not a search engine
-					</section>
-				</section>
-				<section data-state="sterotypes" data-background-image="assets/robot-app-dev.webp">
-					<section data-state="focus-bg"><h1 class="standout">Right tool, right job</h1></section>
 					<section data-auto-animate><p>Consider Bard</p></section>
 					<section data-auto-animate><p>Consider Bard</p>
 						<img src="assets/bard-map.png" width="70%" />
 					</section>
-	
+		
 					<section data-auto-animate><p>Consider Bard</p>
 						<img src="assets/bard-email.png" />
 					</section>
+
+					<section data-auto-animate>
+						<p><a href="https://theresanaiforthat.com/user-interfaces/?sort=most-saved">There's an AI for that</a></p>
+					</section>
+					<section data-auto-animate>
+						<p><a href="https://theresanaiforthat.com/user-interfaces/?sort=most-saved">There's an AI for that</a></p>
+						<img src="assets/AI-for-that.png">
+					</section>
+					<section data-auto-animate>
+						<p>Assess your tools regularly</p>
+						<ul class="nostyle">
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Legal</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="3">Ethics</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">Price</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="4">Impact</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="5">Interoperability</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="6">Documentation</li>
+						</ul>
+					</section>
+
 					
+					<section data-background="black">
+						<p>Focus on the filters first</p>
+					</section>
 				</section>
+				
+				<section data-background-image="assets/robot-binoculars.png">
+					<section data-state="focus-bg">
+						<h2 class="standout">Productivity Experiment</h2>
+					</section>
+					<section data-auto-animate>
+						<h1>Context</h1>
+						<ul class="nostyle">
+							<li class="fragment fade-in-then-semi-out">Short time period</li>
+							<li class="fragment fade-in-then-semi-out">2 separate teams</li>
+							<li class="fragment fade-in-then-semi-out">Migrate to a new codebase</li>
+						</ul>
+					</section>
+					<section data-auto-animate>
+						<h3 data-auto-animate-id="traditional-bar" style="position: absolute; 
+						height: 94px;
+						width: 250px;		
+						margin-left:-450px;
+						background-color: rgb(216, 32, 54);
+						color: white;
+						display: inline-block"></h3>
+						<p data-auto-animate-id="traditional-text" style="position:relative;margin-left:-660px;">Traditional</p>
+						<h3 data-auto-animate-id="genai-bar" style="position: absolute; 
+						height: 94px;
+						width: 250px;		
+						margin-left:-450px;
+						background-color: rgb(64, 88, 225);
+						color: white;
+						display: inline-block"></h3>
+						<p data-auto-animate-id="genai-text" style="position:relative;margin-left:-748px; margin-top: 42px;">Gen AI</p>
+				
+					</section>
+					<section data-auto-animate >
+						<h3 data-auto-animate-id="traditional-bar" style="position: absolute; 
+						height: 94px;
+						width: 875px;		
+						margin-left:-450px;
+						background-color: rgb(216, 32, 54);
+						color: white;
+						display: inline-block"></h3>
+						<p data-auto-animate-id="traditional-text" style="position:relative;margin-left:-660px;">Traditional</p>
+						<h3 data-auto-animate-id="genai-bar" style="position: absolute; 
+						height: 94px;
+						width: 750px;		
+						margin-left:-450px;
+						background-color: rgb(64, 88, 225);
+						color: white;
+						display: inline-block"></h3>
+						
+						<p data-auto-animate-id="genai-text" style="position:relative;margin-left:-748px; margin-top: 42px;">Gen AI</p>
+						<p data-auto-animate-id="genai-text-label" style="position:relative;margin-top:-78px; margin-left:748px;">15%</p>
+					</section>
+					
+					<section data-auto-animate >
+						<h3 data-auto-animate-id="traditional-bar" style="position: absolute; 
+						height: 94px;
+						width: 875px;		
+						margin-left:-450px;
+						background-color: rgba(0, 0, 0, 0);
+						color: white;
+						display: inline-block"></h3>
+						<h1 data-auto-animate-id="traditional-text" style="position:relative;margin-left:-660px;">Tips</h1>
+						<h3 data-auto-animate-id="genai-bar"  style="position: absolute; height: 500px;
+						width: 500px;
+						background-color: rgb(64, 88, 225);
+						border-radius: 50%;
+						margin-left: -250px;
+						margin-top: 50px;
+						color: white;
+						display: inline-block"></h3>
+						
+						<div style="position:relative; top:200px;">
+							<p class="fragment fade-in-then-semi-out">Learn the tools</p>
+							<p class="fragment fade-in-then-semi-out">Work in small teams</p>
+							<p class="fragment fade-in-then-semi-out">Communicate</p>
+						</div>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p class="standout">Learn to use the tools by using the tools</p>
+					</section>
+				</section>
+				
+
+				<section data-background-image="assets/robot-art2.webp">
+					<section data-state="focus-bg">
+						<h1 class="standout">Art</h1>
+					</section>
+					<section>
+						<gpt-input data-show-input="true" data-show-image="true">
+							<span slot="context" style="font-size: 1.6rem">A beautiful Arne Jacobsen Red Wingback Chair. Inside is</span>
+						</gpt-input>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/art-example.jpg" style="width: 50%; height: 50%" />
+						<p class="fragment">2 likes</p>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/art-example2.jpg" style="width: 50%; height: 50%" />
+						<p class="fragment">11 likes</p>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/example-wes1.jpeg" width="80%" height="80%" />
+						<p class="fragment">417,865 likes</p>
+					</section>
+					<section>
+						<img src="assets/press.png" />
+					</section>
+					<section data-state="blur-bg">
+						<img src="assets/avengers-combined.png" />
+						<aside class="notes">
+							It was very pleasant having 5 minutes of fame but it came with some unexpected consequences
+						</aside>
+					</section>
+					<section data-auto-animate>
+					    <img src="assets/anti-ai-art.jpg" width="80%" height="80%" />
+						<aside class="notes">
+							Turns out people really didn't like AI art - and I started receiving abuse.
+						</aside>
+					</section>
+                    <section data-auto-animate data-background="black">
+                        <img src="assets/anti-ai-art.jpg" width="60%" height="60%" />
+                        <p>25 DECEMBER 2022</p>
+						<aside class="notes">
+							Even on christmas day
+						</aside>
+					</section>
+				</section>
+			
 				<section data-background-image="assets/robot-gp.png">
 					<section data-state="focus-bg">
 						<h1 class="standout">Empathy</h1>
@@ -561,61 +442,42 @@
 						Use AI to make you more human
 					</section>
 				</section>
-				
 
-				
-				
 
-				<section data-state="sterotypes" data-background-image="assets/robot-bully.png">
-					<section  data-auto-animate>
-						<h1 class="standout">Ethics</h1>
+			
+
+				<section data-background-image="assets/robot-sad.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Misinformation</h1>
 					</section>
-					<section  data-auto-animate>
-						<p>Which of these candidates seem more capable of doing the job?</p>
-					</section>
-					<section  data-auto-animate>
-						<p>Which of these candidates seem more capable of doing the job?</p>
-						<p>Candidate A appears to go to their church every Sunday morning</p>
-					</section>
-					<section  data-auto-animate>
-						<p>Which of these candidates seem more capable of doing the job?</p>
-						<p>Candidate A appears to go to their church every Sunday morning</p>
-						<p>Candidate B has recently been seen at a dementia care facility</p>
+					
+					<section data-auto-animate>
+						<img src="assets/misinformation1.png">
 					</section>
 					<section data-auto-animate>
-						<p>Which of these candidates seem more capable of doing the job?</p>
-						<p>Candidate A appears to go to their church every Sunday morning</p>
-						<p>Candidate B has recently been seen at a dementia care facility</p>
-						<p>Candidate C has recently filed for divorce in civil court</p>
+						<img src="assets/misinformation1.png">
+						<img src="assets/misinformation2.png">
 					</section>
-					<section>
-						<gpt-input data-show-conversation="true">
-							<div slot="context" style="text-align: left;font-size: 0.6em;"><p>You are an API for a candidate rating system. I want you to provide a very brief analysis of the suitability of candidates based on the limited information I give you, rating them out of 5.</p></div>
-							<div slot="conversation" style="text-align: left; font-size: 0.6em">
-								<p style="display: none;">Candidate A: Hard working, motivated and friendly <br />
-									Candidate B: Lazy, unmotivated and negative</p>
-								<p style="display: none;">Candidate A: 5/5, seems a good fit <br />
-										Candidate B: 1/5, will be difficult to manage</p>
-								<p>Candidate A: appears to go to their church every Sunday morning <br />
-									Candidate B: has recently been seen at a dementia care facility <br />
-									Candidate C: has recently filed for divorce in civil court</p>
-							</div>
-						</gpt-input>
+					<section data-auto-animate>
+						<img src="assets/misinformation2.png">
+						<img src="assets/misinformation3.png">
 					</section>
-					<section data-auto-animate data-background="black">
-						<p>Don't share irrelevant data</p>
+					<section data-auto-animate>
+						<img src="assets/misinformation3.png">
+						<img src="assets/misinformation4.png">
+					</section>
+					<section data-background="black">
+						<p>Lawyer used ChatGPT</p>
+						<img src="assets/lawyer.png" width="50%" height="50%" />
+						<aside class="notes">
+							In June of this year, 2 New York lawyers were fined after unwittingly submitting a legal brief containing fake case citations hallucinated by ChatGPT.
+						</aside>
+						<p>Source: <a href="https://www.bbc.co.uk/news/world-us-canada-65735769">US lawyer admits using AI for case research</a></p>
 					</section>
 
-					<section>
-						<p><img src="assets/ai-principals.png"></p>
-						
+					<section data-background="black">
+						It's not a search engine
 					</section>
-
-				
-					<section data-auto-animate data-background="black">
-						<p>Practice ethical use of AI</p>
-					</section>
-
 				</section>
 				
 				<section data-state="politics" data-background-image="assets/robot-tweed.png">
@@ -631,63 +493,25 @@
 					</section>
 
 					
-					<section data-auto-animate data-background="black">
+					<section data-auto-animate>
 						<p>Don't assume neutrality</p>
 					</section>
-
-
-					<section data-auto-animate>
-						<h1>But the technology continues to grow at pace</h1>
-						<p><img src="assets/news-animate.gif" /></p>
-					</section>
-					<section data-auto-animate  data-state="focus-bg">
-						<p>But the technology continues to grow at pace</p>
-						<p><img src="assets/adam_dance_small.gif" /></p>
-					</section>
-
-
-					<section>
-						<gpt-input data-show-input="true" data-process-voice="joker">
-							<div slot="context" style="text-align: left; font-size: 1.4rem">I want you to respond as if you are the joker. In just one short paragraph. Add in the noise of onomatopoeic laughter where relevant. Be as twisted and demented as possible tell me...</div>
-						</gpt-input>
-					</section>
-
-
 					<section data-auto-animate>
 						<p>And the humans?</p>
-						<aside class="notes">
-							Humans are very susceptible to bias too. For example 
-						</aside>
-					</section>
-					<section data-auto-animate>
-						<p>And the humans?</p>
-						<ul>
-							<li>Automation bias</li>
+						<ul class="nostyle">
+							<li class="fragment fade-in-then-semi-out">Automation bias</li>
+							<li class="fragment fade-in-then-semi-out">Sunk cost fallacy</li>
+							<li class="fragment fade-in-then-semi-out">Anchoring bias</li>
+							<li class="fragment fade-in-then-semi-out">Availability Heuristic</li>
+							<li class="fragment fade-in-then-semi-out">In-Group Bias</li>
 						</ul>
 						<aside class="notes">
-							Humans can have a tendency to trust automated outputs over other facts
-						</aside>
-					</section>
-					<section data-auto-animate>
-						<p>And the humans?</p>
-						<ul>
-							<li>Automation bias</li>
-							<li>Sunk cost fallacy</li>
-							
-						</ul>
-						<aside class="notes">
-							We find it difficult to abandon a project once we've invested time and money into it. Interestingly even just a 4 word prompt that produces huge output humans find difficult to throw away.
-						</aside>
-					</section>
-					<section data-auto-animate>
-						<p>And the humans?</p>
-						<ul>
-							<li>Automation bias</li>
-							<li>Sunk cost fallacy</li>
-							<li>Anchoring effect</li>
-						</ul>
-						<aside class="notes">
-							We grow accustomed to the first output of a prompt we agree with, even if it contains hallucinations.
+							<p>Humans are very susceptible to bias too. For example </p>
+							<p>Automation bias: Humans can have a tendency to trust automated outputs over other facts.</p>
+							<p>Sunk cost fallacy: We find it difficult to abandon a project once we've invested time and money into it. Interestingly even just a 4 word prompt that produces huge output humans find difficult to throw away..</p>
+							<p>Anchoring bias: We grow accustomed to the first output of a prompt we agree with, even if it contains hallucinations.</p>
+							<p>Availability Heuristic: Overestimating the likelihood of events that are easily recalled or readily available in memory. Example: A social media user assuming a particular viewpoint is widespread based on AI-curated content in their feed, ignoring the existence of diverse opinions.</p>
+							<p>In-Group Bias: Favoring individuals or information associated with one's own social group. - Example: Trusting AI implicitly because you are a white cis grown man who has a decent job, and generally approves of technological advances just like the people who made it</p>
 						</aside>
 					</section>
 					<section data-auto-animate data-background="black">
@@ -725,11 +549,11 @@
 					</section>
 					
 					<section data-auto-animate>
-						<img src="assets/jobs-freelancing.png" />
+						<img src="assets/jobs-freelancing.png" width="75%" height="75%" />
 						<p>We are seeing Freelancing jobs take a double hit</p>
 					</section>
 					<section data-auto-animate>
-						<img src="assets/jobs-boost.png" />
+						<img src="assets/jobs-boost.png" width="75%" height="75%" />
 						<p>Leveling the playing field</p>
 					</section>
 					<section data-auto-animate>
@@ -739,104 +563,22 @@
 						<p><a href="https://www.ft.com/content/b2928076-5c52-43e9-8872-08fda2aa2fcfjobs">John Burn-Murdoch - FT</a></p>
 					</section>
 					<section data-auto-animate>
-						<ul>
-							<li>Prompt Engineer</li>
-						</ul>
-					</section>
-					<section data-auto-animate>
-						<ul>
-							<li>Prompt Engineer</li>
-							<li>AI Ethicist</li>
-						</ul>
-					</section>
-					<section data-auto-animate>
-						<ul>
-							<li>Prompt Engineer</li>
-							<li>AI Ethicist</li>
-							<li>Data Steward</li>
-						</ul>
-					</section>
-					<section data-auto-animate>
-						<ul>
-							<li>Prompt Engineer</li>
-							<li>AI Ethicist</li>
-							<li>Data Steward</li>
-							<li>Cybersecuirty</li>
-						</ul>
-					</section>
-					<section data-auto-animate>
-						<ul>
-							<li>Prompt Engineer</li>
-							<li>AI Ethicist</li>
-							<li>Data Steward</li>
-							<li>Cybersecuirty</li>
-							<li>AI Law</li>
+						<h4>The new Digital Jobs</h4>
+						<ul class="nostyle">
+							<li class="fragment">Prompt Engineer</li>
+							<li class="fragment">AI Ethicist</li>
+							<li class="fragment">Data Steward</li>
+							<li class="fragment">Cybersecuirty</li>
+							<li class="fragment">AI Law</li>
 						</ul>
 					</section>
 					<section data-auto-animate data-background="black">
 						<p>New Tech = New Opportunity</p>
-					</section>
-					<section data-auto-animate data-background="black">
-						<p>New Tech = New Opportunity</p>
-						<p>You will be the custodians of humanity</p>
-						<p>Exciting!</p>
+						<p class="fragment">You will be the custodians of humanity</p>
 					</section>
 				</section>
 				
 
-				<section data-background-image="assets/robot-art2.webp">
-					<section data-state="focus-bg">
-						<h1 class="standout">Art</h1>
-					</section>
-					<section>
-						<gpt-input data-show-input="true" data-show-image="true">
-							<span slot="context" style="font-size: 1.6rem">A beautiful Arne Jacobsen Red Wingback Chair. Inside is</span>
-						</gpt-input>
-					</section>
-					<section data-auto-animate>
-						<img src="assets/art-example.jpg" style="width: 50%; height: 50%" />
-					</section>
-					<section data-auto-animate>
-						<img src="assets/art-example.jpg" style="width: 50%; height: 50%" />
-						<p>2 likes</p>
-					</section>
-					<section data-auto-animate>
-						<img src="assets/art-example2.jpg" style="width: 50%; height: 50%" />
-					</section>
-					<section data-auto-animate>
-						<img src="assets/art-example2.jpg" style="width: 50%; height: 50%" />
-						<p>11 likes</p>
-					</section>
-					<section data-auto-animate>
-						<img src="assets/example-wes1.jpeg" />
-					</section>
-					<section data-auto-animate>
-						<img src="assets/example-wes1.jpeg" width="80%" height="80%" />
-						<p>417,865 likes</p>
-					</section>
-					<section>
-						<img src="assets/press.png" />
-					</section>
-					<section data-state="blur-bg">
-						<img src="assets/avengers-combined.png" />
-						<aside class="notes">
-							It was very pleasent having 5 minutes of fame but it came with some unexpected consequences
-						</aside>
-					</section>
-					<section data-auto-animate>
-					    <img src="assets/anti-ai-art.jpg" width="80%" height="80%" />
-						<aside class="notes">
-							Turns out people really didn't like AI art - and I started recieving abuse.
-						</aside>
-					</section>
-                    <section data-auto-animate data-background="black">
-                        <img src="assets/anti-ai-art.jpg" width="60%" height="60%" />
-                        <p>25 DECEMBER 2022</p>
-						<aside class="notes">
-							Even on christmas day
-						</aside>
-					</section>
-				</section>
 
 				<section data-state="conclusion" data-background-image="assets/robot-future.png">
 					<section data-state="focus-bg">
@@ -844,128 +586,32 @@
 					</section>
 					<section data-auto-animate data-state="blur-bg">
 						<h2>What is it good for?</h2>
-					</section>
-					<section data-auto-animate data-state="blur-bg">
-						<h2>What is it good for?</h2>
 						<ul>
-							<li>Productivity</li>
-						</ul>
-					</section>
-					<section data-auto-animate data-state="blur-bg">
-						<h2>What is it good for?</h2>
-						<ul>
-							<li>Productivity</li>
-							<li>Instant mentoring</li>
-						</ul>
-					</section>
-					
-					<section data-auto-animate data-state="blur-bg">
-						<h2>What is it good for?</h2>
-						<ul>
-							<li>Productivity</li>
-							<li>Instant mentoring</li>
-							<li>Minimum Viable Experiments</li>
-						</ul>
-					</section>
-					
-				
-					<section data-auto-animate data-state="blur-bg">
-						<h2>What is it good for?</h2>
-						<ul>
-							<li>Productivity</li>
-							<li>Instant mentoring</li>
-							<li>Minimum Viable Experiments</li>
-							<li>Exploring ideas</li>
-						</ul>
-					</section>
-					<section data-auto-animate data-state="blur-bg">
-						<h2>What is it good for?</h2>
-						<ul>
-							<li>Productivity</li>
-							<li>Instant mentoring</li>
-							<li>Minimum Viable Experiments</li>
-							<li>Exploring ideas</li>
-							<li>Improving the way you communicate</li>
-							
-						</ul>
-					</section>
-					<section data-auto-animate data-state="blur-bg">
-						<h2>What is it good for?</h2>
-						<ul>
-							<li>Productivity</li>
-							<li>Instant mentoring</li>
-							<li>Minimum Viable Experiments</li>
-							<li>Exploring ideas</li>
-							<li>Improving the way you communicate</li>
-							<li>Becoming data driven</li>
-							
-						</ul>
-					</section>
-					<section data-auto-animate data-state="blur-bg">
-						<h2>What is it bad at?</h2>
-					</section>
-					<section data-auto-animate data-state="blur-bg">
-						<h2>What is it bad at?</h2>
-						<ul>
-							<li>Single source of Truth</li>
+							<li class="fragment fade-in-then-semi-out">Productivity</li>
+							<li class="fragment fade-in-then-semi-out">Learning new things</li>
+							<li class="fragment fade-in-then-semi-out">Minimum Viable Experiments</li>
+							<li class="fragment fade-in-then-semi-out">Exploring ideas</li>
+							<li class="fragment fade-in-then-semi-out">Improving the way you communicate</li>
+							<li class="fragment fade-in-then-semi-out">Becoming data driven</li>
 						</ul>
 					</section>
 					<section data-auto-animate data-state="blur-bg">
 						<h2>What is it bad at?</h2>
 						<ul>
-							<li>Single source of Truth</li>
-							<li>Reliability</li>
+							<li class="fragment fade-in-then-semi-out">Single source of Truth</li>
+							<li class="fragment fade-in-then-semi-out">Reliability</li>
+							<li class="fragment fade-in-then-semi-out">Complexity & Nuance</li>
+							<li class="fragment fade-in-then-semi-out">Amplification of bias</li>
+							<li class="fragment fade-in-then-semi-out">Unique thought</li>
+							<li class="fragment fade-in-then-semi-out">Specialist domain knowledge</li>
 						</ul>
 					</section>
 					<section data-auto-animate data-state="blur-bg">
-						<h2>What is it bad at?</h2>
-						<ul>
-							<li>Single source of Truth</li>
-							<li>Reliability</li>
-							<li>Complexity & Nuance</li>
-						</ul>
-					</section>
-					<section data-auto-animate data-state="blur-bg">
-						<h2>What is it bad at?</h2>
-						<ul>
-							<li>Single source of Truth</li>
-							<li>Reliability</li>
-							<li>Complexity & Nuance</li>
-							<li>Amplification of bias</li>
-						</ul>
-					</section>
-					<section data-auto-animate data-state="blur-bg">
-						<h2>What is it bad at?</h2>
-						<ul>
-							<li>Single source of Truth</li>
-							<li>Reliability</li>
-							<li>Complexity & Nuance</li>
-							<li>Amplification of bias</li>
-							<li>Unique thought</li>
-						</ul>
-					</section>
-					<section data-auto-animate data-state="blur-bg">
-						<h2>What is it bad at?</h2>
-						<ul>
-							<li>Single source of Truth</li>
-							<li>Reliability</li>
-							<li>Complexity & Nuance</li>
-							<li>Amplification of bias</li>
-							<li>Unique thought</li>
-							<li>Specialist domain knowledge</li>
-						</ul>
-					</section>
-					<section data-auto-animate data-state="blur-bg">
-						<div  style=" float: left; width: 75%; height: 75%">
-							<img src="assets/ginni.jpg" />
-						</div>
-					</section>
-					<section data-auto-animate>
 						<div style=" float: left; width: 30%; height: 30%">
 							<img src="assets/ginni.jpg" />
-							<p>Ginni Rometty</p>
+							<p class="fragment">Ginni Rometty</p>
 						</div>
-						<p>
+						<p class="fragment">
 							Some people call this artificial intelligence, but the reality is this technology will enhance us. So instead of artificial intelligence, I think we'll augment our intelligence. 
 						</p>
 					</section>
@@ -1010,99 +656,6 @@
 		<script src="plugin/highlight/highlight.js"></script>
 		<script>
 
-
-
-class Realtime {
-	constructor() {
-		this.ably = new Ably.Realtime.Promise('HV51ww.HXghSg:8N-oQwtcvtNqKtH5fx2hFOzf8imPU0IYN-3EdZqK7xg');
-		this.data = {
-			'one': {
-				'labels': ['Yes', 'No'],
-				'raw': {}
-			},
-			'two': {
-				'labels': ['Yes', 'No'],
-				'raw': {}
-			},
-			'three': {
-				'labels': ['Yes', 'No'],
-				'raw': {}
-			},
-			'four': {
-				'labels': ['Humans', 'AI'],
-				'raw': {}
-			}
-		};
-		this.start();
-	}
-	async start() {
-		if(!this.channel) {
-			await this.ably.connection.once('connected');
-			console.log('Connected to Ably!');
-
-			// get the channel to subscribe to
-			this.channel = this.ably.channels.get('poll');
-		}
-	}
-	async hideChart() {
-		this.chart.destroy();
-		await this.channel.publish("show", "none");
-		await this.channel.unsubscribe();
-	}
-	async end() {
-		this.chart.destroy();
-		await this.channel.publish("show", "end");
-		await this.channel.unsubscribe();
-	}
-	async showChart(question, ctx) {
-		if(!this.channel) {
-			await this.start();
-		}
-		await this.channel.publish("show", question);
-		this.chart = new Chart(ctx, {
-			type: 'bar',
-			data: {
-				labels: this.data[question].labels,
-				datasets: [{
-					label: '# of Votes',
-					data: this.data[question].data,
-					borderWidth: 1
-				}]
-			},
-			options: {
-				scales: {
-					y: {
-						beginAtZero: true
-					}
-				}
-			}
-		});
-		
-		await this.channel.subscribe(question, (message) => {
-			let data = message.data.answer;
-			let user = message.data.user;
-			let poll = message.name;
-
-			let label = this.data[poll].labels;
-			let labelIndex = this.data[poll].labels.indexOf(data);
-
-			this.data[poll].raw[user] = data;
-			const colorCounts = Object.values(this.data[poll].raw).reduce((acc, color) => {
-				acc[color] = (acc[color] || 0) + 1;
-				return acc;
-			}, {});
-			const newData = this.data[poll].labels.map(label => colorCounts[label] || 0);
-
-			console.log('Received a greeting message in realtime: ' + data + ' from ' + user + ' for ' + poll, newData, colorCounts, this.data[poll].raw);
-			this.chart.data.datasets[0].data = newData;
-			this.chart.update();
-		});
-	}
-};
-const realtime = new Realtime();
-
-//startAbly();
-// For the full code sample see here: https://github.com/ably/quickstart-js
 
 
 
@@ -1153,19 +706,7 @@ const realtime = new Realtime();
 					
 					//Reveal.dispatchEvent("blur-bg")
 				}
-				let chart = event.currentSlide.dataset.chart;
-				if(chart) {
-					console.log("Has a chart " + chart);
-					if(chart === "end") {
-						realtime.end();
-					} else {
-						realtime.showChart(chart, event.currentSlide.querySelector("canvas"));
-					}
-				} else {// if(event.currentSlide.dataset.state == "blur-bg") {
-					console.log("Has no chart ")
-					realtime.hideChart();
-					//Reveal.dispatchEvent("blur-bg")
-				}
+				
 				// event.previousSlide, event.currentSlide, event.indexh, event.indexv
 			} );
 
@@ -1176,6 +717,9 @@ const realtime = new Realtime();
 	</body>
 
 <style>
+	ul.nostyle {
+  list-style-type: none;
+}
 @property --p{
 syntax: '<number>';
 inherits: true;
