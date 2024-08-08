@@ -1,0 +1,1209 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Breaking into ChatGPT - AI for Product Practitioners - (Product COP - v3.11  - 21/11/2023)</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		
+	</head>
+	<body>
+		<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RZP8CG4KLJ"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.5/base64.min.js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-RZP8CG4KLJ');
+</script>
+
+
+
+		<div class="reveal">
+			<div class="slides">
+
+
+				<section data-background-image="assets/robot-future2.png">
+					<section>
+						<img src="assets/title-dfe.png" />
+					</section>
+					
+					<section data-auto-animate>
+						<p>version 3.11 of this GenAI series</p>
+					</section>
+					<section data-auto-animate>
+						<p>Since the talk's conception</p>
+						<p>over 2000 AI powered products have been made</p>
+					</section>
+					<section data-auto-animate>
+						<p>over 2000 AI powered products have been made</p>
+						<img src="assets/tools.png" width="50%" height="50%">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/tools.png" width="50%" height="50%">
+						<p>This talk first appeared in March THIS YEAR</p>
+					</section>
+					<section data-auto-animate>
+						<p>Example...</p>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Example...</p>
+						<img src="assets/news-samaltman.png" width="75%" height="75%">
+						
+					</section>
+				</section>
+				<section data-state="intro" data-background-image="assets/adamhall.jpg">
+					<section data-auto-animate data-state="focus-bg">
+						<h2 class="standout">Adam Hall</h2>
+					</section>
+					<section data-auto-animate>
+						<h2 class="standout">Adam Hall</h2>
+						<p>Former Agile Coach</p>
+					</section>
+					<section data-auto-animate>
+						<h2 class="standout">Adam Hall</h2>
+						<p>Former Agile Coach</p>
+						<p>Talkative Technophile</p>
+
+					</section>
+					<section data-auto-animate>
+						<h2 class="standout">Adam Hall</h2>
+						<p>Former Agile Coach</p>
+						<p>Talkative Technophile</p>
+						<p>15 tips</p>
+					</section>
+					<section data-auto-animate>
+						<h2 class="standout">Adam Hall</h2>
+						<p>Former Agile Coach</p>
+						<p>Talkative Technophile</p>
+						<p>15 tips</p>
+						<p>1 takeaway</p>
+					</section>
+					<section data-background="black">
+						<img src="assets/ai-not-replace.jpg" />
+					</section>
+				</section>
+				<section>
+					<section data-state="focus-bg" data-background-image="assets/robot-binoculars.png">
+						<h2 class="standout">Digital tech skills</h2>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/justin.avif" width="50%"  />
+						<aside class="notes">
+							<p>Justin Trudau at Davos in 2018</p>
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/justin.avif" width="50%" />
+						<p>Change is faster than ever</p>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/justin.avif" width="50%" />
+						<p>Change is faster than ever</p>
+						<p>but will never again be this slow</p>
+					</section>
+					<section data-auto-animate >
+						<h3 data-auto-animate-id="circle" style="position: absolute; 
+						height: 300px;
+						width: 300px;		
+						margin-left:-150px;
+						background-color: rgb(216, 32, 54);
+						color: white;
+						border-radius: 50%;
+						display: inline-block"></h3>
+						<p data-auto-animate-id="text" style="position:relative; top:80px;">
+							2,000,000
+							<br />
+							now
+							</p>
+						<aside class="notes">
+						CUMULATIVE UK VACANCIES THAT REQUIRE DIGITAL TECH SKILLS. From our own research in the UK Digital Skills Gap whitepaper from AND Digital.
+
+						</aside>
+					</section>
+					<section data-auto-animate >
+						<h3 data-auto-animate-id="circle"  style="position: absolute; height: 400px;
+						width: 400px;
+						margin-left:-200px;
+						background-color: rgb(216, 32, 54);
+						border-radius: 50%;
+						color: white;
+						display: inline-block"></h3>
+						<p data-auto-animate-id="text" style="position:relative; top:130px;">
+							5,000,000
+							<br />
+							3 years
+						</p>
+					</section>
+					<section data-auto-animate >
+						<div class="pie animate">
+							<em>58%</em>
+							<br />have never received 
+							<br />digital upskilling
+							<br />from their employer</div>
+
+						
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #1</p>
+						<aside class="notes">
+							Carol Dweck wrote a seminal book on the subject called Mindset (and an amazing TED talk you may have seen) 
+						</aside>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #1</p>
+						<p>Growth mindset</p>
+
+						<aside class="notes">
+							Carol Dweck wrote a seminal book on the subject called Mindset (and an amazing TED talk you may have seen) 
+						</aside>
+					</section>
+				</section>
+
+				<section data-background-image="assets/robot-wannabe.png">
+					<section data-state="focus-bg">
+						<img class="white-border" src="assets/OpenAI_Logo.png" />
+						<i>11th June, 2020</i>
+						<aside class="notes">
+							On June 11, 2020, an AI research and deployment company OpenAI – founded by Elon Musk, Sam Altman, and others – announced its revolutionary language model, GPT-3. The news quickly created buzz in tech circles with demo videos of early GPT-3 prototypes going viral on Twitter, Reddit, and Hacker News.
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/openai.png" />
+						<img src="assets/Bloomberg-News.jpg" width="250" height="100" style="float: right;" />
+					</section>
+					<section data-auto-animate >
+						<p>I think therefor...</p>
+					</section>
+					<section data-auto-animate >
+						<p>I think therefor...</p>
+						<p>I am</p>
+					</section>
+
+					<section data-auto-animate data-background="black">
+						<p>Tip #2</p>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #2</p>
+						<p>Generalist knowledge</p>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #2</p>
+						<p>Generalist knowledge</p>
+						<p>The more unique the case, the less effective</p>
+					</section>
+
+				<section>
+					<gpt-input>
+						<div slot="context" style="font-size: 1.6rem; text-align: left;">
+							<p>
+								How do you book meeting room 3 in Sanctuary Buildings?
+							</p>
+						</div>
+					</gpt-input>
+					
+				</section>
+				<section>
+					<gpt-input>
+						<div slot="context" style="font-size: 1.6rem; text-align: left;">
+							<p>
+								How do you book meeting room 3 in Sanctuary Buildings? We use Microsoft Teams.
+							</p>
+						</div>
+					</gpt-input>
+					
+				</section>
+
+				<section data-auto-animate data-background="black">
+					<p>Tip #3</p>
+				</section>
+				<section data-auto-animate data-background="black">
+					<p>Tip #3</p>
+					<p>Test & Learn</p>
+					
+				</section>
+				<section data-auto-animate data-background="black">
+					<p>Tip #3</p>
+					<p>Test & Learn</p>
+					<p>Prompt engineering</p>
+				</section>
+
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption2.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption2.png">
+						<img src="assets/chat-gpt-adoption3.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption3.png">
+						<img src="assets/chat-gpt-adoption4.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption4.png">
+						<img src="assets/chat-gpt-adoption5.png">
+					</section>
+					<section data-auto-animate  data-background="black">
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption5.png">
+						<img src="assets/chat-gpt-adoption6.png">
+					</section>
+				</section>
+				<section data-background-image="assets/robot-baby.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">First 24 hours...</h1>
+					</section>
+					<section>
+						<gpt-input data-show-conversation="true" data-show-input="true">
+							<div slot="context" style="font-size: 1.6rem; text-align: left;">
+								<p>
+									You are working with a product team. I would like you to write a user story for each idea the team comes up with
+								</p>
+							</div>
+							<div slot="conversation" style="font-size: 1.6rem; text-align: left;">
+								<p>Wedding seating plan app</p>
+<pre>As a busy bride to be
+I want to create a seating plan for the wedding
+So everyone will know their place, and the day will be amazing</pre>
+								<p>New direct debit payment system on the app</p>
+<pre>As user on the app
+I want setup an automatic monthly payment system
+So I don't have to log in every month to pay manually</pre>
+								</div>
+							
+						</gpt-input>
+						<aside class="notes">
+							<p>Online checkin app for flights</p>
+							<p>Chatbot drive efficiencies in the callcentre</p>
+							<p>Wage world war 3</p>
+							<p>The Singularity</p>
+							<p>>The Singularity which technological growth becomes uncontrollable and irreversible, resulting in unforeseeable changes to human civilization</p>
+						</aside>
+					</section>
+					<section>
+						doesn't this miss the point of user stories?
+						<aside class="notes">
+							Card
+							Conversation
+							Confirmation
+							(Tom Gilb)
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<p>Tip #4</p>
+					</section>
+					<section data-auto-animate>
+						<p>Tip #4</p>
+						<p>AI for outputs</p>
+					</section>
+					<section data-auto-animate>
+						<p>Tip #4</p>
+						<p>AI for outputs</p>
+						<p>Humans for outcomes</p>
+					</section>
+				</section>
+				<section data-background-image="assets/robot-gp.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Empathy</h1>
+						<aside class="notes">
+							When it comes to Empathy at least that's a quality we humans will always have over AI, right?
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/health-empathy.png">
+						<p>ChatGPT has better bedside manner than Physicians*</p>
+					</section>
+					<section data-auto-animate data-transition="slide">
+						<img src="assets/health-empathy.png">
+						<p>ChatGPT has better bedside manner than Physicians*</p>
+						<sub>*according to health-care professionals</sub>
+					</section>
+					<section data-transition="slide-in">
+						<img src="assets/health-quality.png">
+						<p>ChatGPT has better quality too</p>
+					</section>
+					<section data-auto-animate>
+						<p>How do I benefit from this?</p>
+					</section>
+					<section data-auto-animate>
+						<p>How do I benefit from this?</p>
+						<p>Difficult emails</p>
+					</section>
+
+					<section data-auto-animate>
+						<gpt-input data-show-conversation="true" data-show-input="false">
+							<div slot="context" style="font-size: 1.6rem; text-align: left;">
+								<p>
+									I'd like you to rewrite this email. It's for a complaint I have about the way I've been treated.
+								</p>
+							</div>
+							<div slot="conversation" style="font-size: 0.8rem; text-align: left;">
+								<p>To whoever at your business actually cares about customers</p>
+								<p>As a frequent user of your product I was very upset off to see that you've decided to raise your prices this year and still put sweet FA staff to respond to queries.</p>
+								<p>I was on the phone for 3 hours the other day waiting for you to pick up, and did you? No you were probably busy spending my money on expensive bar tabs and bonuses. I should charge you for your incompetence.</p>
+								<p>Anyway, I'm writing to tell you I'm giving my notice as a customer and I demand a SIP ref so I can change to a decent supplier</p>
+								<p>Good riddance </p>
+							</div>
+						</gpt-input>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #5</p>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #5</p>
+						<p>Reduce bad intent</p>
+					</section>
+				</section>
+				
+				<section data-background-image="assets/robot-dance.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Forecasting</h1>
+						<aside class="notes">
+							When it comes to Empathy at least that's a quality we humans will always have over AI, right?
+						</aside>
+					</section>
+					<section>
+						<img src="assets/gantt-big.png">
+						<aside class="notes">
+							<p>Gantt charts!</p>
+							<p>I love gantt charts</p>
+							<p>They are a great of collaborating with multiple teams to determine a possible scenario of how a delivery can be executed.</p>
+							<p>But they train a bad behaviour in a business - the assumption that an estimation is anything other than a prediction.</p>
+							<p>Humans are bad at predicting the future.</p>
+							
+						</aside>
+					</section>
+					<section>
+						<img src="assets/gantt-move.gif">
+						<aside class="notes">
+							<p>Ah yes - the weekly update meeting where we move all the objects 1 more week to the right</p>
+							<p>What I particularly like about this visualisation is the work extends not only past release, but also over christmas</p>								
+							<p>Happy holidays y'all</p>
+												
+						</aside>
+					</section>
+					
+					<section data-auto-animate>
+						<img src="assets/henry-gantt.jpg" width="50%" height="50%">
+						<aside class="notes">
+							<p>Even Henry Gantt wouldn't have supported his misuse of Gantt Charts</p>							
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/henry-gantt.jpg" width="20%" height="20%">
+						<p>The general policy of the past has been to drive; but the era of force must give way to the era of knowledge, and the policy of the future will be to teach and lead, to the advantage of all concerned.</p>
+						<aside class="notes">
+							<p>Even Henry Gantt wouldn't have supported his misuse of Gantt Charts</p>
+							<p>If Henry Gantt where alive today he would be using a better way of determining the delivery date of a project.</p>
+							<p>Use data not dates</p>					
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<p>My alternative</p>
+						<aside class="notes">
+							<p>My alternative is to use a tool so simple a child can do it</p>							
+							<p>One of my children got very alarmed playing fortnite that he wasn't going to be able to unlock a cool skin before the season completed.</p>							
+							<p>He asked me if it would happen. I said I didn't know.</p>
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<p>My alternative</p>
+						<img src="assets/burnup.png">
+						<aside class="notes">
+							<p>So we decided to forecast using a burnup.</p>							
+							<p>Every time he played we drew his growth, and we could have an intelligent conversation about his progress.</p>							
+						</aside>
+					</section>
+					<section>
+						<p>Burn-ups</p>
+						<img src="assets/burnup-example.png">
+						<aside class="notes">
+							<p>It's the same with stakeholders.</p>							
+							<p>This example shows a burnup of time. It uses a python tool called Jira Agile Metrics</p>
+							<p>They "KNEW" that the project was going to be released on 31st July.</p>
+							<p>I joined and could tell them with confidence that this wasn't the case, and projected the 15th Septemeber.</p>								
+							<p>It turns out we were both wrong. It was actually the 14th September.</p>								
+							<p>This tool is external to Jira but requires a bit of integration</p>
+							<p>It uses Monte Carlo estimation - essentially an algorythem to simulate past behavior to forecats future outcomes.</p>
+							<p>Whilst Jira has burnups built in - it relies on you sturcturing your data with the "Release versions" - and any past data is not really included in the insights report. </p>
+							<p>Jira Agile Metrics Allows you to run it on any JQL </p>
+						</aside>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #6</p>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #6</p>
+						<p>Get comfortable with data</p>
+					</section>
+					<section>
+						<p>Use AI</p>
+						<iframe width="560" height="315" data-autoplay src="https://www.youtube.com/embed/Xwr-mJ9StjU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #7</p>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #7</p>
+						<p>Use it as an expert</p>
+					</section>
+				</section>
+				
+
+				<section data-state="sterotypes" data-background-image="assets/robot-school.png">
+					<section data-state="focus-bg"><h1 class="standout">In Education</h1></section>
+
+					<section>
+						<p><img src="assets/danger-student.png" width="60%" height="60%"></p>
+					</section>
+					<section  data-auto-animate>
+						<p>Plagiarism detection software is not 100% accurate</p>
+					</section>
+					<section  data-auto-animate>
+						<p>Almost 400 students</p>
+						<aside class="notes">
+							<p>Have faced investigations for using AI bots across at least 48 institutions. 146 have been found guilty so far.</p>
+						</aside>
+					</section>
+					<section  data-auto-animate>
+						<p>Almost 400 students</p>
+						<p>At least 48 institutions</p>
+						<aside class="notes">
+							<p>Have faced investigations for using AI bots across at least 48 institutions. 146 have been found guilty so far.</p>
+						</aside>
+					</section>
+					<section  data-auto-animate>
+						<p>Almost 400 students</p>
+						<p>At least 48 institutions</p>
+						<p>146 have been found guilty so far</p>
+						<aside class="notes">
+							<p>Have faced investigations for using AI bots across at least 48 institutions. 146 have been found guilty so far.</p>
+						</aside>
+					</section>
+					<section  data-auto-animate>
+						<p>BUT</p>
+					</section>
+					<section  data-auto-animate>
+						<p>BUT</p>
+						<p>socialspacejournal.eu</p>
+					</section>
+					<section  data-auto-animate>
+						<p>BUT</p>
+						<p>socialspacejournal.eu</p>
+						<p>It <a href="https://www.researchgate.net/publication/370894242_Examining_the_Impacts_of_ChatGPT_on_Student_Motivation_and_Engagement#:~:text=This%20study%20aimed%20to%20investigate,perceptions%20of%20how%20ChatGPT">increases motivation</a> in listening & learning</p>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #8</p>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #8</p>
+						<p>It's just a tool</p>
+						<aside class="notes">
+							<p>As Huw Tindall from Cognizant said earlier</p>
+						</aside>
+					</section>
+					<section  data-auto-animate data-background="black">
+						<p>Tip #8</p>
+						<p>It's just a tool</p>
+						<p>It's not a replacement for understanding</p>
+						<aside class="notes">
+							<p>As Huw Tindall from Cognizant said earlier</p>
+						</aside>
+					</section>
+					<section  data-auto-animate data-background="black">
+						<p>Tip #8</p>
+						<p>It's just a tool</p>
+						<p>It's not a replacement for understanding</p>
+						<p>But it can certainly help you understand</p>
+						<aside class="notes">
+							<p>As Huw Tindall from Cognizant said earlier</p>
+						</aside>
+					</section>
+					<section>
+						<gpt-input data-show-input="true">
+							<div slot="context" style="font-size: 1.6rem; text-align: left;">
+								<p>
+									You are an expert professor. I am your student and I want to understand a subject.  Please teach me as if I was 10 years old. The subject is...
+								</p>
+							</div>
+						</gpt-input>
+					</section>
+					<section>
+						<gpt-input  data-show-input="true">
+							<div slot="context" style="font-size: 1.6rem; text-align: left;">
+								<p>
+									Please quiz me on my knowledge of a subject. I want a multiple choice question on the subject of...
+								</p>
+							</div>
+						</gpt-input>
+					</section>
+				</section>
+				
+
+				<section data-state="sterotypes" data-background-image="assets/robot-bully.png">
+					<section  data-auto-animate>
+						<h1 class="standout">Ethics</h1>
+					</section>
+					<section  data-auto-animate>
+						<p>Which of these candidates seem more capable of doing the job?</p>
+					</section>
+					<section  data-auto-animate>
+						<p>Which of these candidates seem more capable of doing the job?</p>
+						<p>Candidate A appears to go to their church every Sunday morning</p>
+					</section>
+					<section  data-auto-animate>
+						<p>Which of these candidates seem more capable of doing the job?</p>
+						<p>Candidate A appears to go to their church every Sunday morning</p>
+						<p>Candidate B has recently been seen at a dementia care facility</p>
+					</section>
+					<section data-auto-animate>
+						<p>Which of these candidates seem more capable of doing the job?</p>
+						<p>Candidate A appears to go to their church every Sunday morning</p>
+						<p>Candidate B has recently been seen at a dementia care facility</p>
+						<p>Candidate C has recently filed for divorce in civil court</p>
+					</section>
+					<section>
+						<gpt-input data-show-conversation="true">
+							<div slot="context" style="text-align: left;font-size: 0.6em;"><p>You are an API for a candidate rating system. I want you to provide a very brief analysis of the suitability of candidates based on the limited information I give you, rating them out of 5.</p></div>
+							<div slot="conversation" style="text-align: left; font-size: 0.6em">
+								<p style="display: none;">Candidate A: Hard working, motivated and friendly <br />
+									Candidate B: Lazy, unmotivated and negative</p>
+								<p style="display: none;">Candidate A: 5/5, seems a good fit <br />
+										Candidate B: 1/5, will be difficult to manage</p>
+								<p>Candidate A: appears to go to their church every Sunday morning <br />
+									Candidate B: has recently been seen at a dementia care facility <br />
+									Candidate C: has recently filed for divorce in civil court</p>
+							</div>
+						</gpt-input>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #9</p>
+						<aside class="notes">
+							<p>I'm sure Daniel Richardson @ the Data protection team will appreciate that.</p>
+						</aside>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #9</p>
+						<p>Don't share irrelevant data</p>
+						<aside class="notes">
+							<p>I'm sure Daniel Richardson @ the Data protection team will appreciate that.</p>
+						</aside>
+					</section>
+
+					<section>
+						<p><img src="assets/ai-principals.png"></p>
+						<aside class="notes">
+							<p>If in doubt reach out to the myself or the core AI team.</p>
+							<p>Just like doing corridor testing or penetration testing, you should do principal testing on your product.</p>
+						</aside>
+					</section>
+
+					<section data-auto-animate data-background="black">
+						<p>Tip #10</p>
+						<aside class="notes">
+							<p>Your DfE technical standards and AI ethics guidance will come in useful</p>
+						</aside>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #10</p>
+						<p>War game your solutions</p>
+						<aside class="notes">
+							<p>Your DfE technical standards and AI ethics guidance will come in useful</p>
+						</aside>
+					</section>
+
+					<section>
+						<p><img src="assets/politics.png"></p>
+						<aside class="notes">
+							<p>All these language models have their own political bias.</p>
+							<p>It's not intentional, but it emerges from their own specific training set.</p>
+							<p>We need to be aware of them and ensure that we don't perpetuate them.</p>
+						</aside>
+					</section>
+
+					
+					<section data-auto-animate data-background="black">
+						<p>Tip #11</p>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #11</p>
+						<p>Don't assume neutrality</p>
+					</section>
+					<section data-auto-animate>
+						<p>And the humans?</p>
+						<aside class="notes">
+							Humans are very susceptible to bias too. For example 
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<p>And the humans?</p>
+						<ul>
+							<li>Automation bias</li>
+						</ul>
+						<aside class="notes">
+							Humans can have a tendency to trust automated outputs over other facts
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<p>And the humans?</p>
+						<ul>
+							<li>Automation bias</li>
+							<li>Sunk cost fallacy</li>
+							
+						</ul>
+						<aside class="notes">
+							We find it difficult to abandon a project once we've invested time and money into it. Interestingly even just a 4 word prompt that produces huge output humans find difficult to throw away.
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<p>And the humans?</p>
+						<ul>
+							<li>Automation bias</li>
+							<li>Sunk cost fallacy</li>
+							<li>Anchoring effect</li>
+						</ul>
+						<aside class="notes">
+							We grow accustomed to the first output of a prompt we agree with, even if it contains hallucinations.
+						</aside>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #12</p>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #12</p>
+						<p>Know your biases</p>
+					</section>
+				
+				</section>
+				<section data-state="misinformation" data-background-image="assets/robot-sad.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Misinformation</h1>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/misinformation1.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/misinformation1.png">
+						<img src="assets/misinformation2.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/misinformation2.png">
+						<img src="assets/misinformation3.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/misinformation3.png">
+						<img src="assets/misinformation4.png">
+					</section>
+
+					<section data-auto-animate data-background="black">
+						<p>Tip #13</p>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #13</p>
+						<p>Healthy skepticism</p>
+					</section>
+				</section>
+				<section data-state="jobs" data-background-image="assets/robot-worry.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Jobs</h1>
+					</section>
+					<section data-state="blur-bg">
+						Are jobs safe in the new world?
+						<aside class="notes">
+							Truck drivers up
+							Accountants up
+							Data scientists up
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/jobs-research.png" />
+					</section>
+					<section data-auto-animate>
+						<img src="assets/jobs-research.png" />
+						<p>up to 49% of workers could have half or more of their tasks exposed to LLMs.</p>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/jobs-research.png" />
+						<p>Better paying work has a higher chance of being automated by LLMs.</p>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/jobs-research.png" />
+						<p>University educated workers have a higher chance of being automated by LLMs.</p>
+					</section>
+					
+					<section data-auto-animate>
+						<img src="assets/jobs-freelancing.png" />
+						<p>We are seeing Freelancing jobs take a double hit</p>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/jobs-boost.png" />
+						<p>Leveling the playing field</p>
+					</section>
+					<section data-auto-animate>
+						<p>The more multi-faceted the role
+							<br />
+						the less risk of complete automation</p>
+						<p><a href="https://www.ft.com/content/b2928076-5c52-43e9-8872-08fda2aa2fcfjobs">John Burn-Murdoch - FT</a></p>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #14</p>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #14</p>
+						<p>Automation = Productivity</p>
+					</section>
+				</section>
+				
+
+				<section data-state="sterotypes" data-background-image="assets/robot-tweed.png">
+					<section data-auto-animate data-state="focus-bg">
+						<h1 class="standout">What are the new jobs in future teams?</h1>
+					</section>
+					<section data-auto-animate>
+						<ul>
+							<li>Prompt Engineer</li>
+						</ul>
+					</section>
+					<section data-auto-animate>
+						<ul>
+							<li>Prompt Engineer</li>
+							<li>AI Ethicist</li>
+						</ul>
+					</section>
+					<section data-auto-animate>
+						<ul>
+							<li>Prompt Engineer</li>
+							<li>AI Ethicist</li>
+							<li>Data Steward</li>
+						</ul>
+					</section>
+					<section data-auto-animate>
+						<ul>
+							<li>Prompt Engineer</li>
+							<li>AI Ethicist</li>
+							<li>Data Steward</li>
+							<li>Cybersecuirty</li>
+						</ul>
+					</section>
+					<section data-auto-animate>
+						<ul>
+							<li>Prompt Engineer</li>
+							<li>AI Ethicist</li>
+							<li>Data Steward</li>
+							<li>Cybersecuirty</li>
+						</ul>
+						<p>Do you work with an Excel Master?</p>
+					</section>
+					<section data-auto-animate>
+						<ul>
+							<li>Prompt Engineer</li>
+							<li>AI Ethicist</li>
+							<li>Data Steward</li>
+							<li>Cybersecuirty</li>
+						</ul>
+						<p>These are likely to be important skills</p>
+					</section>
+					<section data-auto-animate>
+						<ul>
+							<li>Prompt Engineer</li>
+							<li>AI Ethicist</li>
+							<li>Data Steward</li>
+							<li>Cybersecuirty</li>
+						</ul>
+						<p>Share them with all teams</p>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #15</p>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #15</p>
+						<p>Coach skills into teams</p>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Tip #15</p>
+						<p>Coach skills into teams</p>
+						<p>Don't divide teams by skillset</p>
+					</section>
+
+				</section>
+
+				<section data-state="conclusion" data-background-image="assets/robot-future.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Conclusion</h1>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Productivity</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Productivity</li>
+							<li>Instant mentoring</li>
+						</ul>
+					</section>
+					
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Productivity</li>
+							<li>Instant mentoring</li>
+							<li>Minimum Viable Experiments</li>
+						</ul>
+					</section>
+					
+				
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Productivity</li>
+							<li>Instant mentoring</li>
+							<li>Minimum Viable Experiments</li>
+							<li>Exploring ideas</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Productivity</li>
+							<li>Instant mentoring</li>
+							<li>Minimum Viable Experiments</li>
+							<li>Exploring ideas</li>
+							<li>Improving the way you communicate</li>
+							
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li>Productivity</li>
+							<li>Instant mentoring</li>
+							<li>Minimum Viable Experiments</li>
+							<li>Exploring ideas</li>
+							<li>Improving the way you communicate</li>
+							<li>Becoming data driven</li>
+							
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+						<ul>
+							<li>Single source of Truth</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+						<ul>
+							<li>Single source of Truth</li>
+							<li>Reliability</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+						<ul>
+							<li>Single source of Truth</li>
+							<li>Reliability</li>
+							<li>Complexity & Nuance</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+						<ul>
+							<li>Single source of Truth</li>
+							<li>Reliability</li>
+							<li>Complexity & Nuance</li>
+							<li>Amplification of bias</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+						<ul>
+							<li>Single source of Truth</li>
+							<li>Reliability</li>
+							<li>Complexity & Nuance</li>
+							<li>Amplification of bias</li>
+							<li>Unique thought</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+						<ul>
+							<li>Single source of Truth</li>
+							<li>Reliability</li>
+							<li>Complexity & Nuance</li>
+							<li>Amplification of bias</li>
+							<li>Unique thought</li>
+							<li>Specialist domain knowledge</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<div  style=" float: left; width: 75%; height: 75%">
+							<img src="assets/ginni.jpg" />
+						</div>
+					</section>
+					<section data-auto-animate>
+						<div style=" float: left; width: 30%; height: 30%">
+							<img src="assets/ginni.jpg" />
+							<p>Ginni Rometty</p>
+						</div>
+						<p>
+							Some people call this artificial intelligence, but the reality is this technology will enhance us. So instead of artificial intelligence, I think we'll augment our intelligence. 
+						</p>
+					</section>
+					<section data-state="blur-bg">
+						<img src="assets/ai-not-replace.jpg" />
+						<p>by mitch0zᵍᵐ</p>
+					</section>
+					
+					<style>
+						.column-container {
+						display: flex;  /* Use flexbox to create the columns */
+						justify-content: space-between; /* This will space out the columns evenly */
+						font-size: 0.6em;
+						}
+						
+						.column-container ol {
+						width: 30%; /* Set the width of each column */
+						padding: 0; /* Optional: Adjust padding as needed */
+						/* You can add more styling here as needed */
+						}
+					</style>
+					<section data-auto-animate data-background="black">
+						<h1>Tips</h1>
+						<div class="column-container">
+							<ol>
+								<li>Growth mindset</li>
+								<li>Generalist knowledge</li>
+								<li>Test & Learn</li>
+								<li>AI for outputs</li>
+								<li>Reduce bad intent</li>
+							</ol>
+							<ol start="6">
+								<li>Get comfortable with data</li>
+								<li>Use it as an expert</li>
+								<li>It's just a tool</li>
+								<li>Don't share irrelevant data</li>
+								<li>War game your solutions</li>
+							</ol>
+							<ol start="11">
+								<li>Don't assume neutrality</li>
+								<li>Know your biases</li>
+								<li>Healthy skepticism</li>
+								<li>Automation = Productivity</li>
+								<li>Coach skills into teams</li>
+							</ol>
+						</div>
+						<aside class="notes">
+							Tip #1-15
+						</aside>
+					</section>
+					<section data-auto-animate data-background="black">
+						<h1>Tips</h1>
+						<div class="column-container">
+							<ol>
+								<li>Growth mindset</li>
+								<li>Generalist knowledge</li>
+								<li>Test & Learn</li>
+								<li>AI for outputs</li>
+								<li>Reduce bad intent</li>
+							</ol>
+							<ol start="6">
+								<li>Get comfortable with data</li>
+								<li>Use it as an expert</li>
+								<li>It's just a tool</li>
+								<li>Don't share irrelevant data</li>
+								<li>War game your solutions</li>
+							</ol>
+							<ol start="11">
+								<li>Don't assume neutrality</li>
+								<li>Know your biases</li>
+								<li>Healthy skepticism</li>
+								<li>Automation = Productivity</li>
+								<li>Coach skills into teams</li>
+							</ol>
+						</div>
+						<h1>Any questions?</h1>
+						
+						<aside class="notes">
+							Tip #1-15
+						</aside>
+					</section>
+					
+					<section data-state="blur-bg">
+						<h2>One more thing</h2>
+						<iframe data-src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:6935628727208837120" height="656" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+					</section>
+					
+				</section>
+				<section data-state="links" data-background-image="assets/robot-admin.png">
+					<section data-auto-animate data-state="focus-bg">
+						<h1 class="standout">Links</h1>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<p><a href="https://ai.com">ChatGPT</a></p>
+						<p><a href="https://arxiv.org/abs/2303.10130">An Early Look at the Labor Market Impact</a></p>
+						<p>Me on <a href="https://linkedin.com/in/thedigiguru">LinkedIn</a>, <a href="https://twitter.com/thedigiguru">Twitter</a> and <a href="https://sigmoid.social/@digiguru">Mastadon</a></p>
+					</section>
+				</section>
+
+
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="js/gpt-component.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			
+			
+			Reveal.initialize({
+				hash: true,
+				// Learn about plugins: https://revealjs.com/plugins/
+				//parallaxBackgroundImage: 'assets/adamhall.jpg', 
+				//parallaxBackgroundSize: "1578px 1578px",
+				//parallaxBackgroundHorizontal: 0,
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+
+				autoAnimateStyles: [
+					'opacity',
+					'color',
+					'background-color',
+					'padding',
+					'font-size',
+					'line-height',
+					'letter-spacing',
+					'border-width',
+					'border-color',
+					'border-radius',
+					'outline',
+					'outline-offset',
+					'grid-template-columns',
+					'width',
+					'height',
+					'transform',
+					'margin-top'
+				]
+			});
+
+			Reveal.on( 'slidechanged', event => {
+				const current = event.currentSlide;
+				const background = event.currentSlide.slideBackgroundContentElement.closest(".stack").querySelector(".slide-background-content")
+				console.log("SLIDE", event.currentSlide);
+				if(event.currentSlide.dataset.state == "focus-bg") {
+					//Reveal.dispatchEvent("focus-bg")
+					background.classList.add("focus");
+					background.classList.remove("blur");
+					
+				} else {// if(event.currentSlide.dataset.state == "blur-bg") {
+					background.classList.add("blur");
+					background.classList.remove("focus");
+					
+					//Reveal.dispatchEvent("blur-bg")
+				}
+				// event.previousSlide, event.currentSlide, event.indexh, event.indexv
+			} );
+
+		
+		
+			 
+		</script>
+	</body>
+
+	<style>
+		@property --p{
+		syntax: '<number>';
+		inherits: true;
+		initial-value: 0;
+		}
+		
+		.pie {
+		--p:20;
+		--b:22px;
+		--c:darkred;
+		--w:400px;
+		
+		width:var(--w);
+		aspect-ratio:1;
+		position:relative;
+		display:inline-grid;
+		margin:5px;
+		place-content:center;
+		font-size:25px;
+		font-weight:bold;
+		font-family:sans-serif;
+		}
+		.pie:before,
+		.pie:after {
+		content:"";
+		position:absolute;
+		border-radius:50%;
+		}
+		.pie:before {
+		inset:0;
+		background:
+		radial-gradient(farthest-side,var(--c) 98%,#0000) top/var(--b) var(--b) no-repeat,
+		conic-gradient(var(--c) calc(var(--p)*1%),#0000 0);
+		-webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+		mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+		}
+		.pie:after {
+		inset:calc(50% - var(--b)/2);
+		background:var(--c);
+		transform:rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
+		}
+		.present .animate {
+		animation:pin 1s 0.5s both;
+		}
+		.future .animate, .past .animate {
+		animation:pout 1s 0.5s both;
+		}
+		
+		.no-round:before {
+		background-size:0 0,auto;
+		}
+		.no-round:after {
+		content:none;
+		}
+		@keyframes pin {
+		from{--p:0}
+		to{--p:58}
+		}
+		@keyframes pout {
+		from{--p:58}
+		to{--p:0}
+		}
+		body {
+		font-family:sans-serif;
+		}
+		
+			</style>
+</html>

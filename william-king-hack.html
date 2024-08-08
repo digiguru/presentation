@@ -34,8 +34,11 @@
 
 		<div class="reveal">
 			<div class="slides">
-				<section data-state="intro" data-background-image="assets/adamhall.jpg">
+				<section data-state="intro" data-background-image="assets/robot-dimsum.png">
 					<section data-auto-animate data-state="focus-bg">
+						<h1 class="standout">🥟</h1>
+					</section>
+					<section data-auto-animate data-state="black">
 						<h1 class="standout">Dim Sum Destroyers 🤖</h1>
 					</section>
 					<style>
@@ -139,10 +142,30 @@
 				
 					<section data-auto-animate data-background="black">
 						<p>Need to figure out a way to stop the friction</h4>
+							
 					</section>
 				</section>
-
 				<section data-background-image="assets/robot-wannabe.png">
+					<section data-state="focus-bg">
+						<h2>Microsoft PowerApps & Copilot</h2>
+					</section>
+					<section data-state="focus-bg">
+						<img src="assets/announce-microsoft.png">
+					</section>
+					
+
+					<section data-state="blur-bg">
+						<p style="text-align: left; font-size: 18px;">Power Apps is a suite of apps, services, and connectors, as well as a data platform, that provides a rapid development environment to build custom apps for your business needs. Using Power Apps, you can quickly build custom business apps that connect to your data stored either in the underlying data platform (Microsoft Dataverse) or in many online and on-premises data sources (such as SharePoint, Microsoft 365, Dynamics 365, SQL Server, and so on).</p>
+					</section>
+					<section data-state="blur-bg" data-auto-animate>
+						<p>Make an app without knowing any code *</p>
+					</section>
+					<section data-state="blur-bg" data-auto-animate data-background="black">
+						<p>Make an app without knowing any code *</p>
+						<p>* Masochism required</p>
+					</section>
+				</section>
+				<section data-background-image="assets/robot-app-dev.webp">
 					<section data-state="focus-bg">
 						<h2>Microsoft copilot</h2>
 					</section>
@@ -151,60 +174,56 @@
 					</section>
 					<section data-state="blur-bg">
 						<gpt-input data-show-conversation="false" data-show-input="true">
-							<div slot="context" style="font-size: 1.6rem; text-align: left;">
+							<div slot="context" style="display: none;">
 								<p>
-									I am going to give you database tables. I would like you to create the schema for me.
+									IMPORTANT! I ask you to make some tables. I want you to respond with 5 words looking like you've dealt with my request. So say "Createing table {tablename} with columns..." but then suddenly respond like you are Rimmer going mad in the famous red dwarf series saying one of the following randomly "I am a fish!" or "Dribble dribble" or "where is my cheese". Ready?
 								</p>
 							</div>
-							<div slot="conversation" style="font-size: 0.8rem; text-align: left;">
-								<p>HOWEVER I ask I want you to respond like you are Rimmer going mad in the famous red dwarf series saying "I am a fish!" or "Dribble dribble" or "I cannot fulfill the request, please try later"</p>
-							</div>
 						</gpt-input>
-						
+					</section>
+					<section data-state="blur-bg">
+						<img src="assets/chat-gpt-code.png" />
+					</section>
+					<section data-state="blur-bg">
+						<img src="assets/chat-gpt-code2.png" />
 					</section>
 					<section  data-background="black">
-						doesn't this miss the point of user stories?
-						<aside class="notes">
-							Card
-							Conversation
-							Confirmation
-						</aside>
+						Don't rely on Power Apps Copilot (yet)
 					</section>
 					
 				</section>
 				<section data-background-image="assets/robot-baby.png">
 					<section data-state="focus-bg">
-						<h1 class="standout">Right Tool, Right Job</h1>
-					</section>
-
-					<section data-auto-animate><p>Consider Bard</p></section>
-					<section data-auto-animate><p>Consider Bard</p>
-						<img src="assets/bard-map.png" width="70%" />
-					</section>
-		
-					<section data-auto-animate><p>Consider Bard</p>
-						<img src="assets/bard-email.png" />
+						<h1 class="standout">Advice</h1>
 					</section>
 
 					<section data-auto-animate>
-						<p><a href="https://theresanaiforthat.com/user-interfaces/?sort=most-saved">There's an AI for that</a></p>
-					</section>
-					<section data-auto-animate>
-						<p><a href="https://theresanaiforthat.com/user-interfaces/?sort=most-saved">There's an AI for that</a></p>
-						<img src="assets/AI-for-that.png">
-					</section>
-					<section data-auto-animate>
-						<p>Assess your tools regularly</p>
+						<p>Key learnings from using Copilot</p>
 						<ul class="nostyle">
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Legal</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="3">Ethics</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">Price</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="4">Impact</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="5">Interoperability</li>
-							<li class="fragment fade-in-then-semi-out" data-fragment-index="6">Documentation</li>
+							<li class="fragment fade-in-then-semi-out">Don't rely on Copilot</li>
+							<li class="fragment fade-in-then-semi-out">Copilot has a limited prompt length</li>
+							<li class="fragment fade-in-then-semi-out">Long prompts get it to be more forgetful</li>
+							<li class="fragment fade-in-then-semi-out">It forgets about context easily (creates new tables when they already exist)</li>
 						</ul>
 					</section>
-
+					<section data-auto-animate>
+						<p>Key learnings from using PowerApps</p>
+						<ul class="nostyle">
+							<li class="fragment fade-in-then-semi-out">Create a clean environment</li>
+							<li class="fragment fade-in-then-semi-out">Multiple users might be quicker</li>
+							<li class="fragment fade-in-then-semi-out">Have a clear idea of what you are trying to achieve</li>
+							<li class="fragment fade-in-then-semi-out">Use Lookup tables not Multiple Choice</li>
+							<li class="fragment fade-in-then-semi-out">Existance of data in a PowerApp prevents you from changing the data</li>
+						</ul>
+					</section>
+					<section data-auto-animate>
+						<p>Key learnings from making a chatbot</p>
+						<ul class="nostyle">
+							<li class="fragment fade-in-then-semi-out">Reading the website is easy</li>
+							<li class="fragment fade-in-then-semi-out">Connecting to data sources is okay</li>
+							<li class="fragment fade-in-then-semi-out">Integration with dynamics is less reliable</li>
+						</ul>
+					</section>
 					
 					<section data-background="black">
 						<p>Focus on the filters first</p>
