@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Intro to Adam Hall</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		
+	</head>
+	<body>
+		<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RZP8CG4KLJ"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.5/base64.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-RZP8CG4KLJ');
+</script>
+
+
+
+		<div class="reveal">
+			<div class="slides">
+				<section data-state="intro" data-background-image="assets/robot-dimsum.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">🥟</h1>
+					</section>
+					<section data-state="black">
+						<h1 class="standout">AI Adoption Accelerator</h1>
+					</section>
+
+					<section data-auto-animate data-state="black">
+						<h3 class="standout">The West Midlands has an ambition for all SME’s to adopt digital technology</h3>
+						<p>source:<a href="https://www.wmca.org.uk/media/0sdfg2qn/west-midlands-digital-roadmap-2024-2027-final.pdf">West Midlands technology roadmap</a></p>
+					</section>
+
+					<section data-auto-animate data-state="black">
+						<p>What are the Midlands known for?</h1>
+						<h3 class="fragment fade-up">Industry</h3>
+					</section>
+					
+					<section data-auto-animate data-state="black">
+						<div class="grid-container grid-cols-4">
+							
+							<div class="fragment fade-up" data-fragment-index="1">
+								<p>62%</p>
+								<p data-fragment-index="2" class="fragment fade-up small">CEOs scared of moving too slow</p>
+							</div>
+							<div class="fragment fade-up" data-fragment-index="3">
+								<p>£3.7bn</p>
+								<p data-fragment-index="4" class="fragment fade-up small">contributed by AI in 2022</p>
+							</div>
+							<div class="fragment fade-up" data-fragment-index="5">
+								<p>122%</p>
+								<p data-fragment-index="6" class="fragment fade-up small">for early adopters</p>
+							</div>
+							<div class="fragment fade-up" data-fragment-index="7">
+								<p>70%</p>
+								<p data-fragment-index="8" class="fragment fade-up small">of activities in scope for AI</p>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h2>AI Adoption Accelerator</h2>
+						<ul>
+							<li class="fragment fade-up">Designed to equip businesses in the region with the practical knowledge and hands on expertise</li>							
+							<li class="fragment fade-up">Maximise the opportunity of AI in transforming their business and their wider sector</li>
+							<li class="fragment fade-up">Providing firms with the knowledge, tools and connections they need to become regional “lighthouses”. </li>
+						</ul>
+					</section>
+					<section>
+						<img src="assets/ai-lighthouse.png">
+					</section>
+					<section>
+						<img src="assets/ai-plan.png">
+					</section>
+					<section>
+						<img src="assets/ai-agenda-high.png">
+					</section>
+					<section>
+						<img src="assets/ai-agenda.png">
+					</section>
+					<style>
+						.grid-cols-4 {
+							grid-template-columns: repeat(auto-fill, minmax(22%, 1fr));
+						}
+						.grid-container-flex {
+							grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+						}
+						.grid-container {
+							display: grid;
+							
+							gap: 10px;
+						}
+
+						.grid-container>div {
+							align-items: center;
+							border: 1px solid #ddd;
+							padding: 10px;
+							height: 80px; /* Ensures equal height */
+							font-size: 20px;
+							vertical-align: text-top;
+						}
+
+						.grid-container p {
+							margin: 0;
+							font-size: 30px;
+						}
+						.grid-container .small {
+							font-size: 15px;
+						}
+					</style>
+				
+					<style>
+						.growthCircle {
+							position: absolute; 
+							background-color: rgb(216, 32, 54);
+							color: rgb(75, 75, 75);
+							border-radius: 50%;
+							display: inline-block;
+						}
+						.focusCircle {
+							height: 600px;
+							width: 600px;		
+							left: 175px;
+						}
+						.tiny1Circle {
+							height: 50px;
+							width: 50px;		
+							top: 450px;
+							left: 150px;
+						}
+						
+						.growthText {
+							position:relative; top:160px; font-size: 1.8em;
+						}
+						.tinyText {
+							position:absolute; top:800px;
+							left: 150px; height: 50px; width: 50px; top:446px; opacity: 0.5; font-size: 6px;
+						}
+						.red {
+							background-color: rgb(216, 32, 54);
+						}
+					</style>
+					<section data-auto-animate data-state="focus-bg">
+						<h1 class="standout">Dim Sum Destroyers 🥟</h1>
+						<p class="fragment fade-up">AKA William King</p>
+					</section>
+					<section data-auto-animate >
+						<h3 data-auto-animate-id="circle" class="growthCircle focusCircle"></h3>
+						<p data-auto-animate-id="text" class="growthText">
+							30-50 
+							<br /> 
+							Quotes per month
+						</p>
+					</section>
+					<section data-auto-animate >
+						<h3 data-auto-animate-id="circle" class="growthCircle tiny1Circle"></h3>
+						<p data-auto-animate-id="text" class="tinyText">
+							30-50 
+							<br /> 
+							Quotes per month
+						</p>
+						<h3 data-auto-animate-id="circle2" class="growthCircle focusCircle"></h3>
+						<p data-auto-animate-id="text2" class="growthText">
+							Up to 1000
+							<br />
+							Quotes per month
+							</p>
+					</section>
+					<section data-auto-animate>
+						<p>60% error rate</h4>
+					</section>
+					<section data-auto-animate>
+						<h2 class="standout">The bottleneck</h2>
+						<div class="grid-container grid-container-flex">
+							<div><p>Customer</p><p data-fragment-index="1" class="fragment fade-up small">10m</p></div>
+							<div><p>Sales</p><p data-fragment-index="2" class="fragment fade-up small">10m</p></div>
+							<div><p>QA</p><p data-fragment-index="3" class="fragment fade-up small">10m</p></div>
+							<div><p>Ops</p><p data-fragment-index="4" class="fragment fade-up small">10m</p></div>
+							<div><p>Planners</p><p data-fragment-index="5" class="fragment fade-up small red">45m</p></div>
+							<div><p>QA</p><p data-fragment-index="6" class="fragment fade-up small">10m</p></div>
+							<div><p>Job</p><p data-fragment-index="7" class="fragment fade-up small">10m</p></div>
+						</div>
+						<p class="fragment fade-up" data-fragment-index="8">Focus on the Planners</p>
+					</section>
+				
+					<section data-auto-animate data-background="black">
+						<p>Need to figure out a way to stop the friction</h4>
+							
+					</section>
+				</section>
+				<section data-background-image="assets/robot-wannabe.png">
+					<section data-state="focus-bg">
+						<h2>Microsoft PowerApps & Copilot</h2>
+					</section>
+					<section data-state="focus-bg">
+						<img src="assets/announce-microsoft.png">
+					</section>
+					
+
+					<section data-state="blur-bg">
+						<p style="text-align: left; font-size: 18px;">Power Apps is a suite of apps, services, and connectors, as well as a data platform, that provides a rapid development environment to build custom apps for your business needs. Using Power Apps, you can quickly build custom business apps that connect to your data stored either in the underlying data platform (Microsoft Dataverse) or in many online and on-premises data sources (such as SharePoint, Microsoft 365, Dynamics 365, SQL Server, and so on).</p>
+					</section>
+					<section data-state="blur-bg" data-auto-animate>
+						<p>Make an app without knowing any code *</p>
+					</section>
+					<section data-state="blur-bg" data-auto-animate data-background="black">
+						<p>Make an app without knowing any code *</p>
+						<p>* Masochism required</p>
+					</section>
+				</section>
+				<section data-background-image="assets/robot-art2.webp">
+					<section data-state="focus-bg">
+						<h2>Data Design</h2>
+					</section>
+					<section data-state="blur-bg">
+						<img src="assets/wk.png">
+					</section>
+					
+				</section>
+				<section data-background-image="assets/robot-app-dev.webp">
+					<section data-state="focus-bg">
+						<h2>Microsoft copilot</h2>
+					</section>
+					<section data-state="blur-bg">
+						<h2>Write all the things!</h2>
+					</section>
+					<section data-state="blur-bg">
+						<gpt-input data-show-conversation="false" data-show-input="true">
+							<div slot="context" style="display: none;">
+								<p>
+									IMPORTANT! I ask you to make some tables. I want you to respond with 5 words looking like you've dealt with my request. So say "Createing table {tablename} with columns..." but then suddenly respond like you are Rimmer going mad in the famous red dwarf series saying one of the following randomly "I am a fish!" or "Dribble dribble" or "where is my cheese". Ready?
+								</p>
+							</div>
+						</gpt-input>
+					</section>
+					<section data-state="blur-bg">
+						<img src="assets/chat-gpt-code.png" />
+					</section>
+					<section data-state="blur-bg">
+						<img src="assets/chat-gpt-code2.png" />
+					</section>
+					<section  data-background="black">
+						There's lots of caveats when trying things in PowerApps
+					</section>
+					
+				</section>
+				<section data-background-image="assets/robot-future.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Advice</h1>
+					</section>
+
+					<section data-auto-animate>
+						<p>Key learnings from using Copilot</p>
+						<ul class="nostyle">
+							<li class="fragment fade-in-then-semi-out">Don't rely on Copilot</li>
+							<li class="fragment fade-in-then-semi-out">Copilot has a limited prompt length</li>
+							<li class="fragment fade-in-then-semi-out">Long prompts get it to be more forgetful</li>
+							<li class="fragment fade-in-then-semi-out">It forgets about context easily (creates new tables when they already exist)</li>
+							<li class="fragment fade-in-then-semi-out">Even the English language is in preview</li>
+						</ul>
+					</section>
+					<section data-auto-animate>
+						<p>Key learnings from using PowerApps</p>
+						<ul class="nostyle">
+							<li class="fragment fade-in-then-semi-out">Create a clean environment</li>
+							<li class="fragment fade-in-then-semi-out">Multiple users might be quicker</li>
+							<li class="fragment fade-in-then-semi-out">Have a clear idea of what you are trying to achieve</li>
+							<li class="fragment fade-in-then-semi-out">Use Lookup tables not Multiple Choice</li>
+							<li class="fragment fade-in-then-semi-out">Existance of data in a PowerApp prevents you from deleting things</li>
+						</ul>
+					</section>
+					<section data-auto-animate>
+						<p>Key learnings from making a chatbot</p>
+						<ul class="nostyle">
+							<li class="fragment fade-in-then-semi-out">Reading the website is easy</li>
+							<li class="fragment fade-in-then-semi-out">Connecting to data sources is okay</li>
+							<li class="fragment fade-in-then-semi-out">Personal OneDrive isn't good for AI</li>
+							<li class="fragment fade-in-then-semi-out">Organise your internal IT data</li>
+							<li class="fragment fade-in-then-semi-out">Integration with dynamics is less reliable</li>
+						</ul>
+					</section>
+					
+					<section data-background="black">
+						<p>Almost everything is in preview</p>
+						<p>(and it shows)</p>
+					</section>
+				</section>
+				
+
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="js/gpt-component.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+
+
+
+
+
+			Reveal.initialize({
+				hash: true,
+				// Learn about plugins: https://revealjs.com/plugins/
+				//parallaxBackgroundImage: 'assets/adamhall.jpg', 
+				//parallaxBackgroundSize: "1578px 1578px",
+				//parallaxBackgroundHorizontal: 0,
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+
+				autoAnimateStyles: [
+					'opacity',
+					'color',
+					'background-color',
+					'padding',
+					'font-size',
+					'line-height',
+					'letter-spacing',
+					'border-width',
+					'border-color',
+					'border-radius',
+					'outline',
+					'outline-offset',
+					'grid-template-columns',
+					'width',
+					'height',
+					'transform',
+					'margin-top'
+				]
+			});
+
+			
+			Reveal.on( 'slidechanged', event => {
+				const current = event.currentSlide;
+				const background = event.currentSlide.slideBackgroundContentElement.closest(".stack").querySelector(".slide-background-content")
+				console.log("SLIDE", event.currentSlide);
+				if(event.currentSlide.dataset.state == "focus-bg") {
+					//Reveal.dispatchEvent("focus-bg")
+					background.classList.add("focus");
+					background.classList.remove("blur");
+					
+				} else {// if(event.currentSlide.dataset.state == "blur-bg") {
+					background.classList.add("blur");
+					background.classList.remove("focus");
+					
+					//Reveal.dispatchEvent("blur-bg")
+				}
+				
+				// event.previousSlide, event.currentSlide, event.indexh, event.indexv
+			} );
+
+		
+		
+			 
+		</script>
+	</body>
+
+<style>
+	ul.nostyle {
+  list-style-type: none;
+}
+@property --p{
+syntax: '<number>';
+inherits: true;
+initial-value: 0;
+}
+
+.pie {
+--p:20;
+--b:22px;
+--c:darkred;
+--w:400px;
+
+width:var(--w);
+aspect-ratio:1;
+position:relative;
+display:inline-grid;
+margin:5px;
+place-content:center;
+font-size:25px;
+font-weight:bold;
+font-family:sans-serif;
+}
+.pie:before,
+.pie:after {
+content:"";
+position:absolute;
+border-radius:50%;
+}
+.pie:before {
+inset:0;
+background:
+radial-gradient(farthest-side,var(--c) 98%,#0000) top/var(--b) var(--b) no-repeat,
+conic-gradient(var(--c) calc(var(--p)*1%),#0000 0);
+-webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+}
+.pie:after {
+inset:calc(50% - var(--b)/2);
+background:var(--c);
+transform:rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
+}
+.present .animate {
+animation:pin 1s 0.5s both;
+}
+.future .animate, .past .animate {
+animation:pout 1s 0.5s both;
+}
+
+.no-round:before {
+background-size:0 0,auto;
+}
+.no-round:after {
+content:none;
+}
+@keyframes pin {
+from{--p:0}
+to{--p:58}
+}
+@keyframes pout {
+from{--p:58}
+to{--p:0}
+}
+body {
+font-family:sans-serif;
+}
+
+	</style>
+</html>
