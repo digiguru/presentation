@@ -223,6 +223,7 @@ function define(template) {
                     }
                 }
                 if (this.showImage) {
+                    inputValue = contextValue ? contextValue + " " + inputValue : inputValue;
                     console.log("queryImage", {inputValue, img: this.$img});
                     let image = await queryImage(inputValue, this.$img);
                     this.addHistory({title: inputValue, raw: image});
