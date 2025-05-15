@@ -195,13 +195,13 @@ function define(template) {
                 
                 navigator.locks.request('unique_id', (lock) => {
                     
-                    this.uniqueID = this.MakeUniqueID() + "_GPT";
+                    this.uniqueID = this.makeUniqueID() + "_GPT";
                     this.renderHistory();
                 });
                 //this.$quickHides.forEach(x => x.classList.add("hidden"));
             }
             //function 
-            MakeUniqueID() {
+            makeUniqueID() {
                 if(window.uniqueID) {
                     return ++window.uniqueID;
                 } else {
@@ -282,7 +282,7 @@ function define(template) {
 
             //invoked each time the custom element is appended into a document-connected element
             connectedCallback() {
-                //this.uniqueID = this.MakeUniqueID() + "_GPT";
+                //this.uniqueID = this.makeUniqueID() + "_GPT";
                 
                 if (this.showImage) {
                     this.$output.classList.add("hidden");
