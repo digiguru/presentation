@@ -32,7 +32,7 @@ Reveal.addEventListener( 'ready', function( event ) {
     }
 });
 
-const baseURL = 'https://ai-prompt-writer.vercel.app/',
+const baseURL = 'http://localhost:3001/', //'https://ai-prompt-writer.vercel.app/',
     imageURL = baseURL + 'api/image',
     textURL = baseURL + 'api/raw',
     audioUrl = baseURL + 'api/voice';
@@ -76,7 +76,8 @@ async function fetchAudio(input, voice) {
 // Defines the custom element with our appropriate name, <apocalyptic-warning>
 async function queryImage (prompt, imgTag) {
 	try {
-		const data = await fetchImage(prompt);
+		//const data = await fetchImage(prompt);
+        const data = {output: "https://picsum.photos/200/300?random=1"}; // For testing purposes, replace with actual fetchImage call
 		const outputData = data.output;
 		
 		console.log("IMAGE:", outputData);
@@ -225,7 +226,8 @@ function define(template) {
                 if (this.showImage) {
                     inputValue = contextValue ? contextValue + " " + inputValue : inputValue;
                     console.log("queryImage", {inputValue, img: this.$img});
-                    let image = await queryImage(inputValue, this.$img);
+                    //let image = await queryImage(contextValue + " " + inputValue, this.$img);
+                    let image = "test";//await queryImage(inputValue, this.$img);
                     this.addHistory({title: inputValue, raw: image});
                 } else {
                     console.log("queryGPT", {contextValue, messages, inputValue, output: this.$output, processVoice: this.processVoice});
