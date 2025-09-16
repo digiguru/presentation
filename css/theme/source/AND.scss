@@ -13,22 +13,26 @@
 // Include theme-specific fonts
 @import url(https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap);
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
+/* Container for the pseudo-elements */
+.reveal-viewport {
+    position: relative;
+}
 
-.backgrounds::before {
-	content: "© 2025 ";
-    font-size: 12px;
-    background-image: url(/assets/AND-logo.png);
+/* For the Logo */
+.reveal-viewport::after {
+    content: '© 2025'; /* Empty content, we only want the background image */
+    background-image: url('/assets/AND-logo.png'); /* Note the path change */
     background-size: contain;
     background-repeat: no-repeat;
-    background-color: black;
-    width: 900px;
-    height: 41px;
-    position: absolute;
-    bottom: -10px;
-    left: 30px;
-    background-position-x: 40px;
-    background-position-y: -14px;
-} 
+    position: fixed; /* Use fixed positioning */
+    height: 80px;    /* Set the logo height */
+    width: 140px;    /* Set the logo width */
+    bottom: 20px;
+    right: 20px;
+    color: white;
+    z-index: 100;    /* Bring it to the front */
+}
+
 
 // Override theme settings (see ../template/settings.scss)
 $backgroundColor: #191919;
