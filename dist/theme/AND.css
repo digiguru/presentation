@@ -15,21 +15,23 @@
 .reveal-viewport::after {
   content: "© 2025";
   /* Empty content, we only want the background image */
+  font-family: "Poppins", sans-serif;
+  /* Good to be consistent */
   background-image: url("/assets/AND-logo.png");
   /* Note the path change */
   background-size: contain;
   background-repeat: no-repeat;
+  background-position: left center;
   position: fixed;
-  /* Use fixed positioning */
-  height: 80px;
-  /* Set the logo height */
-  width: 140px;
-  /* Set the logo width */
   bottom: 20px;
   right: 20px;
   color: white;
   z-index: 100;
-  /* Bring it to the front */
+  box-sizing: border-box;
+  height: 80px;
+  width: 270px;
+  padding-left: 110px;
+  line-height: 80px;
 }
 
 section.has-light-background, section.has-light-background h1, section.has-light-background h2, section.has-light-background h3, section.has-light-background h4, section.has-light-background h5, section.has-light-background h6 {
