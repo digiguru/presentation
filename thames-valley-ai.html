@@ -82,10 +82,27 @@
 						</aside>
 					</section>	
 					<section data-auto-animate>
+						<style>
+							.logo-text-line {
+    display: flex;         /* Turns the <p> into a flex container */
+    align-items: center;   /* Vertically aligns the text and logo */
+    gap: 0.5em;            /* Adds a small space between the text and logo */
+    justify-content: center; /* Optional: Centers the whole line on the slide */
+}
+
+.logo-text-line img {
+    /* Set the logo height relative to the text size */
+    height: 1em; 
+    width: auto; /* Maintain aspect ratio */
+}
+						</style>
 						<h1 class="standout">Adam Hall</h1>
 
 						<p class="fragment fade-in-then-semi-out" data-fragment-index="1">Former Agile Coach</p>
-						<p class="fragment fade-in-then-semi-out" data-fragment-index="2">AI Principal at AND Digital</p>
+						<p class="logo-text-line fragment fade-in-then-semi-out" data-fragment-index="2">
+							<span>AI Principal at</span>
+							<img src="/assets/AND_logo.png" alt="AND Digital Logo">
+						</p>
 						<p class="fragment fade-in-then-semi-out" data-fragment-index="3">Amateur AI Artist</p>
 						<p class="fragment fade-in-then-semi-out" data-fragment-index="4">Burnout Survivor</p>
 						<aside class="notes">
