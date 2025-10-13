@@ -32,7 +32,7 @@ Reveal.addEventListener( 'ready', function( event ) {
     }
 });
 
-const baseURL = 'http://localhost:3001/', //'https://ai-prompt-writer.vercel.app/',
+const baseURL = 'https://ai-prompt-writer.vercel.app/',
     imageURL = baseURL + 'api/image',
     textURL = baseURL + 'api/raw',
     audioUrl = baseURL + 'api/voice';
