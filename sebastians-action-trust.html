@@ -4,24 +4,22 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Breaking into ChatGPT - AI for Product Practitioners - (Tech West Midlands AI Adoption Accelerator Programme  - v4.3  - 01/07/2024)</title>
+		<title>AI Fundamentals - (Sebastian's Action Trust - v4.2  - 13/10/2025)</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
 		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="dist/theme/AND.css">
 		<link rel="stylesheet" href="custom.css">
-
+		
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 	</head>
 	<body>
 		<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RZP8CG4KLJ"></script>
-<script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.5/base64.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -32,65 +30,98 @@
 
 
 
-		<div class="reveal">
+		<div class="reveal background">
 			<div class="slides">
+
+
+				<section data-background-image="assets/robot-future2.png">
+					<section data-auto-animate data-state="focus-bg">
+						<h1 class="standout">AI Fundamentals</h1>
+					</section>
+					<section data-auto-animate>
+						<h1 class="standout">AI Fundamentals</h1>
+						<p>Learning how we can use AI to make work more fun</p>						
+					</section>
+					<section data-auto-animate>
+						<h1 class="standout">The 21st version of this talk</h1>
+						<p class="fragment fade-up">Since I first ran this talk</p>
+						<p class="fragment fade-up">over 64,000 projects have been made</p>
+						<aside class="notes">
+						This is the 20th version of this talk and it’s going to be the most honest and open iteration I’ve ever done because I’m going to be sharing a story about Burnout, and how I survived it.
+						Since I first ran this talk over 64,481 projects have been tagged with ai on github, and many many more AI announcements. 
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<p>over 64,000 projects have been made</p>
+						<img src="assets/tools.jpg">
+					</section>
+					<section data-auto-animate>
+						<p>Example...</p>
+						<p class="fragment fade-up"><a href="https://benrmatthews.com/how-nonprofits-use-ai-the-2025-ai-for-humanity-report/">The 2025 AI for Humanity Report (Published Oct 1)</a></p>
+						<aside class="notes"> A comprehensive report was released detailing how non-profits are utilizing AI. 
+							Key findings show that grant writing and content creation (77% of respondents) 
+							are the most common uses. 
+							The report distinguishes between "AI-Powered Nonprofits,"
+							 which build AI as a core part of their mission, 
+							 and "AI-Assisted Nonprofits," which use AI to improve internal efficiency.
+							Chatbots are the most common entry point for organizations 
+							building their own AI solutions..</aside>
+					</section>
+					<section data-background="black">
+						Things are moving fast
+					</section>
+				</section>
 				<section data-state="intro" data-background-image="assets/adamhall.jpg">
 					<section data-auto-animate data-state="focus-bg">
-						<h1 class="standout">AI Fundamentals 🤖</h1>
-					</section>
+						<h1 class="standout">Adam Hall</h1>
+						<aside class="notes">
+						Hi - BTW I’m Adam Hall. I know this because that chap looks like me.
+						</aside>
+					</section>	
 					<section data-auto-animate>
-						<h2 class="standout">Adam Hall</h2>
-						<p class="fragment fade-up" data-fragment-index="1">AI Specialist</p>
-						<p class="fragment fade-up" data-fragment-index="2"><img src="assets/clients.png" width="40%" /></p>
-					</section>
+						<h1 class="standout">Adam Hall</h1>
+						<p><img src="assets/clients.png" width="40%" /></p>
+						<aside>
+							I’ve worked with scores of brands, many of which you will recognise.
+						</aside>
+					</section>	
 					<section data-auto-animate>
-						<p><img src="assets/AND_logo.webp"></p>
-						<p class="fragment fade-up">Closing the world's digital skills gap</p>
-					</section>						
+						<style>
+							.logo-text-line {
+    display: flex;         /* Turns the <p> into a flex container */
+    align-items: center;   /* Vertically aligns the text and logo */
+    gap: 0.5em;            /* Adds a small space between the text and logo */
+    justify-content: center; /* Optional: Centers the whole line on the slide */
+}
+
+.logo-text-line img {
+    /* Set the logo height relative to the text size */
+    height: 1em; 
+    width: auto; /* Maintain aspect ratio */
+}
+						</style>
+						<h1 class="standout">Adam Hall</h1>
+
+						<p class="fragment fade-in-then-semi-out" data-fragment-index="1">Former Agile Coach</p>
+						<p class="logo-text-line fragment fade-in-then-semi-out" data-fragment-index="2">
+							<span>AI Principal at</span>
+							<img src="assets/AND_logo.png" alt="AND Digital Logo">
+						</p>
+						<aside class="notes">
+							I used to be an Agile Coach, where I was obsessed with helping teams break down work into smaller iterations and get faster feedback loops.
+							I’m currently an AI Principal, where I obsess with how to help teams embrace AI to make the work they do more agile, with faster feedback loops and more fun.
+						</aside>
+					</section>	
 					<section data-background="black">
 						<img src="assets/ai-not-replace.jpg" />
 					</section>
 				</section>
+				
 				<section data-background-image="assets/robot-future2.png">
 					<section data-auto-animate data-state="focus-bg">
 						<h1 class="standout">The growth of AI</h1>
 					</section>
 					
-					<section data-auto-animate>
-						<p>Since the talk's conception</p>
-						<p>the AI startup sector has risen 4.5x</p>
-					</section>
-					<section data-auto-animate>
-						<p>the AI startup sector has risen 4.5x</p>
-						<p>from 14,700 to 67,200 companies</p>
-					</section>
-					<section data-auto-animate>
-						<p>the AI startup sector has risen 4.5x</p>
-						<p>from 14,700 to 67,200 companies</p>
-						<sub>Source: <a href="https://tracxn.com/d/sectors/artificial-intelligence/__cbMnXfS2GfFo4Vi2dxZyUy7l4O8WyzVYLseb9keW5cI/companies">Tracxn Technologies</a></sub>
-						
-					</section>
-					<section data-auto-animate>
-						<p>the AI startup sector has risen 5x</p>
-						<iframe id="myIframe" src="https://mad.firstmark.com/" width="1024" height="550"></iframe>
-					</section>
-					<section data-auto-animate>
-						<p>the AI startup sector has risen 5x</p>
-						<p>first run in March 2023</p>
-					</section>
-
-					<section data-auto-animate>
-						<p>Example...</p>
-						<p class="fragment">Character AI announces a feature to call an AI</p>
-						<aside class="notes">
-							<p> They get 250M+ visits/mo and ~20M monthly users, largely in the US.
-								Most impressively, they see ~2B queries a day, 20% of Google Search!!
-								Character.AI serves around 20,000 queries per second – about 20% of the request volume served by Google Search, according to public sources.
-								Kids on the platform spend an average of 2 HOURS a day chatting with its bots.
-							</p>
-						</aside>
-					</section>
-
 
 
 					<style>
@@ -160,28 +191,22 @@
 						<h3 data-auto-animate-id="circle" class="growthCircle focusCircle"></h3>
 						<p data-auto-animate-id="text" class="growthText">
 							Theseus 
-							<br /> 
-							40 FLOP
 						</p>
 						<aside class="notes">
-						A robotic mouse navigates a maze in 1950
+						A robotic mouse navigates a maze in 1950. 40 FLOPs
 						</aside>
 					</section>
 					<section data-auto-animate >
 						<h3 data-auto-animate-id="circle" class="growthCircle tiny1Circle"></h3>
 						<p data-auto-animate-id="text" class="tinyText">
 							Theseus 
-							<br /> 
-							40
-							</p>
+						</p>
 							<h3 data-auto-animate-id="circle2" class="growthCircle focusCircle"></h3>
 						<p data-auto-animate-id="text2" class="growthText">
 							Perceptron Mark I
-							<br />
-							695 thousand
-							</p>
+						</p>
 						<aside class="notes">
-						First neural network in 1957. Could distinguish cards positions based on visual input
+						First neural network in 1957. Could distinguish cards positions based on visual input. 695 thousand flops.
 						</aside>
 					</section>
 					<section data-auto-animate >
@@ -189,17 +214,13 @@
 						<h3 data-auto-animate-id="circle2" class="growthCircle tiny1Circle"></h3>
 						<p data-auto-animate-id="text2" class="tinyText">
 							Perceptron Mark I
-							<br />
-							695 thousand
-							</p>
+						</p>
 							<h3 data-auto-animate-id="circle3" class="growthCircle focusCircle"></h3>
 						<p data-auto-animate-id="text3" class="growthText">
 							Neocognitron
-							<br />
-							22 million
-							</p>
+						</p>
 						<aside class="notes">
-						1980 recognise handwritten Japanese characters
+						1980 recognise handwritten Japanese characters. 22 million flops.
 						</aside>
 					</section>
 					<section data-auto-animate >
@@ -208,17 +229,13 @@
 						<h3 data-auto-animate-id="circle3" class="growthCircle tiny1Circle"></h3>
 						<p data-auto-animate-id="text2" class="tinyText">
 							Neocognitron
-							<br />
-							22 million
 							</p>
 							<h3 data-auto-animate-id="circle4" class="growthCircle focusCircle"></h3>
 						<p data-auto-animate-id="text3" class="growthText">
 							TD-Gammon
-							<br />
-							18 trillion
-							</p>
+						</p>
 						<aside class="notes">
-						1992 Plays Backgammon almost as good as a human
+						1992 Plays Backgammon almost as good as a human. 18 trillion
 						</aside>
 					</section>
 					<section data-auto-animate >
@@ -228,19 +245,13 @@
 						<h3 data-auto-animate-id="circle4" class="growthCircle tiny1Circle"></h3>
 						<p data-auto-animate-id="text4" class="tinyText">
 							TD-Gammon
-							<br />
-							18 trillion
-							</p>
-							<h3 data-auto-animate-id="circle5" class="growthCircle focusCircle"></h3>
+						</p>
+						<h3 data-auto-animate-id="circle5" class="growthCircle focusCircle"></h3>
 						<p data-auto-animate-id="text5" class="growthText">
 							AlexNet
-							<br />
-							470 Quadrillion
-							<br /> 
-							(470 petaFLOP)
-							</p>
+						</p>
 						<aside class="notes">
-						2012 Recognises objects in images.
+						2012 Recognises objects in images. 470 QUadrillion
 						</aside>
 					</section>
 					<section data-auto-animate >
@@ -251,19 +262,15 @@
 						<h3 data-auto-animate-id="circle5" class="growthCircle tiny1Circle"></h3>
 						<p data-auto-animate-id="text5" class="tinyText">
 							AlexNet
-							<br />
-							470 Quadrillion
-							<br /> 
-							(470 petaFLOP)
-							</p>
+						</p>
 							<h3 data-auto-animate-id="circle6" class="growthCircle focusCircle"></h3>
 						<p data-auto-animate-id="text6" class="growthText">
 							AlphaGo
-							<br />
-							1.9 million
 							</p>
 						<aside class="notes">
-						2016 AI beats 18-time go champion
+						2016 AI beats 18-time go champion.
+							1.9 million quadrillion
+							
 						</aside>
 					</section>
 					<section data-auto-animate >
@@ -275,17 +282,14 @@
 						<h3 data-auto-animate-id="circle6" class="growthCircle tiny1Circle"></h3>
 						<p data-auto-animate-id="text6" class="tinyText">
 							AlphaGo
-							<br />
-							1.9 million
-							</p>
+						</p>
 							<h3 data-auto-animate-id="circle7" class="growthCircle focusCircle"></h3>
 						<p data-auto-animate-id="text7" class="growthText">
 							GPT-3
-							<br />
-							314 million
+							
 							</p>
 						<aside class="notes">
-						2020 GPT-3 from OpenAI
+						2020 GPT-3 from OpenAI. 314 million quadrillion
 						</aside>
 					</section>
 					<section data-auto-animate>
@@ -301,99 +305,10 @@
 						<p>Don't let technology race away</h4>
 					</section>
 				</section>
-
-				<section data-background-image="assets/robot-wannabe.png">
-					<section data-state="focus-bg">
-						<img class="white-border" src="assets/OpenAI_Logo.png" />
-						<i>11th June, 2020</i>
-						<aside class="notes">
-							On June 11, 2020, an AI research and deployment company OpenAI – founded by Elon Musk, Sam Altman, and others – announced its revolutionary language model, GPT-3. The news quickly created buzz in tech circles with demo videos of early GPT-3 prototypes going viral on Twitter, Reddit, and Hacker News.
-						</aside>
-					</section>
-					<section data-auto-animate>
-						<img src="assets/openai.png" />
-						<img src="assets/Bloomberg-News.jpg" width="250" height="100" style="float: right;" />
-					</section>
-					<section data-auto-animate >
-						<p>I think therefor...</p>
-					</section>
-					<section data-auto-animate >
-						<p>I think therefor...</p>
-						<p>I am</p>
-					</section>
-					<section>
-						<iframe width="560" height="315" data-src="https://www.youtube.com/embed/Zm9B-DvwOgw" title="YouTube video player" 
-						frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-					</section>
-					<section data-background="black">
-						CAN. NOT. WAIT.
-					</section>
-			
-
-				
-
-					<section data-auto-animate>
-						<img src="assets/chat-gpt-adoption1.png">
-					</section>
-					<section data-auto-animate>
-						<img src="assets/chat-gpt-adoption1.png">
-						<img src="assets/chat-gpt-adoption2.png">
-					</section>
-					<section data-auto-animate>
-						<img src="assets/chat-gpt-adoption1.png">
-						<img src="assets/chat-gpt-adoption2.png">
-						<img src="assets/chat-gpt-adoption3.png">
-					</section>
-					<section data-auto-animate>
-						<img src="assets/chat-gpt-adoption1.png">
-						<img src="assets/chat-gpt-adoption3.png">
-						<img src="assets/chat-gpt-adoption4.png">
-					</section>
-					<section data-auto-animate>
-						<img src="assets/chat-gpt-adoption1.png">
-						<img src="assets/chat-gpt-adoption4.png">
-						<img src="assets/chat-gpt-adoption5.png">
-					</section>
-					<section data-auto-animate  data-background="black">
-						<img src="assets/chat-gpt-adoption1.png">
-						<img src="assets/chat-gpt-adoption5.png">
-						<img src="assets/chat-gpt-adoption6.png">
-					</section>
-				
-					<section>
-						<gpt-input data-show-input="true">
-							<div slot="context" style="font-size: 1.6rem; text-align: left;">
-								<p>
-									You are an expert professor. I am your student and I want to understand a subject.  Please teach me as if I was 10 years old. The subject is...
-								</p>
-							</div>
-						</gpt-input>
-					</section>
-					<section>
-						<gpt-input data-show-input="true">
-							<div slot="context" style="font-size: 1.6rem; text-align: left;">
-								<p>
-									You are an expert business advisor. I have a project that I've secured funding for, but I'm concerned I have tunnel vision. Give me the arguments against ...
-								</p>
-							</div>
-						</gpt-input>
-					</section>
-					
-				</section>
-				<section data-background-image="assets/robot-baby.png">
+<section data-background-image="assets/robot-baby.png">
 					<section data-state="focus-bg">
 						<h1 class="standout">Right Tool, Right Job</h1>
 					</section>
-					
-					<section data-auto-animate><p>Consider Bard</p></section>
-					<section data-auto-animate><p>Consider Bard</p>
-						<img src="assets/bard-map.png" width="70%" />
-					</section>
-		
-					<section data-auto-animate><p>Consider Bard</p>
-						<img src="assets/bard-email.png" />
-					</section>
-
 					<section data-auto-animate>
 						<p><a href="https://theresanaiforthat.com/user-interfaces/?sort=most-saved">There's an AI for that</a></p>
 					</section>
@@ -418,7 +333,7 @@
 						<p>Focus on the filters first</p>
 					</section>
 				</section>
-				
+
 				<section data-background-image="assets/robot-binoculars.png">
 					<section data-state="focus-bg">
 						<h2 class="standout">Productivity Experiment</h2>
@@ -500,46 +415,6 @@
 					</section>
 				</section>
 				
-
-				<section data-background-image="assets/robot-art2.webp">
-					<section data-state="focus-bg">
-						<h1 class="standout">Art</h1>
-					</section>
-					<section>
-						<gpt-input data-show-input="true" data-show-image="true">
-							<span slot="context" style="font-size: 1.6rem">A beautiful Arne Jacobsen Red Wingback Chair. Inside is</span>
-						</gpt-input>
-					</section>
-					<section data-auto-animate>
-						<img src="assets/art-example.jpg" style="width: 50%; height: 50%" />
-						<p class="fragment">2 likes</p>
-					</section>
-					<section data-auto-animate>
-						<img src="assets/art-example2.jpg" style="width: 50%; height: 50%" />
-						<p class="fragment">11 likes</p>
-					</section>
-					<section data-auto-animate>
-						<img src="assets/example-wes1.jpeg" width="80%" height="80%" />
-						<p class="fragment">417,865 likes</p>
-					</section>
-					<section>
-						<img src="assets/press.png" />
-					</section>
-					<section data-state="blur-bg">
-						<img src="assets/avengers-combined.png" />
-						<aside class="notes">
-							It was very pleasant having 5 minutes of fame but it came with some unexpected consequences
-						</aside>
-					</section>
-					<section data-auto-animate>
-					    <img src="assets/anti-ai-art.jpg" width="60%" height="60%" />
-						<p class="fragment">25 DECEMBER 2022</p>
-						<aside class="notes">
-							Turns out people really didn't like AI art - and I started receiving abuse.
-						</aside>
-					</section>
-                  
-				</section>
 			
 				<section data-background-image="assets/robot-gp.png">
 					<section data-state="focus-bg">
@@ -675,106 +550,48 @@
 					</section>
 				
 				</section>
-				
-				<section data-state="jobs" data-background-image="assets/robot-worry.png">
+				<section data-background-image="assets/robot-bully.png">
 					<section data-state="focus-bg">
-						<h1 class="standout">Jobs</h1>
-					</section>
-					<section data-state="blur-bg">
-						Are jobs safe in the new world?
-						<aside class="notes">
-							Truck drivers up
-							Accountants up
-							Data scientists up
-						</aside>
+						<h1 class="standout">Business Culture</h1>
 					</section>
 					<section data-auto-animate>
-						<img src="assets/jobs-research.png" />
-					</section>
-					<section data-auto-animate>
-						<img src="assets/jobs-research.png" />
-						<p>up to 49% of workers could have half or more of their tasks exposed to LLMs.</p>
-					</section>
-					<section data-auto-animate>
-						<img src="assets/jobs-research.png" />
-						<p>Better paying work has a higher chance of being automated by LLMs.</p>
-					</section>
-					<section data-auto-animate>
-						<img src="assets/jobs-research.png" />
-						<p>University educated workers have a higher chance of being automated by LLMs.</p>
-					</section>
-					
-					<section data-auto-animate>
-						<img src="assets/jobs-freelancing.png" width="75%" height="75%" />
-						<p>We are seeing Freelancing jobs take a double hit</p>
-					</section>
-					<section data-auto-animate>
-						<img src="assets/jobs-boost.png" width="75%" height="75%" />
-						<p>Leveling the playing field</p>
-					</section>
-					<section data-auto-animate>
-						<p>The more multi-faceted the role
-							<br />
-						the less risk of complete automation</p>
-						<p><a href="https://www.ft.com/content/b2928076-5c52-43e9-8872-08fda2aa2fcfjobs">John Burn-Murdoch - FT</a></p>
-					</section>
-					<section data-auto-animate>
-						<h4>The new Digital Jobs</h4>
-						<ul class="nostyle">
-							<li class="fragment">Prompt Engineer</li>
-							<li class="fragment">AI Ethicist</li>
-							<li class="fragment">Data Steward</li>
-							<li class="fragment">Cybersecuirty</li>
-							<li class="fragment">AI Law</li>
-						</ul>
-					</section>
-					<section data-auto-animate >
-						<h3 data-auto-animate-id="circle" style="position: absolute; 
-						height: 300px;
-						width: 300px;		
-						margin-left:-150px;
-						background-color: rgb(216, 32, 54);
-						color: white;
-						border-radius: 50%;
-						display: inline-block"></h3>
-						<p data-auto-animate-id="text" style="position:relative; top:80px;">
-							2,000,000
-							<br />
-							now
-							</p>
-						<aside class="notes">
-						CUMULATIVE UK VACANCIES THAT REQUIRE DIGITAL TECH SKILLS. From our own research in the UK Digital Skills Gap whitepaper from AND Digital.
+						<div class="grid-container arguments-grid">
+							<div class="grid-item anti-ai-sentiment">
+								Mindless prompting, not real work
+							</div>
+							<div class="grid-item argument-response fragment fade-in" data-fragment-index="1">
+								Share the prompts, this is a shortcut for all
+							</div>
 
-						</aside>
+							<div class="grid-item anti-ai-sentiment fragment fade-in" data-fragment-index="2">
+								They're coming for our jobs
+							</div>
+							<div class="grid-item argument-response fragment fade-in" data-fragment-index="3">
+								Help improve your job but focusing on what matters
+							</div>
+
+							<div class="grid-item anti-ai-sentiment fragment fade-in" data-fragment-index="4">
+								The output is slop
+							</div>
+							<div class="grid-item argument-response fragment fade-in" data-fragment-index="5">
+								Break it down and improve
+							</div>
+
+							<div class="grid-item anti-ai-sentiment fragment fade-in" data-fragment-index="6">
+								There's too much to learn
+							</div>
+							<div class="grid-item argument-response fragment fade-in" data-fragment-index="7">
+								Start small and work up
+							</div>
+
+							
+						</div>
 					</section>
 					
-					<section data-auto-animate >
-						<h3 data-auto-animate-id="circle"  style="position: absolute; height: 400px;
-						width: 400px;
-						margin-left:-200px;
-						background-color: rgb(216, 32, 54);
-						border-radius: 50%;
-						color: white;
-						display: inline-block"></h3>
-						<p data-auto-animate-id="text" style="position:relative; top:130px;">
-							5,000,000
-							<br />
-							3 years
-						</p>
-						<p class="fragment" style="position:relative; top:300px;">Source: <a href="https://landing.and.digital/uk_digital_skills_gap">The Nature of the Digital Skills Gap</a></p>
-					</section>
-					<section data-auto-animate>
-						<div class="pie animate">58%<br />have never received 
-							<br />digital upskilling
-							<br />from their employer</div>
-					</section>
-					<section data-auto-animate data-background="black">
-						<p>Learn the tools</p>
-					</section>
 				</section>
+
 				
-
-
+				
 				<section data-state="conclusion" data-background-image="assets/robot-future.png">
 					<section data-state="focus-bg">
 						<h1 class="standout">Conclusion</h1>
@@ -814,28 +631,44 @@
 						<img src="assets/ai-not-replace.jpg" />
 						<p>by mitch0zᵍᵐ</p>
 					</section>
-					
-					<section data-auto-animate data-background="black">
-						
+					<section data-background="black">
 						<h1>Any questions?</h1>
-						
-					
-					</section>
-					
-					<section data-state="blur-bg">
-						<h2>One more thing</h2>
-						<iframe data-src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:6935628727208837120" height="656" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
 					</section>
 					
 				</section>
+
 				<section data-state="links" data-background-image="assets/robot-admin.png">
 					<section data-auto-animate data-state="focus-bg">
-						<h1 class="standout">Links</h1>
+						<h1 class="standout">Contact Me</h1>
+						 
 					</section>
-					<section data-auto-animate data-state="blur-bg">
-						<p><a href="https://ai.com">ChatGPT</a></p>
-						<p><a href="https://arxiv.org/abs/2303.10130">An Early Look at the Labor Market Impact</a></p>
-						<p>Me on <a href="https://linkedin.com/in/thedigiguru">LinkedIn</a></p>
+					<section>
+						<div class="social-links">
+							<p>
+								<a href="https://linkedin.com/in/thedigiguru" target="_blank">
+									<i class="fa-brands fa-linkedin"></i>
+									<span>thedigiguru</span>
+								</a>
+							</p>
+							<p>
+							<a href="https://x.com/thedigiguru" target="_blank">
+								<i class="fa-brands fa-x-twitter"></i>
+								<span>thedigiguru</span>
+							</a>
+							</p>
+							<p>
+							<a href="https://instagram.com/digiguru" target="_blank">
+								<i class="fa-brands fa-instagram"></i>
+								<span>digiguru</span>
+							</a>
+							</p>
+							<p>
+							<a href="https://sigmoid.social/@digiguru" target="_blank">
+								<i class="fa-brands fa-mastodon"></i>
+								<span>digiguru</span>
+							</a>
+							</p>
+						</div>
 					</section>
 				</section>
 
@@ -850,11 +683,8 @@
 		<script src="plugin/markdown/markdown.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
 		<script>
-
-
-
-
-
+			
+			
 			Reveal.initialize({
 				hash: true,
 				// Learn about plugins: https://revealjs.com/plugins/
@@ -862,30 +692,9 @@
 				//parallaxBackgroundSize: "1578px 1578px",
 				//parallaxBackgroundHorizontal: 0,
 				
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
-
-				autoAnimateStyles: [
-					'opacity',
-					'color',
-					'background-color',
-					'padding',
-					'font-size',
-					'line-height',
-					'letter-spacing',
-					'border-width',
-					'border-color',
-					'border-radius',
-					'outline',
-					'outline-offset',
-					'grid-template-columns',
-					'width',
-					'height',
-					'transform',
-					'margin-top'
-				]
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});
 
-			
 			Reveal.on( 'slidechanged', event => {
 				const current = event.currentSlide;
 				const background = event.currentSlide.slideBackgroundContentElement.closest(".stack").querySelector(".slide-background-content")
@@ -901,7 +710,6 @@
 					
 					//Reveal.dispatchEvent("blur-bg")
 				}
-				
 				// event.previousSlide, event.currentSlide, event.indexh, event.indexv
 			} );
 
@@ -910,76 +718,4 @@
 			 
 		</script>
 	</body>
-
-<style>
-	ul.nostyle {
-  list-style-type: none;
-}
-@property --p{
-syntax: '<number>';
-inherits: true;
-initial-value: 0;
-}
-
-.pie {
---p:20;
---b:22px;
---c:darkred;
---w:400px;
-
-width:var(--w);
-aspect-ratio:1;
-position:relative;
-display:inline-grid;
-margin:5px;
-place-content:center;
-font-size:25px;
-font-weight:bold;
-font-family:sans-serif;
-}
-.pie:before,
-.pie:after {
-content:"";
-position:absolute;
-border-radius:50%;
-}
-.pie:before {
-inset:0;
-background:
-radial-gradient(farthest-side,var(--c) 98%,#0000) top/var(--b) var(--b) no-repeat,
-conic-gradient(var(--c) calc(var(--p)*1%),#0000 0);
--webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
-}
-.pie:after {
-inset:calc(50% - var(--b)/2);
-background:var(--c);
-transform:rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
-}
-.present .animate {
-animation:pin 1s 0.5s both;
-}
-.future .animate, .past .animate {
-animation:pout 1s 0.5s both;
-}
-
-.no-round:before {
-background-size:0 0,auto;
-}
-.no-round:after {
-content:none;
-}
-@keyframes pin {
-from{--p:0}
-to{--p:58}
-}
-@keyframes pout {
-from{--p:58}
-to{--p:0}
-}
-body {
-font-family:sans-serif;
-}
-
-	</style>
 </html>
