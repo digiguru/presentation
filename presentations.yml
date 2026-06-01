@@ -1,0 +1,151 @@
+# Presentations Registry
+# Every new presentation should be added to this file with the following fields:
+# - name: The event or presentation title (from page title or HTML)
+# - version: Format is vX.Y where X is last digit of year (3=2023, 4=2024, 5=2025) and Y is index of that year's talks
+# - date: When the presentation was given (DD/MM/YYYY format)
+# - url: The HTML filename
+# - attendance: Number of attendees (use ? if unknown)
+
+- name: Agile Reading
+  version: v3.0
+  date: 15/03/2023
+  url: agile-reading.html
+  attendance: 59
+
+- name: Financial Services
+  version: v3.1
+  date: 22/03/2023
+  url: nationwide.html
+  attendance: 120
+
+- name: Lightning Talk
+  version: v3.2
+  date: 23/03/2023
+  url: lightning.html
+  attendance: 10
+
+- name: UX Cop
+  version: v3.3
+  date: 21/04/2023
+  url: ux.html
+  attendance: 50
+
+- name: Recruitment
+  version: v3.4
+  date: 30/05/2023
+  url: recruitment.html
+  attendance: 55
+
+- name: .Net
+  version: v3.5
+  date: 12/07/2023
+  url: dotnet.html
+  attendance: 50
+
+- name: Tenzing
+  version: v3.6
+  date: 13/07/2023
+  url: tenzing.html
+  attendance: 50
+
+- name: Agnostic Agile
+  version: v3.7
+  date: 27/09/2023
+  url: anti-ai.html
+  attendance: 30
+
+- name: IAG
+  version: v3.8
+  date: 28/09/2023
+  url: iag.html
+  attendance: 23
+
+- name: Product
+  version: v3.9
+  date: 25/10/2023
+  url: product.html
+  attendance: 20
+
+- name: European Product Guild
+  version: v3.10
+  date: 15/11/2023
+  url: eu-product.html
+  attendance: 15
+
+- name: Empowering Tomorrow's Teams
+  version: v3.11
+  date: 21/11/2023
+  url: dfe.html
+  attendance: 38
+
+- name: A Guide to Using AI to Optimise Your Time
+  version: v3.12
+  date: 30/11/2023
+  url: and-chat.html
+  attendance: 40
+
+- name: Are Robots Replacing Us?
+  version: v3.13
+  date: 06/12/2023
+  url: aviva.html
+  attendance: 10
+
+- name: Christmas Lego Movie Sets
+  version: v3.14
+  date: 21/11/2023
+  url: christmas-lego-movie-sets.html
+  attendance: ?
+
+- name: King's College London
+  version: v4.1
+  date: 25/01/2024
+  url: kcl.html
+  attendance: 108
+
+- name: Intro to Adam Hall
+  version: v4.1
+  date: 11/07/2024
+  url: adam-hall.html
+  attendance: ?
+
+- name: Centrica
+  version: v4.2
+  date: 24/06/2024
+  url: centrica.html
+  attendance: 33
+
+- name: Intro to Adam Hall
+  version: v4.2
+  date: 09/08/2024
+  url: william-king-hack.html
+  attendance: 30
+
+- name: AI Accelerator
+  version: v4.2
+  date: 02/10/2024
+  url: ai-accelerator.html
+  attendance: 30
+
+- name: Tech West Midlands
+  version: v4.3
+  date: 01/07/2024
+  url: tech-wm.html
+  attendance: 30
+
+- name: Connecting the AIs with LBG
+  version: v5.1
+  date: 21/05/2025
+  url: ai-connections.html
+  attendance: 120
+
+- name: AI Fundamentals
+  version: v5.2
+  date: 13/10/2025
+  url: sebastians-action-trust.html
+  attendance: 30
+
+- name: Being the Human in the Loop
+  version: v5.3
+  date: 16/09/2025
+  url: thames-valley-ai.html
+  attendance: 88
