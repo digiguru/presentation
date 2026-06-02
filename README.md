@@ -10,6 +10,10 @@
 ```
 python -m http.server 3000
 ```
+or
+```
+python3 -m http.server 3000
+```
 
 Note this is deployed via github pages to art.digiguru.co.uk/presentation/*
 

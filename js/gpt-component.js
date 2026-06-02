@@ -35,6 +35,7 @@ Reveal.addEventListener( 'ready', function( event ) {
 const baseURL = 'https://ai-prompt-writer.vercel.app/',
     imageURL = baseURL + 'api/image',
     textURL = baseURL + 'api/raw',
+    streamURL = baseURL + 'api/stream',
     audioUrl = baseURL + 'api/voice';
 
 async function fetchImage (prompt) {
@@ -61,6 +62,33 @@ async function fetchText (context, messages,input) {
 		body: JSON.stringify(post)
 	});
 	return await response.json();
+}
+// Same request body as fetchText, but reads the streaming endpoint chunk-by-chunk.
+// Calls onChunk(delta, full) as text arrives and returns { output } when done.
+async function fetchTextStream (context, messages, input, onChunk) {
+	const post = {
+		system: context,
+		examples: messages,
+		prompt: input
+	}
+	const response = await fetch(streamURL, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(post)
+	});
+	const reader = response.body.getReader();
+	const decoder = new TextDecoder();
+	let full = "";
+	for(;;) {
+		const { done, value } = await reader.read();
+		if(done) break;
+		const delta = decoder.decode(value, { stream: true });
+		full += delta;
+		if(onChunk) onChunk(delta, full);
+	}
+	return { output: full };
 }
 async function fetchAudio(input, voice) {
 	const response = await fetch(audioUrl + "?voice=" + voice, {
@@ -105,6 +133,29 @@ async function queryGPT (context, messages, input, output, processVoice) {
             getAudio(outputData, processVoice, output);
         }
 		
+		return data;
+	} catch (ex) {
+		console.error(ex);
+		if(output) output.value = ex;
+	}
+}
+// Streaming counterpart to queryGPT: appends tokens to the output as they arrive.
+async function queryGPTStream (context, messages, input, output, processVoice) {
+	try {
+		if(output) output.value = "";
+		const data = await fetchTextStream(context, messages, input, (delta, full) => {
+			if(output) {
+				output.value = full;
+				output.scrollTop = output.scrollHeight;
+			}
+		});
+		const outputData = data.output;
+
+		console.log("TEXT (stream):", outputData);
+		if(processVoice) {
+			getAudio(outputData, processVoice, output);
+		}
+
 		return data;
 	} catch (ex) {
 		console.error(ex);
@@ -170,6 +221,10 @@ function define(template) {
                 return this.getAttribute('data-show-input') === 'true';
             }
 
+            get stream() {
+                return this.getAttribute('data-stream') === 'true';
+            }
+
 
             // Called anytime a new custom element is created
             constructor() {
@@ -230,8 +285,10 @@ function define(template) {
                     let image = "test";//await queryImage(inputValue, this.$img);
                     this.addHistory({title: inputValue, raw: image});
                 } else {
-                    console.log("queryGPT", {contextValue, messages, inputValue, output: this.$output, processVoice: this.processVoice});
-                    let output = await queryGPT(contextValue, messages, inputValue, this.$output, this.processVoice);
+                    console.log("queryGPT", {contextValue, messages, inputValue, output: this.$output, processVoice: this.processVoice, stream: this.stream});
+                    let output = this.stream
+                        ? await queryGPTStream(contextValue, messages, inputValue, this.$output, this.processVoice)
+                        : await queryGPT(contextValue, messages, inputValue, this.$output, this.processVoice);
                     this.addHistory({title: inputValue, raw: output});
                 }
             }

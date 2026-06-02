@@ -4,38 +4,139 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Fun with ChatGPT (index) - 15/03/2023</title>
+		<title>Presentations (index)</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
 		<link rel="stylesheet" href="dist/theme/black.css">
-		<!--<link rel="stylesheet" href="custom.css">-->
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-		
+
+		<style>
+			body {
+				font-family: "Source Sans Pro", Helvetica, sans-serif;
+				background: #191919;
+				color: #fff;
+				margin: 0;
+				padding: 2rem;
+			}
+			.index {
+				max-width: 70rem;
+				margin: 0 auto;
+			}
+			.index h1 {
+				font-size: 1.6rem;
+				font-weight: 600;
+				margin: 0.4rem 0;
+				line-height: 1.3;
+			}
+			.index .version {
+				color: #888;
+				font-weight: 400;
+				font-size: 1.1rem;
+				margin-right: 0.5rem;
+			}
+			.index a {
+				color: #42affa;
+				text-decoration: none;
+			}
+			.index a:hover {
+				text-decoration: underline;
+			}
+			.index .attendance {
+				color: #666;
+				font-size: 0.9rem;
+				margin-left: 0.5rem;
+			}
+			.index .error {
+				color: #ff6b6b;
+			}
+		</style>
 	</head>
 	<body>
-		<div>
-			<h1>v3.0 (15/03/2023) <a href="agile-reading.html">Agile Reading</a></h1>
-			<h1>v3.1 (22/03/2023) <a href="nationwide.html">Financial Services</a></h1>
-			<h1>v3.2 (23/03/2023) <a href="lightning.html">Lightning Talk</a></h1>
-			<h1>v3.3 (21/04/2023) <a href="ux.html">UX Cop</a></h1>
-			<h1>v3.4 (30/05/2023) <a href="recruitment.html">Recruitment</a></h1>
-			<h1>v3.5 (12/07/2023) <a href="dotnet.html">.Net</a></h1>
-			<h1>v3.6 (13/07/2023) <a href="tenzing.html">Tenzing</a></h1>
-			<h1>v3.7 (27/09/2023) <a href="anti-ai.html">Agnostic Agile</a></h1>
-			<h1>v3.8 (28/09/2023) <a href="iag.html">IAG</a></h1>
-			<h1>v3.9 (25/10/2023) <a href="product.html">Product</a></h1>
-			<h1>v3.10 (15/11/2023) <a href="eu-product.html">European product guild</a></h1>
-			<h1>v3.11 (21/11/2023) <a href="dfe.html">Empowering tomorrow's teams: Upgrading workforce skills</a></h1>
-			<h1>v3.12 (30/11/2023) <a href="and-chat.html">A guide to using AI to optimise your time</a></h1>
-			<h1>v3.13 (06/12/2023) <a href="aviva.html">Are Robots Replacing Us?</a></h1>
-			<h1>v4.1 (25/01/2024) <a href="kcl.html">King's College London</a></h1>
-			<h1>v4.2 (24/06/2024) <a href="centrica.html">Centrica</a></h1>
-			<h1>v4.3 (01/07/2024) <a href="tech-wm.html">Tech West Midlands</a></h1>
-			<h1>v5.1 (16/09/2025) <a href="thames-valley-ai.html">Thames Valley AI</a></h1>
+		<div class="index" id="index">Loading presentations…</div>
 
-		</div>
+		<script>
+			// Minimal parser for the flat list-of-objects format used in presentations.yml
+			function parsePresentations(yaml) {
+				const presentations = [];
+				let current = null;
+				yaml.split(/\r?\n/).forEach(function (line) {
+					// Strip comments and skip blank lines
+					if (/^\s*#/.test(line) || /^\s*$/.test(line)) return;
+
+					const itemMatch = line.match(/^-\s+(\w+):\s*(.*)$/);
+					const fieldMatch = line.match(/^\s+(\w+):\s*(.*)$/);
+
+					if (itemMatch) {
+						current = {};
+						presentations.push(current);
+						current[itemMatch[1]] = stripQuotes(itemMatch[2]);
+					} else if (fieldMatch && current) {
+						current[fieldMatch[1]] = stripQuotes(fieldMatch[2]);
+					}
+				});
+				return presentations;
+			}
+
+			function stripQuotes(value) {
+				return value.replace(/^["']|["']$/g, '').trim();
+			}
+
+			// Sort by version number (vX.Y) so newest talks appear last, matching the registry order
+			function versionKey(version) {
+				const m = (version || '').replace(/^v/, '').split('.');
+				return [parseInt(m[0], 10) || 0, parseInt(m[1], 10) || 0];
+			}
+
+			function render(presentations) {
+				presentations.sort(function (a, b) {
+					const ka = versionKey(a.version);
+					const kb = versionKey(b.version);
+					return ka[0] - kb[0] || ka[1] - kb[1];
+				});
+
+				const container = document.getElementById('index');
+				container.innerHTML = '';
+
+				presentations.forEach(function (p) {
+					const h1 = document.createElement('h1');
+
+					const version = document.createElement('span');
+					version.className = 'version';
+					version.textContent = p.version + ' (' + p.date + ')';
+
+					const link = document.createElement('a');
+					link.href = p.url;
+					link.textContent = p.name;
+
+					h1.appendChild(version);
+					h1.appendChild(link);
+
+					if (p.attendance && p.attendance !== '?') {
+						const attendance = document.createElement('span');
+						attendance.className = 'attendance';
+						attendance.textContent = '👥 ' + p.attendance;
+						h1.appendChild(attendance);
+					}
+
+					container.appendChild(h1);
+				});
+			}
+
+			fetch('presentations.yml')
+				.then(function (response) {
+					if (!response.ok) throw new Error('HTTP ' + response.status);
+					return response.text();
+				})
+				.then(function (text) {
+					render(parsePresentations(text));
+				})
+				.catch(function (err) {
+					document.getElementById('index').innerHTML =
+						'<p class="error">Could not load presentations.yml: ' + err.message + '</p>';
+				});
+		</script>
 	</body>
 </html>

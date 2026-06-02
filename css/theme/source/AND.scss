@@ -20,9 +20,10 @@
 
 /* For the Logo */
 .reveal-viewport::after {
-    content: '© 2025'; /* Empty content, we only want the background image */
-    
+    content: '© 2026'; /* Empty content, we only want the background image */
+
     font-family: 'Poppins', sans-serif; /* Good to be consistent */
+    font-weight: normal;
 
     background-image: url('../../assets/AND-logo.png'); /* Note the path change */
     background-size: contain;
