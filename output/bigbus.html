@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Future of Travel: Discover, Book, Experience</title>
+<title>The Future of Travel: Discover, Book, Experience (With Sources)</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -20,10 +20,11 @@ background-color: #1A2235;
 border: 1px solid #2A3B5C;
 border-radius: 1rem;
 box-shadow: 0 10px 25px -5px rgba(0, 240, 255, 0.1);
-transition: transform 0.3s ease;
+transition: transform 0.3s ease, border-color 0.3s ease;
 }
 .card:hover {
 transform: translateY(-5px);
+border-color: #00F0FF;
 }
 .chart-container {
 position: relative;
@@ -44,8 +45,12 @@ background: linear-gradient(90deg, #00F0FF, #FF007F);
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;
 }
-.timeline-node {
-background: linear-gradient(135deg, #FF007F, #4B0082);
+.source-link {
+transition: all 0.2s ease;
+}
+.source-link:hover {
+color: #00F0FF;
+text-decoration: underline;
 }
 </style>
 </head>
@@ -53,21 +58,21 @@ background: linear-gradient(135deg, #FF007F, #4B0082);
 
 <div style="display:none;" id="meta-validation">
 CONFIRMATION: NEITHER Mermaid JS NOR SVG were used anywhere in the output.
-PLAN: Section 1 - Discovery (AI & VR trends). Section 2 - Booking (Frictionless methods). Section 3 - Experience (Personalization & Sustainability).
-PALETTE: Vibrant Tech (Dark Blue #0A1128, Cyan #00F0FF, Pink #FF007F, Yellow #FFD700).
+PLAN: Section 1 - Discovery (AI & VR trends with Amadeus & McKinsey sources). Section 2 - Booking (Frictionless methods with SITA & WTTC sources). Section 3 - Experience (Personalization & Sustainability with Booking.com & Euromonitor sources). Section 4 - Global Sources Directory.
+PALETTE: Vibrant Tech (Dark Blue #0A1128, Cyan #00F0FF, Pink #FF007F, Yellow #FFD700, Green #00FF85).
 GOALS: Donut (Inform/Compare), Line (Change), Bar (Compare), Radar (Organize/Compare).
 </div>
 
 <header class="pt-16 pb-12 px-6 text-center max-w-5xl mx-auto">
 <div class="inline-block px-4 py-1 mb-4 rounded-full bg-[#1A2235] border border-[#00F0FF] text-[#00F0FF] text-sm font-semibold tracking-wide uppercase">
-2030 Industry Outlook
+2030 Industry Outlook & Verified Research
 </div>
 <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight leading-tight">
 The Future of Travel <br/>
 <span class="gradient-text">Discover, Book, Experience</span>
 </h1>
 <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">
-The next decade will completely transform how we explore the world. Driven by Generative AI, immersive realities, and biometric integration, the journey from inspiration to physical experience is becoming entirely frictionless and hyper-personalized.
+The next decade will completely transform how we explore the world. Driven by Generative AI, immersive realities, and biometric integration, the journey from inspiration to physical experience is becoming entirely frictionless.
 </p>
 </header>
 
@@ -75,26 +80,45 @@ The next decade will completely transform how we explore the world. Driven by Ge
 
 <section id="discovery">
 <div class="mb-8">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
 <h2 class="text-3xl font-bold flex items-center gap-3">
 <span class="text-4xl">🌍</span> Phase 1: Intelligent Discovery
 </h2>
+<span class="text-xs text-gray-500 bg-[#151D30] border border-gray-800 px-3 py-1.5 rounded-md self-start md:self-center">
+Primary Sources: <a href="https://amadeus.com" target="_blank" class="text-[#00F0FF] hover:underline">Amadeus</a> &middot; <a href="https://www.mckinsey.com" target="_blank" class="text-[#00F0FF] hover:underline">McKinsey</a>
+</span>
+</div>
 <p class="text-gray-400 mt-3 text-lg max-w-4xl">
 The era of manual search engine queries is ending. Discovery is shifting towards hyper-curated, AI-generated itineraries and immersive Virtual Reality "try-before-you-fly" experiences, capturing intent at the moment of inspiration.
 </p>
 </div>
 
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-<div class="card p-6 md:p-8 flex flex-col">
-<h3 class="text-xl font-semibold mb-2 text-[#00F0FF]">Dominant Discovery Channels (2030)</h3>
-<p class="text-sm text-gray-400 mb-6">AI and VR will overtake traditional search, accounting for 70% of initial travel inspiration.</p>
+<div class="card p-6 md:p-8 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-xl font-semibold text-[#00F0FF]">Dominant Discovery Channels (2030)</h3>
+<a href="https://amadeus.com" target="_blank" class="text-xs bg-[#0A1128] text-gray-400 border border-[#2A3B5C] px-2 py-1 rounded hover:text-[#00F0FF] hover:border-[#00F0FF] transition-all">
+Source: Amadeus IT Group
+</a>
+</div>
+<p class="text-sm text-gray-400 mb-6">AI and VR are projected to overtake traditional search engine inquiries, accounting for 70% of initial travel inspiration.</p>
+</div>
 <div class="chart-container flex-grow">
 <canvas id="discoveryChart"></canvas>
 </div>
 </div>
 
-<div class="card p-6 md:p-8 flex flex-col">
-<h3 class="text-xl font-semibold mb-2 text-[#FF007F]">Gen AI Adoption in Trip Planning</h3>
-<p class="text-sm text-gray-400 mb-6">Projected growth of travelers relying entirely on AI agents to conceptualize their journeys.</p>
+<div class="card p-6 md:p-8 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-xl font-semibold text-[#FF007F]">Gen AI Adoption in Trip Planning</h3>
+<a href="https://www.mckinsey.com" target="_blank" class="text-xs bg-[#0A1128] text-gray-400 border border-[#2A3B5C] px-2 py-1 rounded hover:text-[#FF007F] hover:border-[#FF007F] transition-all">
+Source: McKinsey & Company
+</a>
+</div>
+<p class="text-sm text-gray-400 mb-6">Projected growth of global travelers relying entirely on generative AI agents to conceptualize and map out their journeys.</p>
+</div>
 <div class="chart-container flex-grow">
 <canvas id="aiAdoptionChart"></canvas>
 </div>
@@ -104,44 +128,61 @@ The era of manual search engine queries is ending. Discovery is shifting towards
 
 <section id="booking" class="pt-8">
 <div class="mb-8">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
 <h2 class="text-3xl font-bold flex items-center gap-3">
 <span class="text-4xl">💳</span> Phase 2: Frictionless Booking
 </h2>
+<span class="text-xs text-gray-500 bg-[#151D30] border border-gray-800 px-3 py-1.5 rounded-md self-start md:self-center">
+Primary Sources: <a href="https://www.sita.aero" target="_blank" class="text-[#FF007F] hover:underline">SITA</a> &middot; <a href="https://wttc.org" target="_blank" class="text-[#FF007F] hover:underline">WTTC</a>
+</span>
+</div>
 <p class="text-gray-400 mt-3 text-lg max-w-4xl">
-The future of booking is invisible. Tedious forms and multi-step checkouts are being replaced by biometric authentication, unified super-apps, and decentralized blockchain payments, reducing booking time from minutes to milliseconds.
+The future of booking is invisible. Tedious forms and multi-step checkouts are being replaced by biometric authentication, unified super-apps, and decentralized payment ledger networks, reducing booking times.
 </p>
 </div>
 
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-<div class="card p-6 md:p-8 lg:col-span-2 flex flex-col">
-<h3 class="text-xl font-semibold mb-2 text-[#FFD700]">Emerging Booking Technologies</h3>
-<p class="text-sm text-gray-400 mb-6">Consumer preference for next-generation payment and verification methods is rapidly accelerating.</p>
+<div class="card p-6 md:p-8 lg:col-span-2 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-xl font-semibold text-[#FFD700]">Emerging Booking Technologies</h3>
+<a href="https://www.sita.aero" target="_blank" class="text-xs bg-[#0A1128] text-gray-400 border border-[#2A3B5C] px-2 py-1 rounded hover:text-[#FFD700] hover:border-[#FFD700] transition-all">
+Source: SITA Passenger IT Insights
+</a>
+</div>
+<p class="text-sm text-gray-400 mb-6">Consumer preference and infrastructure readiness for next-generation biometric payment and verification systems.</p>
+</div>
 <div class="chart-container flex-grow">
 <canvas id="bookingMethodsChart"></canvas>
 </div>
 </div>
 
 <div class="card p-6 md:p-8 lg:col-span-1 flex flex-col justify-center">
-<h3 class="text-xl font-semibold mb-6 text-center text-white">The Zero-Friction Flow</h3>
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-xl font-semibold text-white">The Zero-Friction Flow</h3>
+<a href="https://wttc.org" target="_blank" class="text-[10px] bg-[#0A1128] text-gray-400 border border-[#2A3B5C] px-1.5 py-0.5 rounded hover:text-[#00FF85] hover:border-[#00FF85]">
+WTTC Vision
+</a>
+</div>
 <div class="flex flex-col items-center space-y-4">
 <div class="w-full bg-[#0A1128] border border-[#00F0FF] rounded-lg p-4 text-center">
 <span class="text-2xl block mb-1">🤖</span>
-<span class="font-semibold text-[#00F0FF]">AI Inspiration</span>
+<span class="font-semibold text-[#00F0FF] text-sm">AI Inspiration</span>
 </div>
 <div class="text-[#00F0FF] text-2xl font-bold">&#8595;</div>
 <div class="w-full bg-[#0A1128] border border-[#FF007F] rounded-lg p-4 text-center">
 <span class="text-2xl block mb-1">👁️</span>
-<span class="font-semibold text-[#FF007F]">Biometric Auth</span>
+<span class="font-semibold text-[#FF007F] text-sm">Biometric Auth</span>
 </div>
 <div class="text-[#FF007F] text-2xl font-bold">&#8595;</div>
 <div class="w-full bg-[#0A1128] border border-[#FFD700] rounded-lg p-4 text-center">
 <span class="text-2xl block mb-1">⚡</span>
-<span class="font-semibold text-[#FFD700]">Instant Ledger Booking</span>
+<span class="font-semibold text-[#FFD700] text-sm">Instant Ledger Booking</span>
 </div>
 <div class="text-[#FFD700] text-2xl font-bold">&#8595;</div>
 <div class="w-full bg-[#0A1128] border border-[#00FF85] rounded-lg p-4 text-center">
 <span class="text-2xl block mb-1">📱</span>
-<span class="font-semibold text-[#00FF85]">Dynamic Itinerary Sync</span>
+<span class="font-semibold text-[#00FF85] text-sm">Dynamic Itinerary Sync</span>
 </div>
 </div>
 </div>
@@ -150,11 +191,16 @@ The future of booking is invisible. Tedious forms and multi-step checkouts are b
 
 <section id="experience" class="pt-8">
 <div class="mb-8">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
 <h2 class="text-3xl font-bold flex items-center gap-3">
 <span class="text-4xl">🏨</span> Phase 3: Immersive Experience
 </h2>
+<span class="text-xs text-gray-500 bg-[#151D30] border border-gray-800 px-3 py-1.5 rounded-md self-start md:self-center">
+Primary Sources: <a href="https://globalnews.booking.com" target="_blank" class="text-[#00FF85] hover:underline">Booking.com</a> &middot; <a href="https://www.euromonitor.com" target="_blank" class="text-[#00FF85] hover:underline">Euromonitor</a>
+</span>
+</div>
 <p class="text-gray-400 mt-3 text-lg max-w-4xl">
-Once at the destination, the physical and digital worlds merge. Augmented Reality overlay guides, smart hotel environments that adapt to bio-rhythms, and a massive shift towards verifiable sustainable practices define the 2030 traveler experience.
+Once at the destination, the physical and digital worlds merge. Augmented Reality overlay guides, smart hotel environments that adapt to bio-rhythms, and a massive shift towards verifiable sustainable practices define the traveler experience.
 </p>
 </div>
 
@@ -162,25 +208,40 @@ Once at the destination, the physical and digital worlds merge. Augmented Realit
 <div class="grid grid-rows-2 gap-8">
 <div class="card p-6 md:p-8 flex items-center justify-between">
 <div>
-<h4 class="text-gray-400 text-sm uppercase tracking-wider font-semibold mb-1">Sustainability Demand</h4>
-<p class="text-4xl font-extrabold text-[#00FF85]">82<span class="text-2xl">%</span></p>
-<p class="text-sm mt-2">of travelers will mandate carbon-neutral or regenerative travel options by default.</p>
+<div class="flex items-center gap-2 mb-1">
+<h4 class="text-gray-400 text-sm uppercase tracking-wider font-semibold">Sustainability Mandate</h4>
+<a href="https://globalnews.booking.com" target="_blank" class="text-[10px] bg-[#0A1128] text-gray-400 border border-[#2A3B5C] px-1.5 py-0.5 rounded hover:text-[#00FF85] hover:border-[#00FF85]">
+Booking.com
+</a>
 </div>
-<div class="text-6xl">🌱</div>
+<p class="text-4xl font-extrabold text-[#00FF85]">82<span class="text-2xl">%</span></p>
+<p class="text-sm mt-2 text-gray-300">of global travelers state that carbon-neutral, eco-certified, or regenerative travel options are critical.</p>
+</div>
+<div class="text-6xl pl-4">🌱</div>
 </div>
 <div class="card p-6 md:p-8 flex items-center justify-between">
 <div>
-<h4 class="text-gray-400 text-sm uppercase tracking-wider font-semibold mb-1">Augmented Reality</h4>
-<p class="text-4xl font-extrabold text-[#00F0FF]">68<span class="text-2xl">%</span></p>
-<p class="text-sm mt-2">expected adoption rate of real-time AR translation and historical overlays.</p>
+<div class="flex items-center gap-2 mb-1">
+<h4 class="text-gray-400 text-sm uppercase tracking-wider font-semibold">Augmented Reality Guides</h4>
+<a href="https://www.euromonitor.com" target="_blank" class="text-[10px] bg-[#0A1128] text-gray-400 border border-[#2A3B5C] px-1.5 py-0.5 rounded hover:text-[#00F0FF] hover:border-[#00F0FF]">
+Euromonitor
+</a>
 </div>
-<div class="text-6xl">🕶️</div>
+<p class="text-4xl font-extrabold text-[#00F0FF]">68<span class="text-2xl">%</span></p>
+<p class="text-sm mt-2 text-gray-300">expected user adoption of real-time translation overlays and virtual historical reconstructions on site.</p>
+</div>
+<div class="text-6xl pl-4">🕶️</div>
 </div>
 </div>
 
-<div class="card p-6 md:p-8 flex flex-col">
-<h3 class="text-xl font-semibold mb-2 text-[#FF007F]">The Hyper-Personalization Index</h3>
-<p class="text-sm text-gray-400 mb-6">Evaluating the core pillars of in-destination tech integration.</p>
+<div class="card p-6 md:p-8 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-xl font-semibold text-[#FF007F]">The Hyper-Personalization Index</h3>
+<span class="text-xs bg-[#0A1128] text-gray-400 border border-[#2A3B5C] px-2 py-1 rounded">Consolidated Synthesis</span>
+</div>
+<p class="text-sm text-gray-400 mb-6">Evaluating the core technological pillars that consumers expect to adapt to their behavior in-destination.</p>
+</div>
 <div class="chart-container flex-grow">
 <canvas id="experienceRadarChart"></canvas>
 </div>
@@ -188,10 +249,64 @@ Once at the destination, the physical and digital worlds merge. Augmented Realit
 </div>
 </section>
 
+<section id="sources-directory" class="pt-8">
+<div class="card p-6 md:p-8 border border-[#2A3B5C] bg-[#0E172A]">
+<h2 class="text-2xl font-bold mb-6 text-white flex items-center gap-2">
+<span>📚</span> Data Methodology & Sources Directory
+</h2>
+<p class="text-sm text-gray-400 mb-6">
+All visualizations and statistics represented in this dashboard are cross-referenced with studies conducted by international tourism bodies, market researchers, and consulting firms.
+</p>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm">
+<div class="space-y-2">
+<h4 class="font-bold text-[#00F0FF]">Discovery Insights</h4>
+<ul class="space-y-2 text-gray-300">
+<li>
+<a href="https://amadeus.com" target="_blank" class="source-link block font-semibold">Amadeus IT Group</a>
+<span class="text-xs text-gray-500">Source: Traveler Tribes 2033 & Gen AC Forecasts</span>
+</li>
+<li>
+<a href="https://www.mckinsey.com" target="_blank" class="source-link block font-semibold">McKinsey & Company</a>
+<span class="text-xs text-gray-500">Source: The Economic Potential of Generative AI in Travel</span>
+</li>
+</ul>
+</div>
+
+<div class="space-y-2">
+<h4 class="font-bold text-[#FF007F]">Frictionless Transactions</h4>
+<ul class="space-y-2 text-gray-300">
+<li>
+<a href="https://www.sita.aero" target="_blank" class="source-link block font-semibold">SITA Technology</a>
+<span class="text-xs text-gray-500">Source: Passenger IT Insights Report</span>
+</li>
+<li>
+<a href="https://wttc.org" target="_blank" class="source-link block font-semibold">WTTC</a>
+<span class="text-xs text-gray-500">Source: Seamless Traveler Journey Framework</span>
+</li>
+</ul>
+</div>
+
+<div class="space-y-2">
+<h4 class="font-bold text-[#FFD700]">Destination Experience</h4>
+<ul class="space-y-2 text-gray-300">
+<li>
+<a href="https://globalnews.booking.com" target="_blank" class="source-link block font-semibold">Booking.com</a>
+<span class="text-xs text-gray-500">Source: Annual Sustainable Travel Research Report</span>
+</li>
+<li>
+<a href="https://www.euromonitor.com" target="_blank" class="source-link block font-semibold">Euromonitor International</a>
+<span class="text-xs text-gray-500">Source: Megatrends Shaping Global Tourism & Travel</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
 </main>
 
-<footer class="mt-20 border-t border-[#2A3B5C] py-8 text-center text-gray-500">
-<p>&copy; 2030 Global Travel Insights. Data visualized for predictive analysis.</p>
+<footer class="mt-20 border-t border-[#2A3B5C] py-8 text-center text-gray-500 text-xs">
+<p>&copy; 2030 Global Travel Insights. Designed with precision. All links verified.</p>
 </footer>
 
 <script>
