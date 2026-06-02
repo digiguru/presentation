@@ -300,6 +300,18 @@
 
 			QUnit.config.testTimeout = 30000;
 
+			// Tests are registered inside each deck's async 'ready' handler, and the
+			// decks initialize asynchronously (deck2 even fetches an external .md file).
+			// Hold QUnit's start until every deck is ready so all tests are registered
+			// before the run begins — otherwise the test count varies run-to-run and
+			// CI sees intermittent failures.
+			QUnit.config.autostart = false;
+			const TOTAL_DECKS = 6;
+			let decksReady = 0;
+			function deckReady() {
+				if ( ++decksReady === TOTAL_DECKS ) QUnit.start();
+			}
+
 			let deck1 = new Reveal( document.querySelector( '.deck1' ), { plugins: [ Markdown ] })
 			deck1.addEventListener( 'ready', function() {
 
@@ -469,6 +481,11 @@
 				});
 
 			} );
+
+			// Added after each deck's test-registration 'ready' listener, so for every
+			// deck that handler fires first; QUnit.start() only runs once all six are
+			// ready and all tests are registered.
+			[ deck1, deck2, deck3, deck4, deck5, deck6 ].forEach( deck => deck.addEventListener( 'ready', deckReady ) );
 
 			deck1.initialize();
 			deck2.initialize();
