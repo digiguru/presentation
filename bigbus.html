@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>AI with BigBus - (Big Bus - v6.1  - 02/06/2026)</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="dist/theme/AND.css">
+		<link rel="stylesheet" href="custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+	</head>
+	<body>
+		<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RZP8CG4KLJ"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.5/base64.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-RZP8CG4KLJ');
+</script>
+
+
+
+		<div class="reveal background">
+			<div class="slides">
+
+				<!-- 1. INTRO -->
+				<section data-state="intro" data-background-image="assets/adamhall.jpg">
+					<section data-auto-animate data-state="focus-bg">
+						<h2>AI with BigBus</h2>
+					</section>
+					<section data-auto-animate data-state="black">
+						<p>Stay standing up if....</p>
+						<ul>
+							<li class="fragment fade-up">You have used an LLM</li>
+							<li class="fragment fade-up">You have used an LLM to write a report</li>
+							<li class="fragment fade-up">You have learned something new using an LLM</li>
+							<li class="fragment fade-up">You have written an AI voice service</li>
+							<li class="fragment fade-up">You have written an AI Agent application</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="black">
+						<h2>Adam Hall</h2>
+						<h3 class="fragment fade-in-then-semi-out">AI Addict</h3>
+						<h3 class="fragment fade-in-then-semi-out">Wrote Google Digital Garage's AI productivity training</h3>
+						<h3 class="fragment fade-in-then-semi-out">Coached over 70 companies in their AI Adoption</h3>
+						<h3 class="fragment fade-in-then-semi-out">⚠️ Warning Live Demos ⚠️</h3>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/ai-growth.png">
+					</section>
+				</section>
+
+				<!-- 2. WHAT ARE LLMs -->
+				<section data-background-image="assets/robot-wannabe.png">
+					<section data-state="focus-bg">
+						<img class="white-border" src="assets/OpenAI_Logo.png" />
+						<i>11th June, 2020</i>
+						<aside class="notes">
+							On June 11, 2020, an AI research and deployment company OpenAI – founded by Elon Musk, Sam Altman, and others – announced its revolutionary language model, GPT-3. The news quickly created buzz in tech circles with demo videos of early GPT-3 prototypes going viral on Twitter, Reddit, and Hacker News.
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/openai.png" />
+						<img src="assets/Bloomberg-News.jpg" width="250" height="100" style="float: right;" />
+					</section>
+					<section data-auto-animate >
+						<p>I think therefor...</p>
+					</section>
+					<section data-auto-animate >
+						<p>I think therefor...</p>
+						<p>I am</p>
+					</section>
+					<section>
+						<iframe width="560" height="315" data-src="https://www.youtube.com/embed/Zm9B-DvwOgw" title="YouTube video player"
+						frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+					</section>
+					<section data-background="black">
+						CAN. NOT. WAIT.
+					</section>
+
+					<!-- 3. SEAHORSE EMOJI - LIVE DEMO -->
+					<section data-auto-animate>
+						<p>Ask it something simple...</p>
+					</section>
+					<section data-auto-animate>
+						<p>Ask it something simple...</p>
+						<p>The seahorse emoji 🐠?</p>
+					</section>
+					<section>
+						<gpt-input data-show-input="true">
+							<div slot="context" style="font-size: 1.6rem; text-align: left;">
+								<p>
+									You are a helpful assistant. Answer concisely with just the emoji and nothing else. The user wants you to...
+								</p>
+							</div>
+						</gpt-input>
+						<aside class="notes">
+							Type: "find me the seahorse emoji". There is no seahorse emoji - watch the model confidently spiral, insisting it exists and offering wrong substitutes. A great live demonstration of confident hallucination.
+						</aside>
+					</section>
+					<section data-background="black">
+						<p>Confidently wrong</p>
+						<aside class="notes">
+							The model is certain - but there has never been a seahorse emoji. Confidence is not correctness.
+						</aside>
+					</section>
+
+					<!-- 4. ADOPTION GROWTH ("Linas quotes") -->
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption2.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption2.png">
+						<img src="assets/chat-gpt-adoption3.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption3.png">
+						<img src="assets/chat-gpt-adoption4.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption4.png">
+						<img src="assets/chat-gpt-adoption5.png">
+					</section>
+					<section data-auto-animate  data-background="black">
+						<img src="assets/chat-gpt-adoption1.png">
+						<img src="assets/chat-gpt-adoption5.png">
+						<img src="assets/chat-gpt-adoption6.png">
+					</section>
+				</section>
+
+				<!-- 5. MODELS UPDATE THEMSELVES -->
+				<section data-background-image="assets/robot-art2.webp">
+					<section data-state="focus-bg">
+						<h2 class="standout">Models keep getting better</h2>
+						<aside class="notes">
+							Midjourney has revved its model approximately once every 4 months, slowly getting better and better over time.
+						</aside>
+					</section>
+					<section data-auto-animate>
+<style>
+        /* The main container that holds all the grid items */
+        .grid-container {
+            display: grid;
+            /* This is the key property: it creates 5 columns of equal fractional width (1fr) */
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem; /* This creates space between the grid items */
+            padding: 1.5rem;
+            font-family: sans-serif;
+        }
+
+        /* Styling for each individual cell in the grid */
+        .grid-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px); /* Add a slight lift effect on hover */
+        }
+
+        /* Styling for the paragraph text */
+        .grid-item p {
+            margin: 0 0 10px 0; /* Remove default margins */
+            font-weight: bold;
+			font-size: small;
+            color: #333;
+        }
+
+        /* Styling for the image within each grid cell */
+        .grid-item img {
+            max-width: 100%; /* Ensures the image is never wider than its container */
+            height: auto;    /* Maintains the image's aspect ratio */
+            border-radius: 4px;
+        }
+
+        /* --- Responsive Design --- */
+        /* For tablets and smaller devices */
+        @media (max-width: 992px) {
+            .grid-container {
+                grid-template-columns: repeat(3, 1fr); /* Change to 3 columns */
+            }
+        }
+
+        /* For mobile phones */
+        @media (max-width: 600px) {
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr); /* Change to 2 columns */
+            }
+        }
+    </style>
+						<div class="grid-container">
+                    <div class="grid-item">
+                        <p>V1 - Feb 2022</p>
+                        <img src="https://cdn.midjourney.com/13e7a134-63cb-4c9a-8eec-12eb6706a39e/0_2.png" alt="Midjourney V1">
+                    </div>
+                    <div class="grid-item fragment fade-up">
+                        <p>V2 - Apr 2022</p>
+                        <img src="https://cdn.midjourney.com/09bdc755-cfd2-4e1a-9d64-f29053b407cb/0_0.png" alt="Midjourney V2">
+                    </div>
+                    <div class="grid-item fragment fade-up">
+                        <p>V3 - July 2022</p>
+                        <img src="https://cdn.midjourney.com/6a28a794-5703-4634-afd9-b82fcdac048f/0_3.png" alt="Midjourney V3">
+                    </div>
+                    <div class="grid-item fragment fade-up">
+                        <p>V4 - Nov 2022</p>
+                        <img src="https://cdn.midjourney.com/acae9b21-6922-4caa-a2a5-f4ac53eda796/0_3.png" alt="Midjourney V4">
+                    </div>
+                    <div class="grid-item fragment fade-up">
+                        <p>V5 - Mar 2023</p>
+                        <img src="https://cdn.midjourney.com/158883d9-3922-4f31-9d45-99a8e308767f/0_2.png" alt="Midjourney V5">
+                    </div>
+                    <div class="grid-item fragment fade-up">
+                        <p>V5.1 - May 2023</p>
+                        <img src="https://cdn.midjourney.com/0e8522d4-74fa-4530-81a4-0719b9319034/0_3.png" alt="Midjourney V5.1">
+                    </div>
+                    <div class="grid-item fragment fade-up">
+                        <p>V5.2 - June 2023</p>
+                        <img src="https://cdn.midjourney.com/79d29616-0eac-4b53-9090-791996269aa1/0_1.png" alt="Midjourney V5.2">
+                    </div>
+                    <div class="grid-item fragment fade-up">
+                        <p>V6 - Dec 2023</p>
+                        <img src="https://cdn.midjourney.com/11d066a8-0b2e-4752-8b5d-50faeb95376e/0_1.png" alt="Midjourney V6">
+                    </div>
+                    <div class="grid-item fragment fade-up">
+                        <p>V6.1 - July 2024</p>
+                        <img src="https://cdn.midjourney.com/e8e205ec-b4ee-4f34-a84e-fe4a19ee7088/0_1.png" alt="Midjourney V6.1">
+                    </div>
+                    <div class="grid-item fragment fade-up">
+                        <p>V7 - Apr 2025</p>
+                        <img src="https://cdn.midjourney.com/2cfe2f1f-a779-4446-b023-82efafc9a698/0_1.png" alt="Midjourney V7">
+                    </div>
+                </div>
+						<aside class="notes">
+							Watch as we skip forward about half a year with each version until we arrive at today's. The models update themselves - your job is to keep up.
+						</aside>
+					</section>
+					<section data-auto-animate>
+						<h2>Keep up to date</h2>
+						<p class="fragment fade-up">Outsource the updates</p>
+						<p class="fragment fade-up">Don't rely on old models</p>
+					</section>
+					<section data-background="black">
+						Always be trying out the latest model
+					</section>
+				</section>
+
+				<!-- 6. RESEARCH (OpenAI focused) -->
+				<section data-background-image="assets/robot-admin.png">
+					<section>
+						<h1 class="standout">Research</h1>
+					</section>
+					<section>
+						<h2>Research with OpenAI Deep Research</h2>
+						<ul>
+							<li class="fragment fade-up">Get information about a company</li>
+							<li class="fragment fade-up">Do analysis on different Software Vendors</li>
+							<li class="fragment fade-up">Find the best price on a given thing</li>
+							<li class="fragment fade-up">Do a deep dive into a topic</li>
+							<li class="fragment fade-up"><a href="https://chatgpt.com/" target="_blank">ChatGPT Deep Research</a></li>
+						</ul>
+					</section>
+					<section>
+						<h2>Research callouts</h2>
+						<ul>
+							<li class="fragment fade-up">Read the actual content</li>
+							<li class="fragment fade-up">It can miss key examples, be as specific as possible</li>
+							<li class="fragment fade-up">There is an environmental impact, limit the scope</li>
+							<li class="fragment fade-up">Be open about how you arrived at the conclusions</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Research Alternatives</h2>
+						<ul>
+							<li>OpenAI Deep Research</li>
+							<li>Google Deep Research</li>
+							<li>Perplexity Deep Research</li>
+							<li>Grok Deeper Search</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Use AI to take the grunt-work out of research</p>
+					</section>
+				</section>
+
+				<!-- 7. CLASSIFY -->
+				<section data-background-image="assets/robot-app-dev.webp">
+					<section data-state="focus-bg">
+						<h1 class="standout">Classify</h1>
+					</section>
+					<section>
+						<h2>Classify with Teachable Machine</h2>
+						<ul>
+							<li class="fragment fade-up">Easily create your own image classification</li>
+							<li class="fragment fade-up">Runs offline once trained</li>
+							<li class="fragment fade-up">Better for the environment</li>
+							<li class="fragment fade-up">Can do audio</li>
+							<li class="fragment fade-up"><a href="https://teachablemachine.withgoogle.com/train" target="_blank">Teachable Machine</a></li>
+						</ul>
+					</section>
+					<section>
+						<h2>Classify callouts</h2>
+						<ul>
+							<li class="fragment fade-up">Time consuming</li>
+							<li class="fragment fade-up">You will need an admin process</li>
+							<li class="fragment fade-up">Opaque - it will work, but you can't tell why it works</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Alternatives to Teachable Machine</h2>
+						<ul>
+							<li class="fragment fade-up">Gradient</li>
+							<li class="fragment fade-up">Open Mind</li>
+							<li class="fragment fade-up">Label Studio</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p>Make really bespoke user experiences</p>
+					</section>
+				</section>
+
+				<!-- 8. RIGHT TOOL, RIGHT JOB -->
+				<section data-background-image="assets/robot-baby.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Right Tool, Right Job</h1>
+					</section>
+					<section data-auto-animate>
+						<p><a href="https://theresanaiforthat.com/user-interfaces/?sort=most-saved">There's an AI for that</a></p>
+					</section>
+					<section data-auto-animate>
+						<p><a href="https://theresanaiforthat.com/user-interfaces/?sort=most-saved">There's an AI for that</a></p>
+						<img src="assets/AI-for-that.png">
+					</section>
+					<section data-auto-animate>
+						<p>Assess your tools regularly</p>
+						<ul class="nostyle">
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="2">Legal</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="3">Ethics</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="1">Price</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="4">Impact</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="5">Interoperability</li>
+							<li class="fragment fade-in-then-semi-out" data-fragment-index="6">Documentation</li>
+						</ul>
+					</section>
+					<section data-background="black">
+						<p>Focus on the filters first</p>
+					</section>
+				</section>
+
+				<!-- 9. PRODUCTIVITY EXPERIMENT -->
+				<section data-background-image="assets/robot-binoculars.png">
+					<section data-state="focus-bg">
+						<h2 class="standout">Productivity Experiment</h2>
+					</section>
+					<section data-auto-animate>
+						<h1>Context</h1>
+						<ul class="nostyle">
+							<li class="fragment fade-in-then-semi-out">Short time period</li>
+							<li class="fragment fade-in-then-semi-out">2 separate teams</li>
+							<li class="fragment fade-in-then-semi-out">Migrate to a new codebase</li>
+						</ul>
+					</section>
+					<section data-auto-animate>
+						<h3 data-auto-animate-id="traditional-bar" style="position: absolute;
+						height: 94px;
+						width: 250px;
+						margin-left:-450px;
+						background-color: rgb(216, 32, 54);
+						color: white;
+						display: inline-block"></h3>
+						<p data-auto-animate-id="traditional-text" style="position:relative;margin-left:-660px;">Traditional</p>
+						<h3 data-auto-animate-id="genai-bar" style="position: absolute;
+						height: 94px;
+						width: 250px;
+						margin-left:-450px;
+						background-color: rgb(64, 88, 225);
+						color: white;
+						display: inline-block"></h3>
+						<p data-auto-animate-id="genai-text" style="position:relative;margin-left:-748px; margin-top: 42px;">Gen AI</p>
+
+					</section>
+					<section data-auto-animate >
+						<h3 data-auto-animate-id="traditional-bar" style="position: absolute;
+						height: 94px;
+						width: 875px;
+						margin-left:-450px;
+						background-color: rgb(216, 32, 54);
+						color: white;
+						display: inline-block"></h3>
+						<p data-auto-animate-id="traditional-text" style="position:relative;margin-left:-660px;">Traditional</p>
+						<h3 data-auto-animate-id="genai-bar" style="position: absolute;
+						height: 94px;
+						width: 750px;
+						margin-left:-450px;
+						background-color: rgb(64, 88, 225);
+						color: white;
+						display: inline-block"></h3>
+
+						<p data-auto-animate-id="genai-text" style="position:relative;margin-left:-748px; margin-top: 42px;">Gen AI</p>
+						<p data-auto-animate-id="genai-text-label" style="position:relative;margin-top:-78px; margin-left:748px;">15%</p>
+					</section>
+
+					<section data-auto-animate >
+						<h3 data-auto-animate-id="traditional-bar" style="position: absolute;
+						height: 94px;
+						width: 875px;
+						margin-left:-450px;
+						background-color: rgba(0, 0, 0, 0);
+						color: white;
+						display: inline-block"></h3>
+						<h1 data-auto-animate-id="traditional-text" style="position:relative;margin-left:-660px;">Tips</h1>
+						<h3 data-auto-animate-id="genai-bar"  style="position: absolute; height: 500px;
+						width: 500px;
+						background-color: rgb(64, 88, 225);
+						border-radius: 50%;
+						margin-left: -250px;
+						margin-top: 50px;
+						color: white;
+						display: inline-block"></h3>
+
+						<div style="position:relative; top:200px;">
+							<p class="fragment fade-in-then-semi-out">Learn the tools</p>
+							<p class="fragment fade-in-then-semi-out">Work in small teams</p>
+							<p class="fragment fade-in-then-semi-out">Communicate</p>
+						</div>
+					</section>
+					<section data-auto-animate data-background="black">
+						<p class="standout">Learn to use the tools by using the tools</p>
+					</section>
+				</section>
+
+				<!-- 10. EMPATHY -->
+				<section data-background-image="assets/robot-gp.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Empathy</h1>
+						<aside class="notes">
+							When it comes to Empathy at least that's a quality we humans will always have over AI, right?
+						</aside>
+					</section>
+					<section data-chart="four" data-auto-animate>
+						<p>Who is more empathetic, humans or AI?</p>
+						<canvas></canvas>
+					</section>
+					<section data-auto-animate>
+						<img src="assets/health-empathy.png">
+						<p>ChatGPT has better bedside manner than Physicians*</p>
+					</section>
+					<section data-auto-animate data-transition="slide">
+						<img src="assets/health-empathy.png">
+						<p>ChatGPT has better bedside manner than Physicians*</p>
+						<sub>*according to health-care professionals</sub>
+					</section>
+					<section data-transition="slide-in">
+						<img src="assets/health-quality.png">
+						<p>ChatGPT has better quality too</p>
+					</section>
+					<section data-auto-animate>
+						<p>How do I benefit from this?</p>
+					</section>
+					<section data-auto-animate>
+						<p>How do I benefit from this?</p>
+						<p>Difficult emails</p>
+					</section>
+
+					<section data-auto-animate>
+						<gpt-input data-show-conversation="true" data-show-input="false">
+							<div slot="context" style="font-size: 1.6rem; text-align: left;">
+								<p>
+									I'd like you to rewrite this email. It's for a complaint I have about the way I've been treated.
+								</p>
+							</div>
+							<div slot="conversation" style="font-size: 0.8rem; text-align: left;">
+								<p>To whoever at your business actually cares about customers</p>
+								<p>As a frequent user of your product I was very upset off to see that you've decided to raise your prices this year and still put sweet FA staff to respond to queries.</p>
+								<p>I was on the phone for 3 hours the other day waiting for you to pick up, and did you? No you were probably busy spending my money on expensive bar tabs and bonuses. I should charge you for your incompetence.</p>
+								<p>Anyway, I'm writing to tell you I'm giving my notice as a customer and I demand a SIP ref so I can change to a decent supplier</p>
+								<p>Good riddance </p>
+							</div>
+						</gpt-input>
+					</section>
+					<section data-background="black">
+						Use AI to make you more human
+					</section>
+				</section>
+
+				<!-- 11. MISINFORMATION -->
+				<section data-background-image="assets/robot-sad.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Misinformation</h1>
+					</section>
+
+					<section data-auto-animate>
+						<img src="assets/misinformation1.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/misinformation1.png">
+						<img src="assets/misinformation2.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/misinformation2.png">
+						<img src="assets/misinformation3.png">
+					</section>
+					<section data-auto-animate>
+						<img src="assets/misinformation3.png">
+						<img src="assets/misinformation4.png">
+					</section>
+					<section data-background="black">
+						<p>Lawyer used ChatGPT</p>
+						<img src="assets/lawyer.png" width="50%" height="50%" />
+						<aside class="notes">
+							In June of this year, 2 New York lawyers were fined after unwittingly submitting a legal brief containing fake case citations hallucinated by ChatGPT.
+						</aside>
+						<p>Source: <a href="https://www.bbc.co.uk/news/world-us-canada-65735769">US lawyer admits using AI for case research</a></p>
+					</section>
+
+					<section data-background="black">
+						It's not a search engine
+					</section>
+				</section>
+
+				<!-- 12. VOICE (live) -->
+				<section data-background-image="assets/robot-tweed.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Voice</h1>
+					</section>
+					<section data-auto-animate>
+						<p>Give it a persona</p>
+					</section>
+					<section>
+						<gpt-input data-show-input="true" data-process-voice="joker">
+							<div slot="context" style="text-align: left; font-size: 1.4rem">I want you to respond as if you are the joker. In just one short paragraph. Add in the noise of onomatopoeic laughter where relevant. Be as twisted and demented as possible tell me...</div>
+						</gpt-input>
+						<aside class="notes">
+							Type a prompt - the model responds in character AND speaks it aloud via text-to-speech.
+						</aside>
+					</section>
+					<section data-background="black">
+						AI can speak in any voice
+					</section>
+				</section>
+
+				<!-- 13. CONCLUSION -->
+				<section data-state="conclusion" data-background-image="assets/robot-future.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">Conclusion</h1>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it good for?</h2>
+						<ul>
+							<li class="fragment fade-in-then-semi-out">Productivity</li>
+							<li class="fragment fade-in-then-semi-out">Learning new things</li>
+							<li class="fragment fade-in-then-semi-out">Minimum Viable Experiments</li>
+							<li class="fragment fade-in-then-semi-out">Exploring ideas</li>
+							<li class="fragment fade-in-then-semi-out">Improving the way you communicate</li>
+							<li class="fragment fade-in-then-semi-out">Becoming data driven</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<h2>What is it bad at?</h2>
+						<ul>
+							<li class="fragment fade-in-then-semi-out">Single source of Truth</li>
+							<li class="fragment fade-in-then-semi-out">Reliability</li>
+							<li class="fragment fade-in-then-semi-out">Complexity & Nuance</li>
+							<li class="fragment fade-in-then-semi-out">Amplification of bias</li>
+							<li class="fragment fade-in-then-semi-out">Unique thought</li>
+							<li class="fragment fade-in-then-semi-out">Specialist domain knowledge</li>
+						</ul>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<div style=" float: left; width: 30%; height: 30%">
+							<img src="assets/ginni.jpg" />
+							<p class="fragment">Ginni Rometty</p>
+						</div>
+						<p class="fragment">
+							Some people call this artificial intelligence, but the reality is this technology will enhance us. So instead of artificial intelligence, I think we'll augment our intelligence.
+						</p>
+					</section>
+					<section data-state="blur-bg">
+						<img src="assets/ai-not-replace.jpg" />
+						<p>by mitch0zᵍᵐ</p>
+					</section>
+				</section>
+
+				<!-- 14. GEO -->
+				<section data-background-image="assets/robot-future2.png">
+					<section data-state="focus-bg">
+						<h1 class="standout">GEO</h1>
+					</section>
+					<section data-auto-animate>
+						<h2>GEO is the new SEO</h2>
+						<p class="fragment fade-up">Generative Engine Optimization</p>
+					</section>
+					<section data-auto-animate>
+						<h2>What is it?</h2>
+						<ul>
+							<li class="fragment fade-up">SEO got you ranked in the blue links</li>
+							<li class="fragment fade-up">GEO gets you cited inside the AI's answer</li>
+							<li class="fragment fade-up">ChatGPT, Perplexity, Gemini, Google AI Overviews</li>
+						</ul>
+					</section>
+					<section data-auto-animate>
+						<h2>Why does it matter?</h2>
+						<ul>
+							<li class="fragment fade-up">Search is shifting to AI answers</li>
+							<li class="fragment fade-up">Fewer clicks, more "zero-click" answers</li>
+							<li class="fragment fade-up">You want to be the source the model quotes</li>
+						</ul>
+					</section>
+					<section data-auto-animate>
+						<h2>How do you do it?</h2>
+						<ul>
+							<li class="fragment fade-up">Write clear, factual statements</li>
+							<li class="fragment fade-up">Structure content as questions &amp; answers</li>
+							<li class="fragment fade-up">Add schema and an <code>llms.txt</code></li>
+							<li class="fragment fade-up">Earn authoritative citations &amp; brand mentions</li>
+							<li class="fragment fade-up">Keep your content fresh</li>
+						</ul>
+					</section>
+					<section data-background="black">
+						<p>Optimise to be the answer, not the link</p>
+					</section>
+				</section>
+
+				<!-- 15. MCP -->
+				<section data-background-image="assets/robot-party.webp">
+					<section data-state="focus-bg">
+						<h1 class="standout">MCP</h1>
+					</section>
+					<section data-auto-animate>
+						<h2>What is MCP?</h2>
+						<ul>
+							<li class="fragment fade-up">Model Context Protocol</li>
+							<li class="fragment fade-up">An open standard from Anthropic</li>
+							<li class="fragment fade-up">"USB-C for AI"</li>
+							<li class="fragment fade-up">Connects LLMs to tools, data &amp; actions</li>
+						</ul>
+					</section>
+					<section data-auto-animate>
+						<h2>Why does it exist?</h2>
+						<ul>
+							<li class="fragment fade-up">Stop rebuilding bespoke integrations</li>
+							<li class="fragment fade-up">Any AI app can talk to any tool</li>
+							<li class="fragment fade-up">Agents that <em>do</em> things, not just chat</li>
+						</ul>
+					</section>
+					<section data-auto-animate>
+						<h2>How does it work?</h2>
+						<ul>
+							<li class="fragment fade-up">MCP <strong>servers</strong> expose tools &amp; resources</li>
+							<li class="fragment fade-up">MCP <strong>clients</strong> (Claude, IDEs, agents) connect</li>
+							<li class="fragment fade-up">Client ↔ MCP server ↔ your data / API</li>
+							<li class="fragment fade-up"><a href="https://modelcontextprotocol.io" target="_blank">modelcontextprotocol.io</a></li>
+						</ul>
+					</section>
+					<section data-background="black">
+						<p>Build the plug once, every model can use it</p>
+					</section>
+				</section>
+
+				<!-- 16. QUESTIONS -->
+				<section data-background="black">
+					<h1>Any questions?</h1>
+				</section>
+
+				<!-- 17. LINKS / CONTACT -->
+				<section data-state="links" data-background-image="assets/robot-admin.png">
+					<section data-auto-animate data-state="focus-bg">
+						<h1 class="standout">Links</h1>
+					</section>
+					<section data-auto-animate data-state="blur-bg">
+						<p><a href="https://chatgpt.com/" target="_blank">ChatGPT Deep Research</a></p>
+						<p><a href="https://teachablemachine.withgoogle.com/train" target="_blank">Teachable Machine</a></p>
+						<p><a href="https://theresanaiforthat.com/" target="_blank">There's an AI for that</a></p>
+						<p><a href="https://modelcontextprotocol.io" target="_blank">Model Context Protocol</a></p>
+						<p><a href="https://arxiv.org/abs/2311.09735" target="_blank">GEO: Generative Engine Optimization</a></p>
+					</section>
+					<section>
+						<div class="social-links">
+							<p>
+								<a href="https://linkedin.com/in/thedigiguru" target="_blank">
+									<i class="fa-brands fa-linkedin"></i>
+									<span>thedigiguru</span>
+								</a>
+							</p>
+							<p>
+							<a href="https://x.com/thedigiguru" target="_blank">
+								<i class="fa-brands fa-x-twitter"></i>
+								<span>thedigiguru</span>
+							</a>
+							</p>
+							<p>
+							<a href="https://instagram.com/digiguru" target="_blank">
+								<i class="fa-brands fa-instagram"></i>
+								<span>digiguru</span>
+							</a>
+							</p>
+							<p>
+							<a href="https://sigmoid.social/@digiguru" target="_blank">
+								<i class="fa-brands fa-mastodon"></i>
+								<span>digiguru</span>
+							</a>
+							</p>
+						</div>
+					</section>
+				</section>
+
+
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="js/gpt-component.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+
+
+
+
+			Reveal.initialize({
+				hash: true,
+				// Learn about plugins: https://revealjs.com/plugins/
+				//parallaxBackgroundImage: 'assets/adamhall.jpg',
+				//parallaxBackgroundSize: "1578px 1578px",
+				//parallaxBackgroundHorizontal: 0,
+
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+
+				autoAnimateStyles: [
+					'opacity',
+					'color',
+					'background-color',
+					'padding',
+					'font-size',
+					'line-height',
+					'letter-spacing',
+					'border-width',
+					'border-color',
+					'border-radius',
+					'outline',
+					'outline-offset',
+					'grid-template-columns',
+					'width',
+					'height',
+					'transform',
+					'margin-top'
+				]
+			});
+
+
+			Reveal.on( 'slidechanged', event => {
+				const current = event.currentSlide;
+				const background = event.currentSlide.slideBackgroundContentElement.closest(".stack").querySelector(".slide-background-content")
+				console.log("SLIDE", event.currentSlide);
+				if(event.currentSlide.dataset.state == "focus-bg") {
+					//Reveal.dispatchEvent("focus-bg")
+					background.classList.add("focus");
+					background.classList.remove("blur");
+
+				} else {// if(event.currentSlide.dataset.state == "blur-bg") {
+					background.classList.add("blur");
+					background.classList.remove("focus");
+
+					//Reveal.dispatchEvent("blur-bg")
+				}
+
+				// event.previousSlide, event.currentSlide, event.indexh, event.indexv
+			} );
+
+
+
+
+		</script>
+	</body>
+
+<style>
+	ul.nostyle {
+  list-style-type: none;
+}
+@property --p{
+syntax: '<number>';
+inherits: true;
+initial-value: 0;
+}
+
+.pie {
+--p:20;
+--b:22px;
+--c:darkred;
+--w:400px;
+
+width:var(--w);
+aspect-ratio:1;
+position:relative;
+display:inline-grid;
+margin:5px;
+place-content:center;
+font-size:25px;
+font-weight:bold;
+font-family:sans-serif;
+}
+.pie:before,
+.pie:after {
+content:"";
+position:absolute;
+border-radius:50%;
+}
+.pie:before {
+inset:0;
+background:
+radial-gradient(farthest-side,var(--c) 98%,#0000) top/var(--b) var(--b) no-repeat,
+conic-gradient(var(--c) calc(var(--p)*1%),#0000 0);
+-webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+}
+.pie:after {
+inset:calc(50% - var(--b)/2);
+background:var(--c);
+transform:rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
+}
+.present .animate {
+animation:pin 1s 0.5s both;
+}
+.future .animate, .past .animate {
+animation:pout 1s 0.5s both;
+}
+
+.no-round:before {
+background-size:0 0,auto;
+}
+.no-round:after {
+content:none;
+}
+@keyframes pin {
+from{--p:0}
+to{--p:58}
+}
+@keyframes pout {
+from{--p:58}
+to{--p:0}
+}
+body {
+font-family:sans-serif;
+}
+
+	</style>
+</html>
