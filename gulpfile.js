@@ -1,7 +1,8 @@
 const pkg = require('./package.json')
 const path = require('path')
 const glob = require('glob')
-const yargs = require('yargs')
+const yargs = require('yargs/yargs')
+const { hideBin } = require('yargs/helpers')
 const colors = require('colors')
 const through = require('through2');
 const qunit = require('node-qunit-puppeteer')
@@ -22,9 +23,10 @@ const minify = require('gulp-clean-css')
 const connect = require('gulp-connect')
 const autoprefixer = require('gulp-autoprefixer')
 
-const root = yargs.argv.root || '.'
-const port = yargs.argv.port || 8000
-const host = yargs.argv.host || 'localhost'
+const argv = yargs(hideBin(process.argv)).argv
+const root = argv.root || '.'
+const port = argv.port || 8000
+const host = argv.host || 'localhost'
 
 const banner = `/*!
 * reveal.js ${pkg.version}
