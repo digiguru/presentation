@@ -67,6 +67,7 @@
 
 			QUnit.config.testTimeout = 30000;
 			QUnit.config.reorder = false;
+			QUnit.config.autostart = false;
 
 			const slides = Array.prototype.map.call( document.querySelectorAll( '.slides section' ), slide => {
 				return {
@@ -159,6 +160,8 @@
 				// 		slides[1].h1.addEventListener( 'transitionend', callback );
 				// 	} );
 				// });
+
+				QUnit.start();
 
 			} );
 		</script>
