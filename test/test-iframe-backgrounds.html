@@ -35,6 +35,7 @@
 		<script>
 
 			QUnit.config.testTimeout = 30000;
+			QUnit.config.autostart = false;
 
 			Reveal.initialize({ viewDistance: 3 }).then( () => {
 
@@ -92,6 +93,8 @@
 
 
 				});
+
+				QUnit.start();
 
 			} );
 		</script>

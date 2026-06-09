@@ -35,6 +35,7 @@
 		<script>
 
 			QUnit.config.testTimeout = 30000;
+			QUnit.config.autostart = false;
 
 			Reveal.initialize({ viewDistance: 2 }).then( () => {
 
@@ -96,6 +97,8 @@
 					assert.strictEqual( preloadIframe.hasAttribute( 'src' ), true, 'loaded when slide becomes visible' );
 
 				});
+
+				QUnit.start();
 
 			} );
 		</script>

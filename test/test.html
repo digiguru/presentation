@@ -84,6 +84,7 @@
 		<script src="../dist/reveal.js"></script>
 		<script>
 			QUnit.config.testTimeout = 30000;
+			QUnit.config.autostart = false;
 
 			window.location.hash = '';
 
@@ -892,6 +893,8 @@
 
 					Reveal.off( 'resumed', _onEvent );
 				});
+
+				QUnit.start();
 
 			} );
 		</script>
