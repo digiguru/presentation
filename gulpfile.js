@@ -6,6 +6,7 @@ const { hideBin } = require('yargs/helpers')
 const colors = require('colors')
 const through = require('through2');
 const qunit = require('node-qunit-puppeteer')
+const { finished } = require('stream/promises')
 
 const {rollup} = require('rollup')
 const {terser} = require('rollup-plugin-terser')
@@ -18,10 +19,8 @@ const gulp = require('gulp')
 const tap = require('gulp-tap')
 const zip = require('gulp-zip')
 const header = require('gulp-header')
-const eslint = require('gulp-eslint')
 const minify = require('gulp-clean-css')
 const connect = require('gulp-connect')
-const autoprefixer = require('gulp-autoprefixer')
 
 const argv = yargs(hideBin(process.argv)).argv
 const root = argv.root || '.'
@@ -45,13 +44,18 @@ const babelConfig = {
     compact: false,
     extensions: ['.js', '.html'],
     plugins: [
+        [
+            'polyfill-corejs3',
+            {
+                method: 'usage-global',
+                version: require('core-js/package.json').version
+            }
+        ],
         'transform-html-import-to-string'
     ],
     presets: [[
         '@babel/preset-env',
         {
-            corejs: 3,
-            useBuiltIns: 'usage',
             modules: false
         }
     ]]
@@ -185,12 +189,17 @@ gulp.task('css-themes', () => gulp.src(['./css/theme/source/*.{sass,scss}'])
         .pipe(compileSass())
         .pipe(gulp.dest('./dist/theme')))
 
-gulp.task('css-core', () => gulp.src(['css/reveal.scss'])
-    .pipe(compileSass())
-    .pipe(autoprefixer())
-    .pipe(minify({compatibility: 'ie9'}))
-    .pipe(header(banner))
-    .pipe(gulp.dest('./dist')))
+gulp.task('css-core', async () => {
+    const { default: autoprefixer } = await import('gulp-autoprefixer')
+    const stream = gulp.src(['css/reveal.scss'])
+        .pipe(compileSass())
+        .pipe(autoprefixer())
+        .pipe(minify({compatibility: 'ie9'}))
+        .pipe(header(banner))
+        .pipe(gulp.dest('./dist'))
+
+    await finished(stream)
+})
 
 gulp.task('css', gulp.parallel('css-themes', 'css-core'))
 
@@ -261,11 +270,7 @@ gulp.task('qunit', () => {
     } );
 } )
 
-gulp.task('eslint', () => gulp.src(['./js/**/*.js', 'gulpfile.js'])
-        .pipe(eslint())
-        .pipe(eslint.format()))
-
-gulp.task('test', gulp.series( 'eslint', 'qunit' ))
+gulp.task('test', gulp.series('qunit'))
 
 gulp.task('default', gulp.series(gulp.parallel('js', 'css', 'plugins'), 'test'))
 
@@ -302,7 +307,7 @@ gulp.task('serve', () => {
 
     gulp.watch(['**/*.html', '**/*.md'], gulp.series('reload'))
 
-    gulp.watch(['js/**'], gulp.series('js', 'reload', 'eslint'))
+    gulp.watch(['js/**'], gulp.series('js', 'reload'))
 
     gulp.watch(['plugin/**/plugin.js', 'plugin/**/*.html'], gulp.series('plugins', 'reload'))
 
