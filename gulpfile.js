@@ -10,7 +10,6 @@ const { finished } = require('stream/promises')
 
 const {rollup} = require('rollup')
 const {terser} = require('rollup-plugin-terser')
-const babel = require('@rollup/plugin-babel').default
 const commonjs = require('@rollup/plugin-commonjs')
 const resolve = require('@rollup/plugin-node-resolve').default
 const sass = require('sass')
@@ -38,8 +37,29 @@ const banner = `/*!
 // Prevents warnings from opening too many test pages
 process.setMaxListeners(20);
 
+let babelCorePromise;
+function babel(options) {
+    const { extensions = ['.js'], ...babelOptions } = options;
+
+    return {
+        name: 'babel-8',
+        async transform(code, id) {
+            if (!extensions.some(extension => id.endsWith(extension))) return null;
+
+            babelCorePromise ||= import('@babel/core');
+            const { transformAsync } = await babelCorePromise;
+            const result = await transformAsync(code, {
+                ...babelOptions,
+                filename: id,
+                sourceMaps: true
+            });
+
+            return result ? { code: result.code, map: result.map } : null;
+        }
+    };
+}
+
 const babelConfig = {
-    babelHelpers: 'bundled',
     ignore: ['node_modules'],
     compact: false,
     extensions: ['.js', '.html'],
@@ -230,7 +250,6 @@ gulp.task('qunit', () => {
                 .then(result => {
                     if( result.stats.failed > 0 ) {
                         console.log(`${'!'} ${filename} [${result.stats.passed}/${result.stats.total}] in ${result.stats.runtime}ms`.red);
-                        // qunit.printResultSummary(result, console);
                         qunit.printFailedTests(result, console);
                     }
                     else {
@@ -244,7 +263,7 @@ gulp.task('qunit', () => {
                 })
                 .catch(error => {
                     console.error(error);
-                    reject();
+                    reject(error);
                 });
         } )
     } ) );
@@ -260,9 +279,7 @@ gulp.task('qunit', () => {
                     resolve();
                 }
             } )
-            .catch( () => {
-                reject();
-            } )
+            .catch( reject )
             .finally( () => {
                 server.close();
             } );
