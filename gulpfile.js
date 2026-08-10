@@ -6,10 +6,10 @@ const { hideBin } = require('yargs/helpers')
 const colors = require('colors')
 const through = require('through2');
 const qunit = require('node-qunit-puppeteer')
+const { finished } = require('stream/promises')
 
 const {rollup} = require('rollup')
 const {terser} = require('rollup-plugin-terser')
-const babel = require('@rollup/plugin-babel').default
 const commonjs = require('@rollup/plugin-commonjs')
 const resolve = require('@rollup/plugin-node-resolve').default
 const sass = require('sass')
@@ -18,10 +18,8 @@ const gulp = require('gulp')
 const tap = require('gulp-tap')
 const zip = require('gulp-zip')
 const header = require('gulp-header')
-const eslint = require('gulp-eslint')
 const minify = require('gulp-clean-css')
 const connect = require('gulp-connect')
-const autoprefixer = require('gulp-autoprefixer')
 
 const argv = yargs(hideBin(process.argv)).argv
 const root = argv.root || '.'
@@ -39,19 +37,45 @@ const banner = `/*!
 // Prevents warnings from opening too many test pages
 process.setMaxListeners(20);
 
+let babelCorePromise;
+function babel(options) {
+    const { extensions = ['.js'], ...babelOptions } = options;
+
+    return {
+        name: 'babel-8',
+        async transform(code, id) {
+            if (!extensions.some(extension => id.endsWith(extension))) return null;
+
+            babelCorePromise ||= import('@babel/core');
+            const { transformAsync } = await babelCorePromise;
+            const result = await transformAsync(code, {
+                ...babelOptions,
+                filename: id,
+                sourceMaps: true
+            });
+
+            return result ? { code: result.code, map: result.map } : null;
+        }
+    };
+}
+
 const babelConfig = {
-    babelHelpers: 'bundled',
     ignore: ['node_modules'],
     compact: false,
     extensions: ['.js', '.html'],
     plugins: [
+        [
+            'polyfill-corejs3',
+            {
+                method: 'usage-global',
+                version: require('core-js/package.json').version
+            }
+        ],
         'transform-html-import-to-string'
     ],
     presets: [[
         '@babel/preset-env',
         {
-            corejs: 3,
-            useBuiltIns: 'usage',
             modules: false
         }
     ]]
@@ -185,12 +209,17 @@ gulp.task('css-themes', () => gulp.src(['./css/theme/source/*.{sass,scss}'])
         .pipe(compileSass())
         .pipe(gulp.dest('./dist/theme')))
 
-gulp.task('css-core', () => gulp.src(['css/reveal.scss'])
-    .pipe(compileSass())
-    .pipe(autoprefixer())
-    .pipe(minify({compatibility: 'ie9'}))
-    .pipe(header(banner))
-    .pipe(gulp.dest('./dist')))
+gulp.task('css-core', async () => {
+    const { default: autoprefixer } = await import('gulp-autoprefixer')
+    const stream = gulp.src(['css/reveal.scss'])
+        .pipe(compileSass())
+        .pipe(autoprefixer())
+        .pipe(minify({compatibility: 'ie9'}))
+        .pipe(header(banner))
+        .pipe(gulp.dest('./dist'))
+
+    await finished(stream)
+})
 
 gulp.task('css', gulp.parallel('css-themes', 'css-core'))
 
@@ -221,7 +250,6 @@ gulp.task('qunit', () => {
                 .then(result => {
                     if( result.stats.failed > 0 ) {
                         console.log(`${'!'} ${filename} [${result.stats.passed}/${result.stats.total}] in ${result.stats.runtime}ms`.red);
-                        // qunit.printResultSummary(result, console);
                         qunit.printFailedTests(result, console);
                     }
                     else {
@@ -235,7 +263,7 @@ gulp.task('qunit', () => {
                 })
                 .catch(error => {
                     console.error(error);
-                    reject();
+                    reject(error);
                 });
         } )
     } ) );
@@ -251,9 +279,7 @@ gulp.task('qunit', () => {
                     resolve();
                 }
             } )
-            .catch( () => {
-                reject();
-            } )
+            .catch( reject )
             .finally( () => {
                 server.close();
             } );
@@ -261,11 +287,7 @@ gulp.task('qunit', () => {
     } );
 } )
 
-gulp.task('eslint', () => gulp.src(['./js/**/*.js', 'gulpfile.js'])
-        .pipe(eslint())
-        .pipe(eslint.format()))
-
-gulp.task('test', gulp.series( 'eslint', 'qunit' ))
+gulp.task('test', gulp.series('qunit'))
 
 gulp.task('default', gulp.series(gulp.parallel('js', 'css', 'plugins'), 'test'))
 
@@ -302,7 +324,7 @@ gulp.task('serve', () => {
 
     gulp.watch(['**/*.html', '**/*.md'], gulp.series('reload'))
 
-    gulp.watch(['js/**'], gulp.series('js', 'reload', 'eslint'))
+    gulp.watch(['js/**'], gulp.series('js', 'reload'))
 
     gulp.watch(['plugin/**/plugin.js', 'plugin/**/*.html'], gulp.series('plugins', 'reload'))
 

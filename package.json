@@ -8,7 +8,8 @@
   "module": "dist/reveal.esm.js",
   "license": "MIT",
   "scripts": {
-    "test": "gulp test",
+    "lint": "eslint js gulpfile.js",
+    "test": "npm run lint && gulp qunit",
     "start": "gulp serve",
     "build": "gulp build"
   },
@@ -22,30 +23,27 @@
     "url": "git://github.com/hakimel/reveal.js.git"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=24.11.0"
   },
-  "keywords": [
-    "reveal",
-    "slides",
-    "presentation"
-  ],
+  "keywords": ["reveal", "slides", "presentation"],
   "devDependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/eslint-parser": "^7.14.3",
-    "@babel/preset-env": "^7.14.2",
-    "@rollup/plugin-babel": "^7.1.0",
+    "@babel/core": "^8.0.1",
+    "@babel/eslint-parser": "^8.0.1",
+    "@babel/preset-env": "^8.0.2",
     "@rollup/plugin-commonjs": "^29.0.3",
     "@rollup/plugin-node-resolve": "^16.0.3",
+    "babel-plugin-polyfill-corejs3": "^1.0.0",
     "babel-plugin-transform-html-import-to-string": "2.0.0",
     "colors": "^1.4.0",
-    "core-js": "^3.12.1",
+    "core-js": "^3.48.0",
+    "eslint": "^10.8.1",
     "fitty": "^2.3.0",
     "glob": "^13.0.6",
+    "globals": "^16.0.0",
     "gulp": "^5.0.1",
-    "gulp-autoprefixer": "^8.0.0",
+    "gulp-autoprefixer": "^10.0.0",
     "gulp-clean-css": "^4.2.0",
     "gulp-connect": "^5.7.0",
-    "gulp-eslint": "^6.0.0",
     "gulp-header": "^2.0.9",
     "gulp-tap": "^2.0.0",
     "gulp-zip": "^6.1.0",
@@ -62,43 +60,5 @@
     "chokidar": "3.5.3",
     "glob-parent": "6.0.2"
   },
-  "browserslist": "> 2%, not dead",
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "es6": true
-    },
-    "parser": "@babel/eslint-parser",
-    "parserOptions": {
-      "sourceType": "module",
-      "allowImportExportEverywhere": true,
-      "requireConfigFile": false
-    },
-    "globals": {
-      "module": false,
-      "console": false,
-      "unescape": false,
-      "define": false,
-      "exports": false
-    },
-    "rules": {
-      "curly": 0,
-      "eqeqeq": 2,
-      "wrap-iife": [
-        2,
-        "any"
-      ],
-      "no-use-before-define": [
-        2,
-        {
-          "functions": false
-        }
-      ],
-      "new-cap": 2,
-      "no-caller": 2,
-      "dot-notation": 0,
-      "no-eq-null": 2,
-      "no-unused-expressions": 0
-    }
-  }
+  "browserslist": "> 2%, not dead"
 }
