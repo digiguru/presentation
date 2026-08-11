@@ -238,6 +238,11 @@ export async function discoverPresentations({
   return presentations.map(({ dateTimestamp, ...presentation }) => presentation);
 }
 
+function isWithinPath(parent, candidate) {
+  const relative = path.relative(parent, candidate);
+  return relative === '' || (relative !== '..' && !relative.startsWith(`..${path.sep}`) && !path.isAbsolute(relative));
+}
+
 export async function exportSite(outputDir, presentations, { root = defaultRoot } = {}) {
   const resolvedOutput = path.resolve(outputDir);
   const deckUrls = new Set(presentations.map(presentation => presentation.url));
@@ -246,6 +251,8 @@ export async function exportSite(outputDir, presentations, { root = defaultRoot 
   await mkdir(resolvedOutput, { recursive: true });
 
   async function copyEntry(source, destination, relativePath) {
+    if (isWithinPath(resolvedOutput, path.resolve(source))) return;
+
     const info = await stat(source);
     const parts = relativePath.split(path.sep);
     const topLevel = parts[0];
