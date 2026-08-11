@@ -41,27 +41,11 @@ jobs:
           fi
           echo "Deprecated raw-body@1.1.7 is no longer installed"
 
-      - name: Flatten legacy theme variable exposer
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
+      - name: Migrate legacy Reveal themes to modules
+        run: node scripts/migrate-legacy-theme-sass.mjs
 
-          theme_path = Path('css/theme/template/theme.scss')
-          exposer_path = Path('css/theme/template/exposer.scss')
-          theme = theme_path.read_text()
-          exposer = exposer_path.read_text().strip()
-          marker = '@import "./exposer";'
-          if marker not in theme:
-              raise SystemExit('Expected legacy exposer import was not found')
-          theme_path.write_text(theme.replace(marker, exposer, 1))
-          exposer_path.unlink()
-          PY
-
-      - name: Migrate Sass to modules
-        run: |
-          shopt -s nullglob
-          entrypoints=(css/reveal.scss css/theme/source/*.scss css/theme/source/*.sass)
-          npm exec --yes --package=sass-migrator@2.6.1 -- sass-migrator --migrate-deps module "${entrypoints[@]}"
+      - name: Migrate core Sass to modules
+        run: npm exec --yes --package=sass-migrator@2.6.1 -- sass-migrator --migrate-deps module css/reveal.scss
 
       - name: Migrate legacy Sass color functions
         run: |
