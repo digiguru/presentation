@@ -4,7 +4,8 @@
  * of external markdown documents.
  */
 
-import { marked } from 'marked';
+import { Marked } from 'marked';
+import { markedSmartypants } from 'marked-smartypants';
 
 const DEFAULT_SLIDE_SEPARATOR = '\r?\n---\r?\n',
 	  DEFAULT_NOTES_SEPARATOR = 'notes?:',
@@ -27,6 +28,7 @@ const Plugin = () => {
 
 	// The reveal.js instance this plugin is attached to
 	let deck;
+	let markedInstance = null;
 
 	/**
 	 * Retrieves the markdown contents of a slide section
@@ -112,7 +114,7 @@ const Plugin = () => {
 		var notesMatch = content.split( new RegExp( options.notesSeparator, 'mgi' ) );
 
 		if( notesMatch.length === 2 ) {
-			content = notesMatch[0] + '<aside class="notes">' + marked(notesMatch[1].trim()) + '</aside>';
+			content = notesMatch[0] + '<aside class="notes">' + markedInstance.parse(notesMatch[1].trim()) + '</aside>';
 		}
 
 		// prevent script end tags in the content from interfering
@@ -363,7 +365,12 @@ const Plugin = () => {
 		}
 
 		if ( element.nodeType == Node.COMMENT_NODE ) {
-			if ( addAttributeInElement( element, previousElement, separatorElementAttributes ) == false ) {
+			var targetElement = previousElement;
+			if( targetElement && ( targetElement.tagName == 'UL' || targetElement.tagName == 'OL' ) ) {
+				targetElement = targetElement.lastElementChild || targetElement;
+			}
+
+			if ( addAttributeInElement( element, targetElement, separatorElementAttributes ) == false ) {
 				addAttributeInElement( element, section, separatorSectionAttributes );
 			}
 		}
@@ -384,7 +391,7 @@ const Plugin = () => {
 			var notes = section.querySelector( 'aside.notes' );
 			var markdown = getMarkdownFromSlide( section );
 
-			section.innerHTML = marked( markdown );
+			section.innerHTML = markedInstance.parse( markdown );
 			addAttributes( 	section, section, null, section.getAttribute( 'data-element-attributes' ) ||
 							section.parentNode.getAttribute( 'data-element-attributes' ) ||
 							DEFAULT_ELEMENT_ATTRIBUTES_SEPARATOR,
@@ -421,43 +428,36 @@ const Plugin = () => {
 
 			deck = reveal;
 
-			let { renderer, animateLists, ...markedOptions } = deck.getConfig().markdown || {};
+			let { renderer: customRenderer, animateLists, smartypants, ...markedOptions } = deck.getConfig().markdown || {};
 
-			if( !renderer ) {
-				renderer = new marked.Renderer();
-
-				renderer.code = ( code, language ) => {
-
-					// Off by default
+			const renderer = customRenderer || {
+				code( { text, lang } ) {
+					let language = lang || '';
 					let lineNumbers = '';
 
-					// Users can opt in to show line numbers and highlight
-					// specific lines.
-					// ```javascript []        show line numbers
-					// ```javascript [1,4-8]   highlights lines 1 and 4-8
 					if( CODE_LINE_NUMBER_REGEX.test( language ) ) {
 						lineNumbers = language.match( CODE_LINE_NUMBER_REGEX )[1].trim();
 						lineNumbers = `data-line-numbers="${lineNumbers}"`;
 						language = language.replace( CODE_LINE_NUMBER_REGEX, '' ).trim();
 					}
 
-					// Escape before this gets injected into the DOM to
-					// avoid having the HTML parser alter our code before
-					// highlight.js is able to read it
-					code = escapeForHTML( code );
+					text = escapeForHTML( text );
+					return `<pre><code ${lineNumbers} class="${language}">${text}</code></pre>`;
+				}
+			};
 
-					return `<pre><code ${lineNumbers} class="${language}">${code}</code></pre>`;
+			if( animateLists === true && !customRenderer ) {
+				renderer.listitem = function( token ) {
+					const text = token.tokens ? this.parser.parseInline( token.tokens ) : ( token.text || '' );
+					return `<li class="fragment">${text}</li>`;
 				};
 			}
 
-			if( animateLists === true ) {
-				renderer.listitem = text => `<li class="fragment">${text}</li>`;
+			markedInstance = new Marked();
+			markedInstance.use( { renderer, ...markedOptions } );
+			if( smartypants ) {
+				markedInstance.use( markedSmartypants() );
 			}
-
-			marked.setOptions( {
-				renderer,
-				...markedOptions
-			} );
 
 			return processSlides( deck.getRevealElement() ).then( convertSlides );
 
@@ -467,7 +467,8 @@ const Plugin = () => {
 		processSlides: processSlides,
 		convertSlides: convertSlides,
 		slidify: slidify,
-		marked: marked
+		get marked() { return markedInstance; },
+		get markdownOptions() { return deck ? deck.getConfig().markdown || {} : {}; }
 	}
 
 };
