@@ -1,0 +1,27 @@
+name: reveal6-prod-spotcheck
+
+on:
+  push:
+    branches: [experiment/reveal-6-migration]
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - name: Use pinned Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Compare production with Reveal 6 preview
+        env:
+          PROD_BASE: https://art.digiguru.co.uk/presentation
+          PREVIEW_BASE: https://presentation-jr7gt1qfj-digiguru-s-team.vercel.app
+        run: node scripts/reveal6-prod-spotcheck.mjs
