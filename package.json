@@ -13,7 +13,7 @@
     "test:tooling": "node --test test/*.test.mjs",
     "start": "gulp serve",
     "build": "gulp build",
-    "preview:build": "npm run build && node scripts/presentations.mjs --export preview-site",
+    "preview:build": "npm run build && node scripts/presentations.mjs --export preview-site && node scripts/presentation-index.mjs preview-site",
     "audit": "npm audit --audit-level=high",
     "presentations:check": "node scripts/presentations.mjs --check",
     "presentations:assets": "node scripts/check-presentation-assets.mjs",
