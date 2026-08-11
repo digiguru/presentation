@@ -159,7 +159,7 @@ async function discoverPresentations() {
     const title = titleOf(html);
     const name = meta(html, 'presentation-name') || cleanName(title, legacy);
     const version = meta(html, 'presentation-version') || title?.match(/\b(v\d+\.\d+)\b/i)?.[1] || legacy?.version;
-    const date = meta(html, 'presentation-date') || title?.match(/\b(\d{1,2}\/\d{1,2}\/\d{4})\b/)?.[1] || legacy?.date;
+    const date = meta(html, 'presentation-date') || title?.match(/\b(\d{1,2})\/(\d{1,2})\/(\d{4})\b/)?.[0] || legacy?.date;
     const attendance = meta(html, 'presentation-attendance') || legacy?.attendance;
 
     const missing = [
@@ -211,9 +211,7 @@ async function exportSite(outputDir, presentations) {
       return;
     }
 
-    if (relativePath.endsWith('.html')) {
-      if (parts.length !== 1 || !deckUrls.has(relativePath)) return;
-    }
+    if (relativePath.endsWith('.html') && parts.length === 1 && !deckUrls.has(relativePath)) return;
 
     await cp(source, destination);
   }
