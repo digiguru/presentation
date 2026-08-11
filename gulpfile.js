@@ -9,7 +9,8 @@ const qunit = require('node-qunit-puppeteer')
 const { finished } = require('stream/promises')
 
 const {rollup} = require('rollup')
-const {terser} = require('rollup-plugin-terser')
+const terserModule = require('@rollup/plugin-terser')
+const terser = terserModule.default || terserModule
 const commonjs = require('@rollup/plugin-commonjs')
 const resolve = require('@rollup/plugin-node-resolve').default
 const sass = require('sass')
