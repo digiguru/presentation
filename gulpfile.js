@@ -5,7 +5,7 @@ const glob = require('glob')
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
 const colors = require('colors')
-const through = require('through2')
+const { objectTransform } = require('through2')
 const qunit = require('node-qunit-puppeteer')
 const { finished } = require('stream/promises')
 
@@ -181,7 +181,7 @@ gulp.task('plugins', () => {
 
 // A pipeable Sass step using Dart Sass's modern API.
 function compileSass() {
-    return through.obj((vinylFile, encoding, callback) => {
+    return objectTransform((vinylFile, encoding, callback) => {
         try {
             const result = sass.compileString(vinylFile.contents.toString(), {
                 loadPaths: ['css/', 'css/theme/template'],
