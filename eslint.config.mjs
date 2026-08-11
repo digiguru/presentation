@@ -1,6 +1,18 @@
 import babelParser from '@babel/eslint-parser';
 import globals from 'globals';
 
+const sharedRules = {
+  curly: 'off',
+  eqeqeq: 'error',
+  'wrap-iife': ['error', 'any'],
+  'no-use-before-define': ['error', { functions: false }],
+  'new-cap': 'error',
+  'no-caller': 'error',
+  'dot-notation': 'off',
+  'no-eq-null': 'error',
+  'no-unused-expressions': 'off',
+};
+
 export default [
   {
     ignores: [
@@ -33,17 +45,7 @@ export default [
         unescape: 'readonly',
       },
     },
-    rules: {
-      curly: 'off',
-      eqeqeq: 'error',
-      'wrap-iife': ['error', 'any'],
-      'no-use-before-define': ['error', { functions: false }],
-      'new-cap': 'error',
-      'no-caller': 'error',
-      'dot-notation': 'off',
-      'no-eq-null': 'error',
-      'no-unused-expressions': 'off',
-    },
+    rules: sharedRules,
   },
   {
     files: ['gulpfile.js'],
@@ -58,16 +60,18 @@ export default [
         ...globals.node,
       },
     },
-    rules: {
-      curly: 'off',
-      eqeqeq: 'error',
-      'wrap-iife': ['error', 'any'],
-      'no-use-before-define': ['error', { functions: false }],
-      'new-cap': 'error',
-      'no-caller': 'error',
-      'dot-notation': 'off',
-      'no-eq-null': 'error',
-      'no-unused-expressions': 'off',
+    rules: sharedRules,
+  },
+  {
+    files: ['scripts/**/*.mjs'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: {
+        ...globals.node,
+        ...globals.es2021,
+      },
     },
+    rules: sharedRules,
   },
 ];
