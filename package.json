@@ -28,7 +28,11 @@
   "engines": {
     "node": ">=24.11.0"
   },
-  "keywords": ["reveal", "slides", "presentation"],
+  "keywords": [
+    "reveal",
+    "slides",
+    "presentation"
+  ],
   "devDependencies": {
     "@babel/core": "^8.0.1",
     "@babel/eslint-parser": "^8.0.1",
@@ -57,7 +61,8 @@
     "qunit": "^2.19.3",
     "rollup": "^4.62.4",
     "sass": "^1.39.2",
-    "yargs": "^18.0.0"
+    "yargs": "^18.0.0",
+    "marked-smartypants": "^1.1.11"
   },
   "overrides": {
     "chokidar": "3.5.3",
