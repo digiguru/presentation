@@ -8,11 +8,13 @@
   "module": "dist/reveal.esm.js",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint js gulpfile.js",
+    "lint": "eslint js scripts gulpfile.js",
     "test": "npm run lint && gulp qunit",
     "start": "gulp serve",
     "build": "gulp build",
-    "presentations:check": "node scripts/presentations.mjs --check"
+    "presentations:check": "node scripts/presentations.mjs --check",
+    "presentations:assets": "node scripts/check-presentation-assets.mjs",
+    "presentations:smoke": "node scripts/smoke-presentations.mjs"
   },
   "author": {
     "name": "Hakim El Hattab",

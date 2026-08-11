@@ -4,10 +4,13 @@ on:
   push:
     branches: [master]
   pull_request:
-    branches: [master]
 
 permissions:
   contents: read
+
+concurrency:
+  group: presentation-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -25,6 +28,8 @@ jobs:
         run: npm ci
       - name: Validate presentation metadata
         run: npm run presentations:check
+      - name: Validate local presentation assets
+        run: npm run presentations:assets
       - name: Lint
         run: npm run lint
       - name: Build
@@ -33,6 +38,8 @@ jobs:
         run: gulp qunit
         env:
           CI: true
+      - name: Smoke test presentations
+        run: npm run presentations:smoke
 
   dispatch-website:
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'

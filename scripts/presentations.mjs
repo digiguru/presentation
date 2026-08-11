@@ -211,9 +211,7 @@ async function exportSite(outputDir, presentations) {
       return;
     }
 
-    if (relativePath.endsWith('.html')) {
-      if (parts.length !== 1 || !deckUrls.has(relativePath)) return;
-    }
+    if (relativePath.endsWith('.html') && parts.length === 1 && !deckUrls.has(relativePath)) return;
 
     await cp(source, destination);
   }
