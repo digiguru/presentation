@@ -383,6 +383,12 @@
 
 				window.addEventListener( 'message', function( event ) {
 
+					// Validate every message origin before parsing it. Keep file://
+					// support so the speaker view still works without a web server.
+					if( window.location.origin !== event.origin && window.location.origin !== 'file://' ) {
+						return;
+					}
+
 					clearTimeout( connectionTimeout );
 					connectionStatus.style.display = 'none';
 
@@ -729,7 +735,7 @@
 					function _updateTimer() {
 
 						var diff, hours, minutes, seconds,
-						now = new Date();
+							now = new Date();
 
 						diff = now.getTime() - start.getTime();
 
