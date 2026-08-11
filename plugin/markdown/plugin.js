@@ -365,7 +365,12 @@ const Plugin = () => {
 		}
 
 		if ( element.nodeType == Node.COMMENT_NODE ) {
-			if ( addAttributeInElement( element, previousElement, separatorElementAttributes ) == false ) {
+			var targetElement = previousElement;
+			if( targetElement && ( targetElement.tagName == 'UL' || targetElement.tagName == 'OL' ) ) {
+				targetElement = targetElement.lastElementChild || targetElement;
+			}
+
+			if ( addAttributeInElement( element, targetElement, separatorElementAttributes ) == false ) {
 				addAttributeInElement( element, section, separatorSectionAttributes );
 			}
 		}
