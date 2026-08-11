@@ -1,45 +1,57 @@
-// Base settings for all themes that can optionally be
-// overridden by the super-theme
+// Base settings for all themes that can optionally be overridden.
+@use 'sass:color';
 
-// Background of the presentation
-$backgroundColor: #2b2b2b;
+$backgroundColor: #2b2b2b !default;
+$mainFont: 'Lato', sans-serif !default;
+$mainFontSize: 40px !default;
+$mainColor: #eee !default;
+$blockMargin: 20px !default;
+$headingMargin: 0 0 $blockMargin 0 !default;
+$headingFont: 'League Gothic', Impact, sans-serif !default;
+$headingColor: #eee !default;
+$headingLineHeight: 1.2 !default;
+$headingLetterSpacing: normal !default;
+$headingTextTransform: uppercase !default;
+$headingTextShadow: none !default;
+$headingFontWeight: normal !default;
+$heading1TextShadow: $headingTextShadow !default;
+$heading1Size: 3.77em !default;
+$heading2Size: 2.11em !default;
+$heading3Size: 1.55em !default;
+$heading4Size: 1.00em !default;
+$codeFont: monospace !default;
+$linkColor: #13DAEC !default;
+$linkColorHover: color.adjust($linkColor, $lightness: 20%) !default;
+$selectionBackgroundColor: #FF5E99 !default;
+$selectionColor: #fff !default;
 
-// Primary/body text
-$mainFont: 'Lato', sans-serif;
-$mainFontSize: 40px;
-$mainColor: #eee;
-
-// Vertical spacing between blocks of text
-$blockMargin: 20px;
-
-// Headings
-$headingMargin: 0 0 $blockMargin 0;
-$headingFont: 'League Gothic', Impact, sans-serif;
-$headingColor: #eee;
-$headingLineHeight: 1.2;
-$headingLetterSpacing: normal;
-$headingTextTransform: uppercase;
-$headingTextShadow: none;
-$headingFontWeight: normal;
-$heading1TextShadow: $headingTextShadow;
-
-$heading1Size: 3.77em;
-$heading2Size: 2.11em;
-$heading3Size: 1.55em;
-$heading4Size: 1.00em;
-
-$codeFont: monospace;
-
-// Links and actions
-$linkColor: #13DAEC;
-$linkColorHover: lighten( $linkColor, 20% );
-
-// Text selection
-$selectionBackgroundColor: #FF5E99;
-$selectionColor: #fff;
-
-// Generates the presentation background, can be overridden
-// to return a background image or gradient
 @mixin bodyBackground() {
-	background: $backgroundColor;
+  background: $backgroundColor;
+}
+
+:root {
+  --r-background-color: #{$backgroundColor};
+  --r-main-font: #{$mainFont};
+  --r-main-font-size: #{$mainFontSize};
+  --r-main-color: #{$mainColor};
+  --r-block-margin: #{$blockMargin};
+  --r-heading-margin: #{$headingMargin};
+  --r-heading-font: #{$headingFont};
+  --r-heading-color: #{$headingColor};
+  --r-heading-line-height: #{$headingLineHeight};
+  --r-heading-letter-spacing: #{$headingLetterSpacing};
+  --r-heading-text-transform: #{$headingTextTransform};
+  --r-heading-text-shadow: #{$headingTextShadow};
+  --r-heading-font-weight: #{$headingFontWeight};
+  --r-heading1-text-shadow: #{$heading1TextShadow};
+  --r-heading1-size: #{$heading1Size};
+  --r-heading2-size: #{$heading2Size};
+  --r-heading3-size: #{$heading3Size};
+  --r-heading4-size: #{$heading4Size};
+  --r-code-font: #{$codeFont};
+  --r-link-color: #{$linkColor};
+  --r-link-color-dark: #{color.adjust($linkColor, $lightness: -15%)};
+  --r-link-color-hover: #{$linkColorHover};
+  --r-selection-background-color: #{$selectionBackgroundColor};
+  --r-selection-color: #{$selectionColor};
 }

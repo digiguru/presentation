@@ -1,13 +1,13 @@
+@use './settings' as settings;
+
 // Base theme template for reveal.js
 
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
 
-@import "./exposer";
-
 .reveal-viewport {
-	@include bodyBackground();
+	@include settings.bodyBackground();
 	background-color: var(--r-background-color);
 }
 

@@ -1,3 +1,44 @@
+@use 'sass:color';
+@use '../template/mixins' as mixins;
+
+$backgroundColor: #fff;
+$mainColor: #000;
+$headingColor: #000;
+$mainFontSize: 42px;
+$mainFont: 'Source Sans Pro', Helvetica, sans-serif;
+$headingFont: 'Source Sans Pro', Helvetica, sans-serif;
+$headingTextShadow: none;
+$headingLetterSpacing: normal;
+$headingTextTransform: uppercase;
+$headingFontWeight: 600;
+$linkColor: #2a76dd;
+$linkColorHover: color.adjust( $linkColor, $lightness: 15%, $space: hsl );
+$selectionBackgroundColor: color.adjust( $linkColor, $lightness: 25%, $space: hsl );
+$heading1Size: 2.5em;
+$heading2Size: 1.6em;
+$heading3Size: 1.3em;
+$heading4Size: 1.0em;
+
+@use '../template/settings' with (
+  $backgroundColor: $backgroundColor,
+  $mainColor: $mainColor,
+  $headingColor: $headingColor,
+  $mainFontSize: $mainFontSize,
+  $mainFont: $mainFont,
+  $headingFont: $headingFont,
+  $headingTextShadow: $headingTextShadow,
+  $headingLetterSpacing: $headingLetterSpacing,
+  $headingTextTransform: $headingTextTransform,
+  $headingFontWeight: $headingFontWeight,
+  $linkColor: $linkColor,
+  $linkColorHover: $linkColorHover,
+  $selectionBackgroundColor: $selectionBackgroundColor,
+  $heading1Size: $heading1Size,
+  $heading2Size: $heading2Size,
+  $heading3Size: $heading3Size,
+  $heading4Size: $heading4Size
+);
+@use '../template/theme';
 /**
  * White compact & high contrast reveal.js theme, with headers not in capitals.
  *
@@ -7,43 +48,18 @@
  * - $mainFontSize controls code blocks, too (although under some ratio).
  */
 
-
 // Default mixins and settings -----------------
-@import "../template/mixins";
-@import "../template/settings";
-// ---------------------------------------------
 
+// ---------------------------------------------
 
 // Include theme-specific fonts
 @import url(./fonts/source-sans-pro/source-sans-pro.css);
 
-
 // Override theme settings (see ../template/settings.scss)
-$backgroundColor: #fff;
 
-$mainColor: #000;
-$headingColor: #000;
-
-$mainFontSize: 42px;
-$mainFont: 'Source Sans Pro', Helvetica, sans-serif;
-$headingFont: 'Source Sans Pro', Helvetica, sans-serif;
-$headingTextShadow: none;
-$headingLetterSpacing: normal;
-$headingTextTransform: uppercase;
-$headingFontWeight: 600;
-$linkColor: #2a76dd;
-$linkColorHover: lighten( $linkColor, 15% );
-$selectionBackgroundColor: lighten( $linkColor, 25% );
-
-$heading1Size: 2.5em;
-$heading2Size: 1.6em;
-$heading3Size: 1.3em;
-$heading4Size: 1.0em;
-
-// Change text colors against dark slide backgrounds
-@include dark-bg-text-color(#fff);
-
+@include mixins.dark-bg-text-color(#fff);
 
 // Theme template ------------------------------
-@import "../template/theme";
+
 // ---------------------------------------------
+

@@ -1,26 +1,9 @@
-/**
- * Black theme for reveal.js. This is the opposite of the 'white' theme.
- *
- * By Hakim El Hattab, http://hakim.se
- */
+@use 'sass:color';
+@use '../template/mixins' as mixins;
 
-
-// Default mixins and settings -----------------
-@import "../template/mixins";
-@import "../template/settings";
-// ---------------------------------------------
-
-
-// Include theme-specific fonts
-@import url(./fonts/source-sans-pro/source-sans-pro.css);
-
-
-// Override theme settings (see ../template/settings.scss)
 $backgroundColor: #191919;
-
 $mainColor: #fff;
 $headingColor: #fff;
-
 $mainFontSize: 42px;
 $mainFont: 'Source Sans Pro', Helvetica, sans-serif;
 $headingFont: 'Source Sans Pro', Helvetica, sans-serif;
@@ -29,18 +12,51 @@ $headingLetterSpacing: normal;
 $headingTextTransform: uppercase;
 $headingFontWeight: 600;
 $linkColor: #42affa;
-$linkColorHover: lighten( $linkColor, 15% );
+$linkColorHover: color.adjust( $linkColor, $lightness: 15%, $space: hsl );
 $selectionBackgroundColor: rgba( $linkColor, 0.75 );
-
 $heading1Size: 2.5em;
 $heading2Size: 1.6em;
 $heading3Size: 1.3em;
 $heading4Size: 1.0em;
 
-// Change text colors against light slide backgrounds
-@include light-bg-text-color(#222);
+@use '../template/settings' with (
+  $backgroundColor: $backgroundColor,
+  $mainColor: $mainColor,
+  $headingColor: $headingColor,
+  $mainFontSize: $mainFontSize,
+  $mainFont: $mainFont,
+  $headingFont: $headingFont,
+  $headingTextShadow: $headingTextShadow,
+  $headingLetterSpacing: $headingLetterSpacing,
+  $headingTextTransform: $headingTextTransform,
+  $headingFontWeight: $headingFontWeight,
+  $linkColor: $linkColor,
+  $linkColorHover: $linkColorHover,
+  $selectionBackgroundColor: $selectionBackgroundColor,
+  $heading1Size: $heading1Size,
+  $heading2Size: $heading2Size,
+  $heading3Size: $heading3Size,
+  $heading4Size: $heading4Size
+);
+@use '../template/theme';
+/**
+ * Black theme for reveal.js. This is the opposite of the 'white' theme.
+ *
+ * By Hakim El Hattab, http://hakim.se
+ */
 
+// Default mixins and settings -----------------
+
+// ---------------------------------------------
+
+// Include theme-specific fonts
+@import url(./fonts/source-sans-pro/source-sans-pro.css);
+
+// Override theme settings (see ../template/settings.scss)
+
+@include mixins.light-bg-text-color(#222);
 
 // Theme template ------------------------------
-@import "../template/theme";
+
 // ---------------------------------------------
+
