@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -7,6 +7,7 @@ import test from 'node:test';
 import {
   cleanName,
   discoverPresentations,
+  exportSite,
   isValidVersion,
   normaliseAttendance,
   parseLegacyYaml,
@@ -109,4 +110,24 @@ test('toYaml emits numeric attendance without quotes', () => {
   ]);
   assert.match(yaml, /attendance: 12/);
   assert.doesNotMatch(yaml, /attendance: "12"/);
+});
+
+test('exportSite can write inside the source root without recursively copying itself', async () => {
+  const root = await mkdtemp(path.join(tmpdir(), 'presentation-export-'));
+  const outputDir = path.join(root, 'preview-site');
+
+  try {
+    await writeFile(path.join(root, 'talk.html'), revealDeck('Preview Talk - v1.0 - 11/08/2026'));
+    await mkdir(path.join(root, 'dist'), { recursive: true });
+    await writeFile(path.join(root, 'dist', 'runtime.js'), 'console.log("runtime");\n');
+
+    const presentations = await discoverPresentations({ root });
+    await exportSite(outputDir, presentations, { root });
+
+    assert.match(await readFile(path.join(outputDir, 'talk.html'), 'utf8'), /class="reveal"/);
+    assert.equal(await readFile(path.join(outputDir, 'dist', 'runtime.js'), 'utf8'), 'console.log("runtime");\n');
+    assert.equal((await readdir(outputDir)).includes('preview-site'), false);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
 });

@@ -14,6 +14,7 @@
     "start": "gulp serve",
     "build": "gulp build",
     "postbuild": "node scripts/use-reveal6-runtime.mjs",
+    "preview:build": "npm run build && node scripts/presentations.mjs --export preview-site && node scripts/presentation-index.mjs preview-site",
     "audit": "npm audit --audit-level=high",
     "presentations:check": "node scripts/presentations.mjs --check",
     "presentations:assets": "node scripts/check-presentation-assets.mjs",
