@@ -126,6 +126,23 @@ The current policy permits the native setup required by `@parcel/watcher` and Pu
 
 Dependabot runs weekly for npm and GitHub Actions. Minor and patch updates are grouped; major versions remain separate so breaking changes are reviewed independently.
 
+## Vercel preview deployments
+
+The repository can be connected directly to Vercel to provide a browser-accessible deployment for `master` and automatic Preview Deployments for pull requests and branches.
+
+The Vercel build configuration is version-controlled in `vercel.json`. It runs:
+
+```bash
+npm ci
+npm run preview:build
+```
+
+`npm run preview:build` builds the Reveal runtime and exports the same self-contained static presentation site used by the smoke tests into `preview-site/`. Vercel serves that directory as the deployment output.
+
+Because `vercel.json` owns the install command, build command and output directory, do not duplicate or shorten those commands in the Vercel dashboard. Repository configuration intentionally overrides dashboard Build & Development command values.
+
+For a pull request, use Vercel's branch/PR Preview Deployment to review real presentation behaviour before merging. This is especially useful for Reveal runtime upgrades and visual changes that pass automated smoke tests but still need human browser review.
+
 ## Website deployment
 
 Changes to `master` are deployed to the main Digiguru website through an event-driven GitHub Actions flow:
