@@ -1,4 +1,4 @@
-name: Branch maintenance
+name: Branch cleanup
 
 on:
   push:
@@ -9,73 +9,21 @@ permissions:
   contents: write
 
 jobs:
-  apply-generated-maintenance:
-    if: ${{ !contains(github.event.head_commit.message, '[maintenance-generated]') }}
+  delete-audited-stale-branches:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
-
+    timeout-minutes: 5
     steps:
       - name: Checkout feature branch
         uses: actions/checkout@v7
-        with:
-          ref: agent/complete-presentation-hardening
 
-      - name: Use pinned Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version-file: .node-version
-          cache: npm
-
-      - name: Refresh lockfile for dependency changes
-        run: npm install --package-lock-only --ignore-scripts
-
-      - name: Install dependencies with reviewed scripts only
-        run: npm ci
-
-      - name: Confirm deprecated raw-body chain is gone
+      - name: Delete branches superseded by master
         run: |
-          if npm ls raw-body@1.1.7 --all >/dev/null 2>&1; then
-            echo "Deprecated raw-body@1.1.7 is still present" >&2
-            npm ls raw-body@1.1.7 --all
-            exit 1
-          fi
-          echo "Deprecated raw-body@1.1.7 is no longer installed"
-
-      - name: Migrate legacy Reveal themes to modules
-        run: node scripts/migrate-legacy-theme-sass.mjs
-
-      - name: Migrate core Sass to modules
-        run: npm exec --yes --package=sass-migrator@2.6.1 -- sass-migrator --migrate-deps module css/reveal.scss
-
-      - name: Migrate legacy Sass color functions
-        run: |
-          shopt -s nullglob
-          entrypoints=(css/reveal.scss css/theme/source/*.scss css/theme/source/*.sass)
-          npm exec --yes --package=sass-migrator@2.6.1 -- sass-migrator --migrate-deps color "${entrypoints[@]}"
-
-      - name: Add contextual alt text to historical decks
-        run: npm run presentations:accessibility:fix
-
-      - name: Validate generated result
-        run: |
-          npm audit --audit-level=high
-          npm run test:tooling
-          npm run presentations:check
-          npm run presentations:assets
-          npm run presentations:accessibility
-          npm run lint
-          npm run build
-          gulp qunit
-          npm run presentations:smoke
-
-      - name: Commit generated maintenance changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package-lock.json css '*.html'
-          if git diff --cached --quiet; then
-            echo "No generated maintenance changes were needed"
-            exit 0
-          fi
-          git commit -m "Apply generated maintenance migrations [maintenance-generated]"
-          git push origin HEAD:agent/complete-presentation-hardening
+          git push origin --delete \
+            GPT-Component-History \
+            agent/dispatch-website-after-ci \
+            agent/document-website-dispatch \
+            agent/embed-presentation-metadata \
+            agent/harden-presentation-ci \
+            agent/rebase-harden-presentation-ci-on-master \
+            chore/consolidate-dependabot-upgrades \
+            dependabot/npm_and_yarn/yargs-18.0.0
