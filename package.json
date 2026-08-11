@@ -35,15 +35,12 @@
   "engines": {
     "node": ">=24.11.0 <25"
   },
-  "keywords": [
-    "reveal",
-    "slides",
-    "presentation"
-  ],
+  "keywords": ["reveal", "slides", "presentation"],
   "allowScripts": {
     "@parcel/watcher@2.6.0": true,
     "puppeteer@24.43.1": true,
-    "core-js": false
+    "core-js": false,
+    "fsevents": false
   },
   "devDependencies": {
     "@babel/core": "^8.0.1",
