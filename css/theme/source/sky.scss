@@ -1,23 +1,6 @@
-/**
- * Sky theme for reveal.js.
- *
- * Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
- */
+@use 'sass:color';
+@use '../template/mixins' as mixins;
 
-
-// Default mixins and settings -----------------
-@import "../template/mixins";
-@import "../template/settings";
-// ---------------------------------------------
-
-
-
-// Include theme-specific fonts
-@import url(https://fonts.googleapis.com/css?family=Quicksand:400,700,400italic,700italic);
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
-
-
-// Override theme settings (see ../template/settings.scss)
 $mainFont: 'Open Sans', sans-serif;
 $mainColor: #333;
 $headingFont: 'Quicksand', sans-serif;
@@ -26,24 +9,51 @@ $headingLetterSpacing: -0.08em;
 $headingTextShadow: none;
 $backgroundColor: #f7fbfc;
 $linkColor: #3b759e;
-$linkColorHover: lighten( $linkColor, 20% );
+$linkColorHover: color.adjust( $linkColor, $lightness: 20%, $space: hsl );
 $selectionBackgroundColor: #134674;
 
-// Fix links so they are not cut off
+@use '../template/settings' with (
+  $mainFont: $mainFont,
+  $mainColor: $mainColor,
+  $headingFont: $headingFont,
+  $headingColor: $headingColor,
+  $headingLetterSpacing: $headingLetterSpacing,
+  $headingTextShadow: $headingTextShadow,
+  $backgroundColor: $backgroundColor,
+  $linkColor: $linkColor,
+  $linkColorHover: $linkColorHover,
+  $selectionBackgroundColor: $selectionBackgroundColor
+);
+@use '../template/theme';
+/**
+ * Sky theme for reveal.js.
+ *
+ * Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
+ */
+
+// Default mixins and settings -----------------
+
+// ---------------------------------------------
+
+// Include theme-specific fonts
+@import url(https://fonts.googleapis.com/css?family=Quicksand:400,700,400italic,700italic);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+
+// Override theme settings (see ../template/settings.scss)
+
 .reveal a {
 	line-height: 1.3em;
 }
 
 // Background generator
 @mixin bodyBackground() {
-	@include radial-gradient( #add9e4, #f7fbfc );
+	@include mixins.radial-gradient( #add9e4, #f7fbfc );
 }
 
 // Change text colors against dark slide backgrounds
-@include dark-bg-text-color(#fff);
-
-
+@include mixins.dark-bg-text-color(#fff);
 
 // Theme template ------------------------------
-@import "../template/theme";
+
 // ---------------------------------------------
+

@@ -1,37 +1,46 @@
-/**
- * Black theme for reveal.js.
- *
- * Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
- */
+@use 'sass:color';
+@use '../template/mixins' as mixins;
 
-
-// Default mixins and settings -----------------
-@import "../template/mixins";
-@import "../template/settings";
-// ---------------------------------------------
-
-
-// Include theme-specific fonts
-@import url(https://fonts.googleapis.com/css?family=Montserrat:700);
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic,700italic);
-
-
-// Override theme settings (see ../template/settings.scss)
 $backgroundColor: #111;
-
 $mainFont: 'Open Sans', sans-serif;
 $linkColor: #e7ad52;
-$linkColorHover: lighten( $linkColor, 20% );
+$linkColorHover: color.adjust( $linkColor, $lightness: 20%, $space: hsl );
 $headingFont: 'Montserrat', Impact, sans-serif;
 $headingTextShadow: none;
 $headingLetterSpacing: -0.03em;
 $headingTextTransform: none;
 $selectionBackgroundColor: #e7ad52;
 
-// Change text colors against light slide backgrounds
-@include light-bg-text-color(#222);
+@use '../template/settings' with (
+  $backgroundColor: $backgroundColor,
+  $mainFont: $mainFont,
+  $linkColor: $linkColor,
+  $linkColorHover: $linkColorHover,
+  $headingFont: $headingFont,
+  $headingTextShadow: $headingTextShadow,
+  $headingLetterSpacing: $headingLetterSpacing,
+  $headingTextTransform: $headingTextTransform,
+  $selectionBackgroundColor: $selectionBackgroundColor
+);
+@use '../template/theme';
+/**
+ * Black theme for reveal.js.
+ *
+ * Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
+ */
 
+// Default mixins and settings -----------------
+
+// ---------------------------------------------
+
+// Include theme-specific fonts
+@import url(https://fonts.googleapis.com/css?family=Montserrat:700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic,700italic);
+
+// Override theme settings (see ../template/settings.scss)
+
+@include mixins.light-bg-text-color(#222);
 
 // Theme template ------------------------------
-@import "../template/theme";
+
 // ---------------------------------------------

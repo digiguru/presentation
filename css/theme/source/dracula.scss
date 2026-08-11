@@ -1,17 +1,6 @@
-/**
- * Dracula Dark theme for reveal.js.
- * Based on https://draculatheme.com
- */
+@use 'sass:color';
+@use '../template/mixins' as mixins;
 
-
-// Default mixins and settings -----------------
-@import "../template/mixins";
-@import "../template/settings";
-// ---------------------------------------------
-
-
-
-// Include theme-specific fonts
 $systemFontsSansSerif: -apple-system,
 					   BlinkMacSystemFont,
 					   avenir next,
@@ -31,16 +20,6 @@ $systemFontsMono: Menlo,
 				  Liberation Mono,
 				  Lucida Console,
 				  monospace;
-
-/**
- * Dracula colors by Zeno Rocha
- * https://draculatheme.com/contribute
- */
-html * {
-	color-profile: sRGB;
-	rendering-intent: auto;
-}
-
 $background: #282A36;
 $foreground: #F8F8F2;
 $selection: #44475A;
@@ -52,10 +31,6 @@ $green: #50FA7B;
 $purple: #BD93F9;
 $cyan: #8BE9FD;
 $pink: #FF79C6;
-
-
-
-// Override theme settings (see ../template/settings.scss)
 $mainColor: $foreground;
 $headingColor: $purple;
 $headingTextShadow: none;
@@ -66,15 +41,46 @@ $linkColorHover: $cyan;
 $selectionBackgroundColor: $selection;
 $inlineCodeColor: $green;
 $listBulletColor: $cyan;
-
 $mainFont: $systemFontsSansSerif;
 $codeFont: "Fira Code", $systemFontsMono;
 
-// Change text colors against light slide backgrounds
-@include light-bg-text-color($background);
+@use '../template/settings' with (
+  $mainColor: $mainColor,
+  $headingColor: $headingColor,
+  $headingTextShadow: $headingTextShadow,
+  $headingTextTransform: $headingTextTransform,
+  $backgroundColor: $backgroundColor,
+  $linkColor: $linkColor,
+  $linkColorHover: $linkColorHover,
+  $selectionBackgroundColor: $selectionBackgroundColor,
+  $mainFont: $mainFont,
+  $codeFont: $codeFont
+);
+@use '../template/theme';
+/**
+ * Dracula Dark theme for reveal.js.
+ * Based on https://draculatheme.com
+ */
+
+// Default mixins and settings -----------------
+
+// ---------------------------------------------
+
+// Include theme-specific fonts
+
+/**
+ * Dracula colors by Zeno Rocha
+ * https://draculatheme.com/contribute
+ */
+html * {
+	color-profile: sRGB;
+	rendering-intent: auto;
+}
+
+@include mixins.light-bg-text-color($background);
 
 // Theme template ------------------------------
-@import "../template/theme";
+
 // ---------------------------------------------
 
 // Define additional color effects based on Dracula spec
@@ -130,3 +136,4 @@ $codeFont: "Fira Code", $systemFontsMono;
 .reveal ol li {
 	counter-increment: li
 }
+

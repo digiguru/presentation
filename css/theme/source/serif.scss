@@ -1,19 +1,6 @@
-/**
- * A simple theme for reveal.js presentations, similar
- * to the default theme. The accent color is brown.
- *
- * This theme is Copyright (C) 2012-2013 Owen Versteeg, http://owenversteeg.com - it is MIT licensed.
- */
+@use 'sass:color';
+@use '../template/mixins' as mixins;
 
-
-// Default mixins and settings -----------------
-@import "../template/mixins";
-@import "../template/settings";
-// ---------------------------------------------
-
-
-
-// Override theme settings (see ../template/settings.scss)
 $mainFont: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
 $mainColor: #000;
 $headingFont: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
@@ -22,17 +9,43 @@ $headingTextShadow: none;
 $headingTextTransform: none;
 $backgroundColor: #F0F1EB;
 $linkColor: #51483D;
-$linkColorHover: lighten( $linkColor, 20% );
+$linkColorHover: color.adjust( $linkColor, $lightness: 20%, $space: hsl );
 $selectionBackgroundColor: #26351C;
+
+@use '../template/settings' with (
+  $mainFont: $mainFont,
+  $mainColor: $mainColor,
+  $headingFont: $headingFont,
+  $headingColor: $headingColor,
+  $headingTextShadow: $headingTextShadow,
+  $headingTextTransform: $headingTextTransform,
+  $backgroundColor: $backgroundColor,
+  $linkColor: $linkColor,
+  $linkColorHover: $linkColorHover,
+  $selectionBackgroundColor: $selectionBackgroundColor
+);
+@use '../template/theme';
+/**
+ * A simple theme for reveal.js presentations, similar
+ * to the default theme. The accent color is brown.
+ *
+ * This theme is Copyright (C) 2012-2013 Owen Versteeg, http://owenversteeg.com - it is MIT licensed.
+ */
+
+// Default mixins and settings -----------------
+
+// ---------------------------------------------
+
+// Override theme settings (see ../template/settings.scss)
 
 .reveal a {
   line-height: 1.3em;
 }
 
 // Change text colors against dark slide backgrounds
-@include dark-bg-text-color(#fff);
-
+@include mixins.dark-bg-text-color(#fff);
 
 // Theme template ------------------------------
-@import "../template/theme";
+
 // ---------------------------------------------
+
