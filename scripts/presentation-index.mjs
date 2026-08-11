@@ -3,8 +3,6 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
-import { discoverPresentations } from './presentations.mjs';
-
 function escapeHtml(value = '') {
   return String(value)
     .replaceAll('&', '&amp;')
@@ -70,7 +68,11 @@ export function renderPresentationIndex(presentations) {
 `;
 }
 
-export async function writePresentationIndex(outputDir, presentations = await discoverPresentations()) {
+export async function writePresentationIndex(outputDir, presentations) {
+  if (!Array.isArray(presentations)) {
+    throw new TypeError('writePresentationIndex requires a presentation array');
+  }
+
   const resolvedOutput = path.resolve(outputDir);
   await mkdir(resolvedOutput, { recursive: true });
   const indexPath = path.join(resolvedOutput, 'index.html');
@@ -84,6 +86,8 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     throw new Error('Usage: node scripts/presentation-index.mjs <output-directory>');
   }
 
-  const indexPath = await writePresentationIndex(outputDir);
+  const { discoverPresentations } = await import('./presentations.mjs');
+  const presentations = await discoverPresentations();
+  const indexPath = await writePresentationIndex(outputDir, presentations);
   console.log(`Generated presentation index at ${indexPath}`);
 }
