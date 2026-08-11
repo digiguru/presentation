@@ -1,10 +1,6 @@
-# Presentations Registry
-# Every new presentation should be added to this file with the following fields:
-# - name: The event or presentation title (from page title or HTML)
-# - version: Format is vX.Y where X is last digit of year (3=2023, 4=2024, 5=2025) and Y is index of that year's talks
-# - date: When the presentation was given (DD/MM/YYYY format)
-# - url: The HTML filename
-# - attendance: Number of attendees (use ? if unknown)
+# Frozen historical metadata used only to enrich automatically discovered presentations.
+# Do not add new presentations here. New Reveal HTML files are discovered automatically.
+# New or exceptional metadata should live in the HTML via presentation-* meta tags.
 
 - name: Agile Reading
   version: v3.0
@@ -94,7 +90,7 @@
   version: v3.14
   date: 21/11/2023
   url: christmas-lego-movie-sets.html
-  attendance: ?
+  attendance: 12
 
 - name: King's College London
   version: v4.1
