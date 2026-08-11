@@ -1,6 +1,7 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 
 import { discoverPresentations } from './presentations.mjs';
 
@@ -77,7 +78,7 @@ export async function writePresentationIndex(outputDir, presentations = await di
   return indexPath;
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname)) {
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const outputDir = process.argv[2];
   if (!outputDir) {
     throw new Error('Usage: node scripts/presentation-index.mjs <output-directory>');
