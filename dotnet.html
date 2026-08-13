@@ -1,36 +1,21 @@
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Breaking into ChatGPT - Becoming AI Enabled Humans - (.NET - v3.5  - 30/05/2023)</title>
+<meta name="presentation-format" content="pure-v1">
+<meta name="presentation-name" content=".Net">
+<meta name="presentation-version" content="v3.5">
+<meta name="presentation-date" content="30/05/2023">
+<meta name="presentation-attendance" content="50">
+<meta name="presentation-reveal-classes" content="reveal">
+<meta name="presentation-theme" content="black">
 
-		<title>Breaking into ChatGPT - Becoming AI Enabled Humans - (.NET - v3.5  - 30/05/2023)</title>
-
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
-		<link rel="stylesheet" href="custom.css">
-
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-		
-	</head>
-	<body>
-		<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RZP8CG4KLJ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-RZP8CG4KLJ');
+<script type="application/json" id="presentation-options">
+{
+  "hash": true
+}
 </script>
 
-
-
-		<div class="reveal">
-			<div class="slides">
-				<section data-background-image="assets/robot-future2.png">
+<div class="slides">
+<section data-background-image="assets/robot-future2.png">
 					<section data-auto-animate>
 						<h1 class="standout">ChatGPT & .NET</h1>
 					</section>
@@ -537,47 +522,4 @@ So I don't have to log in every month to pay manually</pre>
 					</section>
 				</section>
 			</div>
-		</div>
-
-		<script src="dist/reveal.js"></script>
-		<script src="js/gpt-component.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			
-			
-			Reveal.initialize({
-				hash: true,
-				// Learn about plugins: https://revealjs.com/plugins/
-				//parallaxBackgroundImage: 'assets/adamhall.jpg', 
-				//parallaxBackgroundSize: "1578px 1578px",
-				//parallaxBackgroundHorizontal: 0,
-				
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-
-			Reveal.on( 'slidechanged', event => {
-				const current = event.currentSlide;
-				const background = event.currentSlide.slideBackgroundContentElement.closest(".stack").querySelector(".slide-background-content")
-				console.log("SLIDE", event.currentSlide);
-				if(event.currentSlide.dataset.state == "focus-bg") {
-					//Reveal.dispatchEvent("focus-bg")
-					background.classList.add("focus");
-					background.classList.remove("blur");
-					
-				} else {// if(event.currentSlide.dataset.state == "blur-bg") {
-					background.classList.add("blur");
-					background.classList.remove("focus");
-					
-					//Reveal.dispatchEvent("blur-bg")
-				}
-				// event.previousSlide, event.currentSlide, event.indexh, event.indexv
-			} );
-
-		
-		
-			 
-		</script>
-	</body>
-</html>
+</div>

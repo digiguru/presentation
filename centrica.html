@@ -1,40 +1,90 @@
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Breaking into ChatGPT - AI for Product Practitioners - (Centrica - v4.2  - 24/06/2024)</title>
+<meta name="presentation-format" content="pure-v1">
+<meta name="presentation-name" content="Centrica">
+<meta name="presentation-version" content="v4.2">
+<meta name="presentation-date" content="24/06/2024">
+<meta name="presentation-attendance" content="33">
+<meta name="presentation-reveal-classes" content="reveal">
+<meta name="presentation-theme" content="black">
 
-		<title>Breaking into ChatGPT - AI for Product Practitioners - (Centrica - v4.2  - 24/06/2024)</title>
+<style>
+@property --p{
+syntax: '<number>';
+inherits: true;
+initial-value: 0;
+}
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
-		<link rel="stylesheet" href="custom.css">
+.pie {
+--p:20;
+--b:22px;
+--c:darkred;
+--w:400px;
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-		
-	</head>
-	<body>
-		<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RZP8CG4KLJ"></script>
-<script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.5/base64.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+width:var(--w);
+aspect-ratio:1;
+position:relative;
+display:inline-grid;
+margin:5px;
+place-content:center;
+font-size:25px;
+font-weight:bold;
+font-family:sans-serif;
+}
+.pie:before,
+.pie:after {
+content:"";
+position:absolute;
+border-radius:50%;
+}
+.pie:before {
+inset:0;
+background:
+radial-gradient(farthest-side,var(--c) 98%,#0000) top/var(--b) var(--b) no-repeat,
+conic-gradient(var(--c) calc(var(--p)*1%),#0000 0);
+-webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+}
+.pie:after {
+inset:calc(50% - var(--b)/2);
+background:var(--c);
+transform:rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
+}
+.present .animate {
+animation:pin 1s 0.5s both;
+}
+.future .animate, .past .animate {
+animation:pout 1s 0.5s both;
+}
 
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+.no-round:before {
+background-size:0 0,auto;
+}
+.no-round:after {
+content:none;
+}
+@keyframes pin {
+from{--p:0}
+to{--p:58}
+}
+@keyframes pout {
+from{--p:58}
+to{--p:0}
+}
+body {
+font-family:sans-serif;
+}
 
-  gtag('config', 'G-RZP8CG4KLJ');
+	</style>
+
+<script type="application/json" id="presentation-options">
+{
+  "hash": true
+}
 </script>
 
-
-
-		<div class="reveal">
-			<div class="slides">
-
-				<section data-state="intro" data-background-image="assets/adamhall.jpg">
+<div class="slides">
+<section data-state="intro" data-background-image="assets/adamhall.jpg">
 					<section data-auto-animate data-state="focus-bg">
 						<h1 class="standout">Your Cheat Codes to JFDI</h1>
 					</section>
@@ -602,145 +652,6 @@ So I don't have to log in every month to pay manually</pre>
 						<p>Me on <a href="https://linkedin.com/in/thedigiguru">LinkedIn</a>, <a href="https://twitter.com/thedigiguru">Twitter</a> and <a href="https://sigmoid.social/@digiguru">Mastadon</a></p>
 					</section>
 				</section>
+</div>
 
-
-
-			</div>
-		</div>
-
-		<script src="dist/reveal.js"></script>
-		<script src="js/gpt-component.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-
-
-
-
-
-			Reveal.initialize({
-				hash: true,
-				// Learn about plugins: https://revealjs.com/plugins/
-				//parallaxBackgroundImage: 'assets/adamhall.jpg', 
-				//parallaxBackgroundSize: "1578px 1578px",
-				//parallaxBackgroundHorizontal: 0,
-				
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
-
-				autoAnimateStyles: [
-					'opacity',
-					'color',
-					'background-color',
-					'padding',
-					'font-size',
-					'line-height',
-					'letter-spacing',
-					'border-width',
-					'border-color',
-					'border-radius',
-					'outline',
-					'outline-offset',
-					'grid-template-columns',
-					'width',
-					'height',
-					'transform',
-					'margin-top'
-				]
-			});
-
-			
-			Reveal.on( 'slidechanged', event => {
-				const current = event.currentSlide;
-				const background = event.currentSlide.slideBackgroundContentElement.closest(".stack").querySelector(".slide-background-content")
-				console.log("SLIDE", event.currentSlide);
-				if(event.currentSlide.dataset.state == "focus-bg") {
-					//Reveal.dispatchEvent("focus-bg")
-					background.classList.add("focus");
-					background.classList.remove("blur");
-					
-				} else {// if(event.currentSlide.dataset.state == "blur-bg") {
-					background.classList.add("blur");
-					background.classList.remove("focus");
-					
-					//Reveal.dispatchEvent("blur-bg")
-				}
-				
-				// event.previousSlide, event.currentSlide, event.indexh, event.indexv
-			} );
-
-		
-		
-			 
-		</script>
-	</body>
-
-<style>
-@property --p{
-syntax: '<number>';
-inherits: true;
-initial-value: 0;
-}
-
-.pie {
---p:20;
---b:22px;
---c:darkred;
---w:400px;
-
-width:var(--w);
-aspect-ratio:1;
-position:relative;
-display:inline-grid;
-margin:5px;
-place-content:center;
-font-size:25px;
-font-weight:bold;
-font-family:sans-serif;
-}
-.pie:before,
-.pie:after {
-content:"";
-position:absolute;
-border-radius:50%;
-}
-.pie:before {
-inset:0;
-background:
-radial-gradient(farthest-side,var(--c) 98%,#0000) top/var(--b) var(--b) no-repeat,
-conic-gradient(var(--c) calc(var(--p)*1%),#0000 0);
--webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
-}
-.pie:after {
-inset:calc(50% - var(--b)/2);
-background:var(--c);
-transform:rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
-}
-.present .animate {
-animation:pin 1s 0.5s both;
-}
-.future .animate, .past .animate {
-animation:pout 1s 0.5s both;
-}
-
-.no-round:before {
-background-size:0 0,auto;
-}
-.no-round:after {
-content:none;
-}
-@keyframes pin {
-from{--p:0}
-to{--p:58}
-}
-@keyframes pout {
-from{--p:58}
-to{--p:0}
-}
-body {
-font-family:sans-serif;
-}
-
-	</style>
-</html>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
