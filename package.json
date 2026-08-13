@@ -15,7 +15,7 @@
     "presentations:accessibility": "node scripts/presentation-accessibility.mjs",
     "presentations:accessibility:fix": "node scripts/presentation-accessibility.mjs --write",
     "presentations:smoke": "node scripts/smoke-presentations.mjs",
-    "pure:install": "npm --prefix pure install --no-package-lock --ignore-scripts --no-audit --no-fund",
+    "pure:install": "npm --prefix pure install --package-lock-only --ignore-scripts --no-audit --no-fund && cat pure/package-lock.json && npm --prefix pure install --ignore-scripts --no-audit --no-fund",
     "pure:dev": "npm --prefix pure run dev",
     "pure:test": "npm --prefix pure run test",
     "pure:build": "npm --prefix pure run build",
