@@ -1,12 +1,12 @@
 import Reveal from 'reveal.js';
-import Highlight from 'reveal.js/plugin/highlight/highlight.esm.js';
-import Markdown from 'reveal.js/plugin/markdown/markdown.esm.js';
-import Notes from 'reveal.js/plugin/notes/notes.esm.js';
+import Highlight from 'reveal.js/plugin/highlight';
+import Markdown from 'reveal.js/plugin/markdown';
+import Notes from 'reveal.js/plugin/notes';
 
-import 'reveal.js/dist/reset.css';
-import 'reveal.js/dist/reveal.css';
-import 'reveal.js/dist/theme/black.css';
-import 'reveal.js/dist/plugin/highlight/monokai.css';
+import 'reveal.js/reset.css';
+import 'reveal.js/reveal.css';
+import 'reveal.js/theme/black.css';
+import 'reveal.js/plugin/highlight/monokai.css';
 import '../../custom.css';
 import './stage1.css';
 
