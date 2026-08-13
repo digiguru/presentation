@@ -13,6 +13,21 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  stage1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Use pinned Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+
+      - name: Validate Stage 1 clean runtime
+        run: npm run stage1:check
+
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -47,9 +62,6 @@ jobs:
 
       - name: Test custom tooling
         run: npm run test:tooling
-
-      - name: Validate Stage 1 clean runtime
-        run: npm run stage1:check
 
       - name: Validate presentation metadata
         run: npm run presentations:check
