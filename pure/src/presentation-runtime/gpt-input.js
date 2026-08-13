@@ -1,7 +1,8 @@
 import templateHtml from './gpt-input.html?raw';
+import { resolveGptApiBase } from './runtime-config.js';
 import { addSlide } from './slides.js';
 
-const apiBase = '/api/prompt';
+const apiBase = resolveGptApiBase(document);
 const imageURL = `${apiBase}/image`;
 const textURL = `${apiBase}/raw`;
 const streamURL = `${apiBase}/stream`;
