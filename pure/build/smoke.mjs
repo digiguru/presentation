@@ -1,6 +1,6 @@
 import { execFile, spawnSync } from 'node:child_process';
 import { createReadStream } from 'node:fs';
-import { stat } from 'node:fs/promises';
+import { readFile, stat } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import path from 'node:path';
 import { promisify } from 'node:util';
@@ -15,6 +15,7 @@ const decks = [
   { file: 'anti-ai.html' },
   { file: 'bigbus.html', expectsGpt: true },
 ];
+const buildInfo = JSON.parse(await readFile(path.join(dist, 'build-info.json'), 'utf8'));
 
 function findChrome() {
   const candidates = [
@@ -39,6 +40,7 @@ function contentType(filePath) {
     '.css': 'text/css; charset=utf-8',
     '.html': 'text/html; charset=utf-8',
     '.js': 'text/javascript; charset=utf-8',
+    '.json': 'application/json; charset=utf-8',
     '.jpg': 'image/jpeg',
     '.jpeg': 'image/jpeg',
     '.png': 'image/png',
@@ -99,6 +101,25 @@ try {
   const address = server.address();
   const failures = [];
 
+  server.missingRequests = new Set();
+  try {
+    const { stdout: indexDom } = await execFileAsync(chrome, [
+      '--headless=new', '--no-sandbox', '--disable-dev-shm-usage', '--disable-gpu',
+      '--disable-background-networking', '--disable-default-apps', '--disable-extensions',
+      '--disable-sync', '--metrics-recording-only', '--virtual-time-budget=1500', '--dump-dom',
+      `http://127.0.0.1:${address.port}/index.html`
+    ], { encoding: 'utf8', maxBuffer: 5 * 1024 * 1024, timeout: 15000 });
+
+    if (!indexDom.includes(buildInfo.commitSha)) failures.push('index.html: build commit SHA is not visible');
+    for (const deck of decks) {
+      if (!indexDom.includes(deck.file)) failures.push(`index.html: ${deck.file} is not listed`);
+    }
+  } catch (error) {
+    failures.push(`index.html: Chrome failed: ${error.message}`);
+  }
+
+  for (const missing of server.missingRequests) failures.push(`index.html: local request returned 404: ${missing}`);
+
   for (const deck of decks) {
     server.missingRequests = new Set();
     const url = `http://127.0.0.1:${address.port}/${deck.file}`;
@@ -124,12 +145,9 @@ try {
       });
 
       if (!revealIsReady(stdout)) failures.push(`${deck.file}: Reveal did not reach ready`);
-      if (!stdout.includes(`data-pure-source="${deck.file}"`)) {
-        failures.push(`${deck.file}: Pure source marker was not set`);
-      }
-      if (deck.expectsGpt && !stdout.includes('data-gpt-input-ready="true"')) {
-        failures.push(`${deck.file}: Pure <gpt-input> control did not register`);
-      }
+      if (!stdout.includes(`data-pure-source="${deck.file}"`)) failures.push(`${deck.file}: Pure source marker was not set`);
+      if (!stdout.includes(buildInfo.commitSha)) failures.push(`${deck.file}: exact build commit SHA is missing`);
+      if (deck.expectsGpt && !stdout.includes('data-gpt-input-ready="true"')) failures.push(`${deck.file}: Pure <gpt-input> control did not register`);
     } catch (error) {
       failures.push(`${deck.file}: Chrome failed: ${error.message}`);
     }
@@ -139,7 +157,7 @@ try {
 
   if (failures.length) throw new Error(`Pure presentation smoke tests failed:\n- ${failures.join('\n- ')}`);
 
-  console.log(`Smoke tested ${decks.length} Pure decks: Reveal ready, controls loaded, no local 404s.`);
+  console.log(`Smoke tested ${decks.length} Pure decks at commit ${buildInfo.commitSha}: index identified build, Reveal ready, controls loaded, no local 404s.`);
 } finally {
   await new Promise(resolve => server.close(resolve));
 }
