@@ -2,7 +2,7 @@
 
 This repository contains Digiguru's presentation content and the **Pure** Reveal.js runtime. Pure is the only runtime/build path.
 
-Stage 6 removed the inherited framework/build stack. Stage 7 migrated all 25 presentation sources to the canonical `pure-v1` content format and removed the historical HTML compatibility parser and frozen metadata registry.
+Stage 6 removed the inherited framework/build stack. Stage 7 migrated the then-current 25 presentation sources to the canonical `pure-v1` content format and removed the historical HTML compatibility parser and frozen metadata registry. The rescued Christmas LEGO Movie Sets quiz brings the current canonical corpus to 26 decks.
 
 ## Architecture
 
@@ -109,7 +109,7 @@ The generated YAML is an export artifact only; there is no repository-owned pres
 
 ## CI and deployment
 
-GitHub Actions validates workflow syntax, repository tooling, all 25 canonical metadata records, accessibility, ESLint, the locked dependency graph, source purity/capability preservation, the production build, all 25 built decks in Chrome, and the exported catalogue plus all 25 exported decks in Chrome.
+GitHub Actions validates workflow syntax, repository tooling, all 26 canonical metadata records, accessibility, ESLint, the locked dependency graph, source purity/capability preservation, the production build, all 26 built decks in Chrome, and the exported catalogue plus all 26 exported decks in Chrome.
 
 CI installs the locked Pure dependency graph once per job and reuses it for lint/build/smoke work. After a successful push to `master`, the workflow dispatches `digiguru/digiguru.github.io` with the exact presentation SHA that passed CI.
 
