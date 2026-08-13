@@ -48,6 +48,9 @@ jobs:
       - name: Test custom tooling
         run: npm run test:tooling
 
+      - name: Validate Stage 1 clean runtime
+        run: npm run stage1:check
+
       - name: Validate presentation metadata
         run: npm run presentations:check
 
