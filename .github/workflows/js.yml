@@ -42,14 +42,6 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version-file: .node-version
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Audit dependencies (known legacy issue)
-        continue-on-error: true
-        run: npm audit --audit-level=high
 
       - name: Validate GitHub Actions workflows
         env:
@@ -70,25 +62,14 @@ jobs:
       - name: Validate presentation metadata
         run: npm run presentations:check
 
-      - name: Validate local presentation assets
-        run: npm run presentations:assets
-
       - name: Validate presentation accessibility
         run: npm run presentations:accessibility
 
-      - name: Lint
+      - name: Lint Pure and repository tooling
         run: npm run lint
 
       - name: Build Pure product
         run: npm run build
-
-      - name: Build retained legacy runtime
-        run: npm run build:legacy
-
-      - name: Test retained legacy Reveal runtime
-        run: npm run test:legacy
-        env:
-          CI: true
 
       - name: Smoke test exported Pure presentations
         run: npm run presentations:smoke

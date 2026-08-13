@@ -2,24 +2,16 @@
   "name": "digiguru-presentations",
   "version": "4.4.0",
   "private": true,
-  "description": "Digiguru presentation source and customized Reveal.js runtime",
-  "homepage": "https://revealjs.com",
-  "main": "dist/reveal.js",
-  "module": "dist/reveal.esm.js",
+  "description": "Digiguru presentation source and Pure Reveal.js runtime",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint js scripts pure gulpfile.js",
+    "lint": "npm run pure:install && ./pure/node_modules/.bin/eslint scripts test/*.test.mjs pure/src pure/build pure/test pure/*.mjs",
     "test": "npm run lint && npm run test:tooling && npm run pure:check",
     "test:tooling": "node --test test/*.test.mjs",
-    "test:legacy": "gulp qunit",
     "start": "npm run pure:install && npm run pure:dev",
-    "start:legacy": "gulp serve",
     "build": "npm run pure:preview",
-    "build:legacy": "gulp build",
     "preview:build": "npm run build",
-    "audit": "npm audit --audit-level=high",
     "presentations:check": "node scripts/presentations.mjs --check",
-    "presentations:assets": "node scripts/check-presentation-assets.mjs",
     "presentations:accessibility": "node scripts/presentation-accessibility.mjs",
     "presentations:accessibility:fix": "node scripts/presentation-accessibility.mjs --write",
     "presentations:smoke": "node scripts/smoke-presentations.mjs",
@@ -31,11 +23,6 @@
     "pure:check": "npm run pure:install && npm --prefix pure run check",
     "pure:preview": "npm run pure:install && npm --prefix pure run build"
   },
-  "author": {
-    "name": "Hakim El Hattab",
-    "email": "hakim.elhattab@gmail.com",
-    "web": "https://hakim.se"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/digiguru/presentation.git"
@@ -46,46 +33,5 @@
   "engines": {
     "node": ">=24.11.0 <25"
   },
-  "keywords": ["reveal", "slides", "presentation"],
-  "allowScripts": {
-    "@parcel/watcher@2.6.0": true,
-    "puppeteer@24.43.1": true,
-    "core-js": false,
-    "fsevents": false
-  },
-  "devDependencies": {
-    "@babel/core": "^8.0.1",
-    "@babel/eslint-parser": "^8.0.1",
-    "@babel/preset-env": "^8.0.2",
-    "@rollup/plugin-commonjs": "^29.0.3",
-    "@rollup/plugin-node-resolve": "^16.0.3",
-    "@rollup/plugin-terser": "^1.0.0",
-    "babel-plugin-polyfill-corejs3": "^1.0.0",
-    "babel-plugin-transform-html-import-to-string": "2.0.0",
-    "colors": "^1.4.0",
-    "core-js": "^3.48.0",
-    "eslint": "^10.8.1",
-    "fitty": "^2.3.0",
-    "glob": "^13.0.6",
-    "globals": "^17.9.0",
-    "gulp": "^5.0.1",
-    "gulp-autoprefixer": "^10.0.0",
-    "gulp-clean-css": "^4.2.0",
-    "gulp-header": "^2.0.9",
-    "gulp-zip": "^6.1.0",
-    "highlight.js": "^11.7.0",
-    "marked": "^18.0.9",
-    "marked-smartypants": "^1.1.11",
-    "node-qunit-puppeteer": "^2.1.2",
-    "qunit": "^2.19.3",
-    "rollup": "^4.62.4",
-    "sass": "^1.39.2",
-    "through2": "^5.0.11",
-    "yargs": "^18.0.0"
-  },
-  "overrides": {
-    "chokidar": "3.5.3",
-    "glob-parent": "6.0.2"
-  },
-  "browserslist": "> 2%, not dead"
+  "keywords": ["reveal.js", "slides", "presentation"]
 }

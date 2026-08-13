@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
+    "lint": "eslint --config ../eslint.config.mjs ../scripts ../test/*.test.mjs src build test *.mjs",
     "test": "node --test test/*.test.mjs",
     "audit:legacy": "node build/audit-legacy-decks.mjs",
     "build": "vite build && node build/verify-build.mjs",
@@ -14,6 +15,7 @@
     "reveal.js": "6.0.1"
   },
   "devDependencies": {
+    "eslint": "10.8.1",
     "vite": "8.1.5"
   }
 }

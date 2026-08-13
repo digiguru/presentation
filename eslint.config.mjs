@@ -1,6 +1,3 @@
-import babelParser from '@babel/eslint-parser';
-import globals from 'globals';
-
 const sharedRules = {
   curly: 'off',
   eqeqeq: 'error',
@@ -16,9 +13,7 @@ const sharedRules = {
 export default [
   {
     ignores: [
-      'dist/**',
       'node_modules/**',
-      'plugin/**/*.js',
       'output/**',
       'pure/dist/**',
       'pure/node_modules/**',
@@ -26,66 +21,10 @@ export default [
     ],
   },
   {
-    files: ['js/**/*.js'],
+    files: ['pure/src/**/*.js', 'scripts/**/*.mjs', 'test/*.test.mjs', 'pure/**/*.mjs'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
-      parser: babelParser,
-      parserOptions: {
-        requireConfigFile: false,
-        babelOptions: {
-          parserOpts: {
-            allowImportExportEverywhere: true,
-          },
-        },
-      },
-      globals: {
-        ...globals.browser,
-        ...globals.es2021,
-        module: 'readonly',
-        define: 'readonly',
-        exports: 'readonly',
-        unescape: 'readonly',
-      },
-    },
-    rules: sharedRules,
-  },
-  {
-    files: ['pure/src/**/*.js'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      globals: {
-        ...globals.browser,
-        ...globals.es2021,
-      },
-    },
-    rules: sharedRules,
-  },
-  {
-    files: ['gulpfile.js'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'commonjs',
-      parser: babelParser,
-      parserOptions: {
-        requireConfigFile: false,
-      },
-      globals: {
-        ...globals.node,
-      },
-    },
-    rules: sharedRules,
-  },
-  {
-    files: ['scripts/**/*.mjs', 'pure/**/*.mjs'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      globals: {
-        ...globals.node,
-        ...globals.es2021,
-      },
     },
     rules: sharedRules,
   },
