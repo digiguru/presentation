@@ -180,7 +180,7 @@ class extends HTMLElement {
 
 		<div class="reveal">
 			<div class="slides">
-				<section data-state="intro">
+				<section data-state="intro" data-background-image="assets/adamhall.jpg" data-background-size="1578px 1578px">
 					<section data-auto-animate data-state="focus-bg">
 						<h2>Adam Hall</h2>
 					</section>
@@ -203,7 +203,7 @@ class extends HTMLElement {
 						when suddenly...
 					</section>
 				</section>
-				<section data-state="robots">
+				<section data-state="robots" data-background-image="assets/robot-wannabe.png" data-background-size="1696px 928px">
 
 					
 					<section data-state="focus-bg">
@@ -228,7 +228,7 @@ class extends HTMLElement {
 						CAN. NOT. WAIT.
 					</section>
 				</section>
-				<section data-state="art">
+				<section data-state="art" data-background-image="assets/robot-art.png" data-background-size="1696px 928px">
 					<section data-state="focus-bg">
 						<h1>Art</h1>
 					</section>
@@ -277,7 +277,7 @@ class extends HTMLElement {
 						</aside>
 					</section>
 				</section>
-				<section data-state="openai">
+				<section data-state="openai" data-background-image="assets/robot-welcome.png" data-background-size="1696px 928px">
 					<section data-state="focus-bg">
 						<h1>Invite</h1>
 					</section>
@@ -318,7 +318,7 @@ class extends HTMLElement {
 						<img alt="Chat gpt adoption6" data-generated-alt="true" src="assets/chat-gpt-adoption6.png">
 					</section>
 				</section>
-				<section data-state="app">
+				<section data-state="app" data-background-image="assets/robot-dance.png" data-background-size="1696px 928px">
 					<section data-state="focus-bg">
 						<h1>My First App</h1>
 					</section>
@@ -352,7 +352,7 @@ So I don't have to log in every month to pay manually</pre>
 					</section>
 				</section>
 
-				<section data-state="upskilling">
+				<section data-state="upskilling" data-background-image="assets/celebrate2.png" data-background-size="1696px 928px">
 					<section data-state="focus-bg">
 						<h1>Upskilling</h1>
 					</section>
@@ -389,7 +389,7 @@ So I don't have to log in every month to pay manually</pre>
 						Your scientists were so preoccupied with whether they could, they didn't stop to think if they should
 					</section>
 				</section>
-				<section data-state="sterotypes">
+				<section data-state="sterotypes" data-background-image="assets/robot-bully.png" data-background-size="1696px 928px">
 					<section data-state="focus-bg"><h1>Stereotypes</h1></section>
 					<section data-state="blur-bg">
 						<gpt-input>
@@ -405,7 +405,7 @@ So I don't have to log in every month to pay manually</pre>
 						Actively pursue diversity
 					</section>
 				</section>
-				<section data-state="misinformation">
+				<section data-state="misinformation" data-background-image="assets/robot-sad.png" data-background-size="1696px 928px">
 					<section data-state="focus-bg">
 						<h1>Misinformation</h1>
 					</section>
@@ -428,7 +428,7 @@ So I don't have to log in every month to pay manually</pre>
 						Treat OpenAI like a junior
 					</section>
 				</section>
-				<section data-state="jobs">
+				<section data-state="jobs" data-background-image="assets/robot-worry.png" data-background-size="1696px 928px">
 					<section data-state="focus-bg">
 						<h1>Jobs</h1>
 					</section>
@@ -443,7 +443,7 @@ So I don't have to log in every month to pay manually</pre>
 				</section>
 				
 
-				<section data-state="conclusion">
+				<section data-state="conclusion" data-background-image="assets/robot-future.png" data-background-size="1728px 864px">
 					<section data-state="focus-bg">
 						<h1>Conclusion</h1>
 					</section>
@@ -467,7 +467,7 @@ So I don't have to log in every month to pay manually</pre>
 						<h2>Any questions?</h2>
 					</section>
 				</section>
-				<section data-state="future">
+				<section data-state="future" data-background-image="assets/robot-future2.png" data-background-size="1696px 928px">
 					<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 					<section data-auto-animate data-state="focus-bg">
 						<h2>Epilogue</h2>
@@ -534,9 +534,6 @@ So I don't have to log in every month to pay manually</pre>
 			Reveal.initialize({
 				hash: true,
 				// Learn about plugins: https://revealjs.com/plugins/
-				parallaxBackgroundImage: 'assets/adamhall.jpg', 
-				parallaxBackgroundSize: "1578px 1578px",
-				parallaxBackgroundHorizontal: 0,
 				
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});
@@ -549,84 +546,6 @@ So I don't have to log in every month to pay manually</pre>
 				[...document.getElementsByClassName("backgrounds")].forEach(x => {
 					x.classList.remove("blur")
 				})
-			});
-			Reveal.addEventListener( 'intro', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/adamhall.jpg', 
-					parallaxBackgroundSize: "1578px 1578px",
-					
-				});
-			});
-			Reveal.addEventListener( 'robots', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-wannabe.png',
-					parallaxBackgroundSize: "1696px 928px"
-				});
-			});
-			Reveal.addEventListener( 'art', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-art.png',
-					parallaxBackgroundSize: "1696px 928px"
-				});
-			});
-			Reveal.addEventListener( 'openai', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-welcome.png',
-					parallaxBackgroundSize: "1696px 928px"
-				});
-			});
-			Reveal.addEventListener( 'app', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-dance.png',
-					parallaxBackgroundSize: "1696px 928px"
-				});
-			});
-			Reveal.addEventListener( 'upskilling', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/celebrate2.png',
-					parallaxBackgroundSize: "1696px 928px"
-				});
-			});
-			Reveal.addEventListener( 'sterotypes', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-bully.png',
-					parallaxBackgroundSize: "1696px 928px"
-				});
-			});
-			Reveal.addEventListener( 'misinformation', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-sad.png',
-					parallaxBackgroundSize: "1696px 928px"
-				});
-			});
-			Reveal.addEventListener( 'jobs', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-worry.png',
-					parallaxBackgroundSize: "1696px 928px"
-				});
-			});
-			Reveal.addEventListener( 'conclusion', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-future.png',
-					parallaxBackgroundSize: "1728px 864px"
-				});
-			});
-			Reveal.addEventListener( 'future', function() {
-				// Called each time the slide with the "stats" state is made visible
-				Reveal.configure({ 
-					parallaxBackgroundImage: 'assets/robot-future2.png',
-					parallaxBackgroundSize: "1696px 928px"
-				});
 			});
 			
 			
