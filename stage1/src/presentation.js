@@ -5,18 +5,32 @@ import Notes from 'reveal.js/plugin/notes';
 
 import 'reveal.js/reset.css';
 import 'reveal.js/reveal.css';
-import 'reveal.js/theme/black.css';
 import 'reveal.js/plugin/highlight/monokai.css';
 import '../../custom.css';
 import './stage1.css';
 
-import { installPresentationRuntime } from './presentation-runtime/index.js';
+import {
+  installLegacyControls,
+  installPresentationRuntime,
+} from './presentation-runtime/index.js';
+
+function readCompatibilityConfig() {
+  const element = document.querySelector('#legacy-deck-config');
+  if (!element) return { options: {}, capabilities: {} };
+  try {
+    return JSON.parse(element.textContent || '{}');
+  } catch (error) {
+    throw new Error(`Could not parse legacy deck compatibility config: ${error.message}`);
+  }
+}
 
 const revealRoot = document.querySelector('.reveal');
-if (!revealRoot) throw new Error('Stage 1 presentation is missing its .reveal root.');
+if (!revealRoot) throw new Error('Stage 2 presentation is missing its .reveal root.');
 
+const compatibility = readCompatibilityConfig();
 const deck = new Reveal(revealRoot, {
   hash: true,
+  ...compatibility.options,
   plugins: [Markdown, Highlight, Notes],
   autoAnimateStyles: [
     'opacity',
@@ -39,10 +53,10 @@ const deck = new Reveal(revealRoot, {
   ]
 });
 
-installPresentationRuntime(deck);
+installPresentationRuntime(deck, compatibility.capabilities);
+await installLegacyControls(deck, compatibility.capabilities);
 await deck.initialize();
 
-// Deliberately not window.Reveal: Stage 1 proves our controls can depend on an
-// explicit deck instance instead of a fork-specific global. Expose a clearly
-// experimental handle only to make browser comparison/debugging easy.
-window.stage1Deck = deck;
+document.documentElement.dataset.compatibilitySource = compatibility.source || 'unknown';
+document.documentElement.dataset.revealReady = String(deck.isReady());
+window.stage2Deck = deck;
