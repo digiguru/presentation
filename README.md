@@ -1,190 +1,125 @@
 # Digiguru presentations
 
-This repository is the source of truth for presentation files used by the Digiguru website. It contains the presentation HTML and assets plus the customized Reveal.js runtime used to render them.
+This repository is the source of truth for Digiguru presentation content and the **Pure** runtime. Pure uses the official `reveal.js` npm package and Vite. The inherited Reveal/Gulp runtime remains only as temporary regression coverage until the final cleanup stage.
 
 ## Local setup
 
-The supported runtime is pinned in `.node-version` and must satisfy the `package.json` engine range. With a compatible Node 24 installation:
+Use the Node version pinned in `.node-version`:
 
 ```bash
 npm ci
 npm start
 ```
 
-`npm start` serves the repository with the built-in Node static server used by the test suite and watches the Reveal source for changes. The default address is <http://localhost:8000/>. You can override the host, port or served root with the existing Gulp arguments, for example:
+The normal product commands are:
 
 ```bash
-npm start -- --port 3000
+npm start       # Pure Vite development server
+npm run build   # build Pure into pure/dist
+npm test        # lint, tooling tests and Pure validation/build
 ```
 
-Before opening a PR, run the same important checks used by CI:
+The inherited framework commands are explicitly legacy:
+
+```bash
+npm run start:legacy
+npm run build:legacy
+npm run test:legacy
+```
+
+Do not use those legacy commands for new runtime work.
+
+Before opening a PR, run:
 
 ```bash
 npm run presentations:check
 npm run presentations:assets
 npm run presentations:accessibility
-npm run lint
-npm run test:tooling
-npm run build
-gulp qunit
+npm test
 npm run presentations:smoke
-npm audit --audit-level=high
 ```
+
+`presentations:smoke` requires Chrome/Chromium. GitHub Actions provides Chrome, so Codespaces without a browser can rely on CI for that check.
 
 ## Adding a presentation
 
-Create a new Reveal presentation as a root-level `.html` file. There is **no registry file to update**.
+Create a root-level `.html` file containing Reveal `reveal` and `slides` containers. Presentations are discovered automatically; there is no registry to update.
 
-A presentation is discovered automatically when the HTML contains both the Reveal `reveal` and `slides` containers.
-
-The easiest metadata convention is to include the version and date in the document title:
+The easiest metadata convention is:
 
 ```html
 <title>My new talk - v6.2 - 11/08/2026</title>
 ```
 
-The filename automatically becomes the published URL, for example:
+The filename becomes the published URL. For unusual titles use `presentation-name`, `presentation-version`, `presentation-date`, and optional `presentation-attendance` meta tags.
 
-```text
-my-new-talk.html -> /presentation/my-new-talk.html
-```
+Run `npm run presentations:check` to validate metadata. `legacy-presentations.yml` is frozen compatibility data for historical presentations; do not add new entries.
 
-For unusual titles, add explicit metadata in the `<head>`:
+## Pure runtime
+
+Pure lives under `pure/`. The build discovers the presentation corpus, renders every deck through the shared `pure/deck.html` shell, preserves existing `assets/...`, `themes/...` and `output/...` URLs, and emits `build-info.json` plus `presentations.json`.
+
+Presentation backgrounds should be declarative:
 
 ```html
-<meta name="presentation-name" content="My new talk">
-<meta name="presentation-version" content="v6.2">
-<meta name="presentation-date" content="11/08/2026">
-<meta name="presentation-attendance" content="40">
+<section data-background-image="assets/example.png" data-background-size="1696px 928px">
 ```
 
-`presentation-name`, `presentation-version`, and `presentation-date` are required logically, but can be inferred from the title or frozen legacy metadata. Validation is deliberately strict:
+Do not add presentation-specific `Reveal.configure()` listeners to switch backgrounds.
 
-- versions use `vX.Y`, for example `v6.2`;
-- dates must be real calendar dates in `DD/MM/YYYY` format;
-- attendance is optional, but when supplied it must be a non-negative integer.
-
-Run:
-
-```bash
-npm run presentations:check
-```
-
-CI runs the same validation. A newly added Reveal deck with missing or malformed metadata fails the build rather than silently disappearing from the website.
-
-The website build calls `scripts/presentations.mjs` to generate its Jekyll data and export the presentation runtime at build time. There is no runtime GitHub API dependency.
-
-`legacy-presentations.yml` is a frozen compatibility source for historical display names and attendance values. **Do not add new presentations to it.** Git history preserves the old manually maintained registry.
-
-## Images and accessibility
-
-Every `<img>` in a presentation must have an `alt` attribute. Prefer a short description that communicates what the image contributes to the slide; use `alt=""` only when an image is genuinely decorative.
-
-Check the full presentation set with:
-
-```bash
-npm run presentations:accessibility
-```
-
-For the historical cleanup there is also a bootstrap fixer:
-
-```bash
-npm run presentations:accessibility:fix
-```
-
-It derives an initial description from explicit hints, useful asset names and nearby slide context. Automatically added descriptions are marked with `data-generated-alt="true"`. Treat those as a useful baseline: when editing that slide, replace a generated description with a more precise human-written one where the visual meaning needs more context.
-
-Local asset references are validated separately with:
+Every `<img>` must have an `alt` attribute. Validate presentation assets and accessibility with:
 
 ```bash
 npm run presentations:assets
+npm run presentations:accessibility
 ```
 
-That validator checks image, script, stylesheet, background, `srcset` and CSS URL references without applying generic HTML link rules that conflict with Reveal's hash-based navigation.
+## Build and export
+
+`npm run build` is the product build and writes the static site to `pure/dist/`.
+
+The website-facing CLI remains:
+
+```bash
+node scripts/presentations.mjs --manifest /path/to/presentations.yml --export /path/to/site
+```
+
+Export builds Pure and copies **only the validated Pure artifact**. It no longer copies the repository tree or inherited Reveal/Gulp implementation. The exporter verifies that `presentations.json` matches metadata discovery and that every expected presentation exists.
 
 ## Tests and CI
 
-The `tests` workflow uses the pinned Node version and runs, in order:
+During migration the workflow has two layers. The Pure job validates the product and opens all decks in Chrome. The main build job validates tooling/content, builds Pure, then temporarily builds/tests the inherited runtime as regression coverage before smoke-testing the exported Pure site.
 
-1. `npm ci` with the repository's reviewed install-script policy.
-2. `npm audit --audit-level=high`.
-3. `actionlint` against the GitHub Actions workflows.
-4. Node unit tests for the custom metadata, accessibility and server tooling.
-5. Presentation metadata, local-asset and image-alt validation.
-6. ESLint.
-7. The Reveal build.
-8. The Reveal QUnit browser suite.
-9. A headless-Chrome smoke test that opens every exported deck and fails on local 404s or a Reveal runtime that never reaches the ready state.
+```text
+npm run build         -> Pure product
+npm run build:legacy  -> temporary inherited framework regression build
+```
 
-The `build` job is intentionally the single required CI status to use for branch protection on `master`.
+The exported-site smoke test validates `index.html` as a catalogue and then opens every deck listed by `presentations.json`, failing on missing local requests or Reveal not reaching `ready`.
 
-### Dependency install scripts
+The known high-severity `extract-zip` audit finding comes through the retained QUnit/Puppeteer stack. It remains visible and non-blocking until the final legacy cleanup removes that stack.
 
-Dependency lifecycle scripts are reviewed explicitly in the `allowScripts` section of `package.json`, and `.npmrc` enables strict enforcement. A new dependency that introduces an unreviewed install script should fail installation until it has been deliberately reviewed and either approved or denied.
+## Vercel previews
 
-The current policy permits the native setup required by `@parcel/watcher` and Puppeteer and denies the non-essential `core-js` postinstall script. Do not use `--dangerously-allow-all-scripts` to bypass this policy in CI.
-
-Dependabot runs weekly for npm and GitHub Actions. Minor and patch updates are grouped; major versions remain separate so breaking changes are reviewed independently.
-
-## Vercel preview deployments
-
-The repository can be connected directly to Vercel to provide a browser-accessible deployment for `master` and automatic Preview Deployments for pull requests and branches.
-
-The Vercel build configuration is version-controlled in `vercel.json`. It runs:
+`vercel.json` runs:
 
 ```bash
 npm ci
-npm run preview:build
+npm run build
 ```
 
-`npm run preview:build` builds the Reveal runtime and exports the same self-contained static presentation site used by the smoke tests into `preview-site/`. Vercel serves that directory as the deployment output.
+and publishes `pure/dist`. It also provides the same-origin `/api/prompt/*` boundary used by the Pure GPT control.
 
-Because `vercel.json` owns the install command, build command and output directory, do not duplicate or shorten those commands in the Vercel dashboard. Repository configuration intentionally overrides dashboard Build & Development command values.
-
-For a pull request, use Vercel's branch/PR Preview Deployment to review real presentation behaviour before merging. This is especially useful for Reveal runtime upgrades and visual changes that pass automated smoke tests but still need human browser review.
+The Pure index shows the exact build commit SHA. Check that SHA when reviewing a preview so a stale immutable Vercel deployment is not mistaken for the latest branch build.
 
 ## Website deployment
 
-Changes to `master` are deployed to the main Digiguru website through an event-driven GitHub Actions flow:
+A successful push to `master` dispatches `digiguru/digiguru.github.io` with the exact presentation commit SHA that passed CI. The website checks out that SHA, generates its manifest, exports the validated Pure artifact and deploys it.
 
-1. The `tests` workflow validates the complete presentation source and runtime.
-2. If the `build` job succeeds on a push to `master`, `dispatch-website` runs.
-3. It uses the `WEBSITE_DISPATCH_TOKEN` repository secret to trigger the `jekyll.yml` workflow in `digiguru/digiguru.github.io` and passes the exact presentation commit SHA that just passed CI.
-4. The website workflow checks out that exact presentation commit, verifies the checkout matches the requested SHA, generates the manifest, exports the presentation files and deploys the static site to GitHub Pages.
+`WEBSITE_DISPATCH_TOKEN` should remain narrowly scoped to `digiguru.github.io` with **Actions — Read and write**, stored only as an Actions secret.
 
-Pinning the source SHA makes deployments deterministic: a newer presentation commit landing while a website build is queued cannot silently change the contents of the earlier release.
+## Reveal.js relationship
 
-The website can still be rebuilt manually with its `workflow_dispatch` action. If no `presentation_sha` is supplied for a manual website build, the website intentionally falls back to the current `presentation/master`. There is no hourly polling job.
+Pure uses Reveal.js as a dependency, not as repository-owned product code. The inherited Reveal/Gulp/QUnit source remains temporarily for migration regression coverage only. New product behaviour belongs in Pure or presentation content.
 
-### Website dispatch token
-
-`WEBSITE_DISPATCH_TOKEN` is a fine-grained GitHub personal access token. Keep its access deliberately narrow:
-
-- Resource owner: `digiguru`.
-- Repository access: only `digiguru.github.io`.
-- Repository permission: **Actions — Read and write**.
-- Store the token only as the `WEBSITE_DISPATCH_TOKEN` Actions secret in this repository; never commit it to the repository.
-
-To rotate or replace the token:
-
-1. In GitHub, open **Settings → Developer settings → Personal access tokens → Fine-grained tokens**.
-2. Generate a replacement token with the repository and permission scope above.
-3. Open this repository's **Settings → Secrets and variables → Actions**.
-4. Update the `WEBSITE_DISPATCH_TOKEN` repository secret with the new token value.
-5. Merge a small safe change to `master` and confirm the `tests` workflow completes successfully, including the `dispatch-website` job.
-6. Confirm `digiguru/digiguru.github.io` starts its Jekyll workflow for the exact presentation SHA and deploys successfully.
-7. Revoke the old token after the replacement has been verified.
-
-If the source CI is green but `dispatch-website` fails with an authentication or authorization error, check the token expiry, repository selection and **Actions — Read and write** permission first.
-
-## Branch protection
-
-`master` should be protected so changes cannot bypass the validation above. Require the `build` status check before merge and keep direct pushes restricted according to the repository's normal ownership model. This is a repository setting rather than source-controlled workflow configuration.
-
-## Reveal.js maintenance
-
-This repository started as a Reveal.js fork and preserves the upstream Reveal copyright and MIT licence. The package is marked `private` because this repository is an application/source repository rather than an npm package intended for publication.
-
-The build uses Dart Sass's modern JavaScript API and the Sass module system. When changing inherited Reveal styles, keep the source free of deprecated Sass `@import`, global built-ins and legacy color helpers so future Sass upgrades do not turn warnings into build failures.
-
-Reveal.js is an open-source HTML presentation framework. Documentation is available at <https://revealjs.com/>.
+The final cleanup stage will remove the unused framework source, Gulp/QUnit/Puppeteer dependencies and legacy package metadata after the website integration proves the Pure export end to end.

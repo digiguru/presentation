@@ -1,6 +1,6 @@
 import { execFile, execFileSync, spawnSync } from 'node:child_process';
 import { createReadStream } from 'node:fs';
-import { mkdtemp, readdir, rm, stat } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, stat } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
@@ -88,6 +88,27 @@ function revealIsReady(dom) {
   return false;
 }
 
+async function dumpDom(chrome, url, virtualTimeBudget = 3000) {
+  return execFileAsync(chrome, [
+    '--headless=new',
+    '--no-sandbox',
+    '--disable-dev-shm-usage',
+    '--disable-gpu',
+    '--disable-background-networking',
+    '--disable-default-apps',
+    '--disable-extensions',
+    '--disable-sync',
+    '--metrics-recording-only',
+    `--virtual-time-budget=${virtualTimeBudget}`,
+    '--dump-dom',
+    url,
+  ], {
+    encoding: 'utf8',
+    maxBuffer: 10 * 1024 * 1024,
+    timeout: 30000,
+  });
+}
+
 let server;
 
 try {
@@ -96,11 +117,10 @@ try {
     stdio: 'inherit',
   });
 
-  const decks = (await readdir(exportDir))
-    .filter(file => file.endsWith('.html'))
-    .sort();
+  const manifest = JSON.parse(await readFile(path.join(exportDir, 'presentations.json'), 'utf8'));
+  const decks = manifest.map(presentation => presentation.url).sort();
 
-  if (!decks.length) throw new Error('No exported presentation HTML files found for smoke testing.');
+  if (!decks.length) throw new Error('No exported presentations found in presentations.json for smoke testing.');
 
   const missingRequests = new Set();
   server = createServer((req, res) => {
@@ -119,30 +139,23 @@ try {
   const chrome = findChrome();
   const failures = [];
 
+  missingRequests.clear();
+  try {
+    const { stdout } = await dumpDom(chrome, `http://127.0.0.1:${address.port}/index.html`, 1500);
+    for (const deck of decks) {
+      if (!stdout.includes(`href="./${deck}"`)) failures.push(`index.html: missing link to ${deck}`);
+    }
+  } catch (error) {
+    failures.push(`index.html: Chrome failed: ${error.message}`);
+  }
+  for (const missing of missingRequests) failures.push(`index.html: local request returned 404: ${missing}`);
+
   for (const deck of decks) {
     missingRequests.clear();
     const url = `http://127.0.0.1:${address.port}/${encodeURIComponent(deck)}`;
 
     try {
-      const { stdout } = await execFileAsync(chrome, [
-        '--headless=new',
-        '--no-sandbox',
-        '--disable-dev-shm-usage',
-        '--disable-gpu',
-        '--disable-background-networking',
-        '--disable-default-apps',
-        '--disable-extensions',
-        '--disable-sync',
-        '--metrics-recording-only',
-        '--virtual-time-budget=3000',
-        '--dump-dom',
-        url,
-      ], {
-        encoding: 'utf8',
-        maxBuffer: 10 * 1024 * 1024,
-        timeout: 30000,
-      });
-
+      const { stdout } = await dumpDom(chrome, url);
       if (!revealIsReady(stdout)) failures.push(`${deck}: Reveal did not reach the ready state`);
     } catch (error) {
       failures.push(`${deck}: Chrome failed: ${error.message}`);
@@ -155,7 +168,7 @@ try {
     throw new Error(`Presentation smoke tests failed:\n- ${failures.join('\n- ')}`);
   }
 
-  console.log(`Smoke tested ${decks.length} presentations in headless Chrome with no local 404s.`);
+  console.log(`Smoke tested Pure index and ${decks.length} presentations in headless Chrome with no local 404s.`);
 } finally {
   if (server) await new Promise(resolve => server.close(resolve));
   await rm(workDir, { recursive: true, force: true });

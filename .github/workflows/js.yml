@@ -79,15 +79,18 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Build
+      - name: Build Pure product
         run: npm run build
 
-      - name: Test Reveal runtime
-        run: gulp qunit
+      - name: Build retained legacy runtime
+        run: npm run build:legacy
+
+      - name: Test retained legacy Reveal runtime
+        run: npm run test:legacy
         env:
           CI: true
 
-      - name: Smoke test presentations
+      - name: Smoke test exported Pure presentations
         run: npm run presentations:smoke
 
   dispatch-website:
