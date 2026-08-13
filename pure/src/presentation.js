@@ -9,6 +9,7 @@ import 'reveal.js/plugin/highlight/monokai.css';
 import './pure.css';
 
 import { installPresentationRuntime } from './presentation-runtime/index.js';
+import { inheritStackBackgrounds } from './presentation-runtime/stack-backgrounds.js';
 
 function readPureConfig() {
   const element = document.querySelector('#pure-deck-config');
@@ -22,6 +23,10 @@ function readPureConfig() {
 
 const revealRoot = document.querySelector('.reveal');
 if (!revealRoot) throw new Error('Pure presentation is missing its .reveal root.');
+
+const slidesElement = revealRoot.querySelector('.slides');
+if (!slidesElement) throw new Error('Pure presentation is missing its .slides container.');
+inheritStackBackgrounds(slidesElement);
 
 const pureConfig = readPureConfig();
 const deck = new Reveal(revealRoot, {

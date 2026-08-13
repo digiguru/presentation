@@ -71,6 +71,12 @@ function revealIsReady(dom) {
   });
 }
 
+function renderedBackgroundOccurrences(dom, assetFile) {
+  return [...dom.matchAll(/<div\b[^>]*class=["'][^"']*\bslide-background-content\b[^"']*["'][^>]*>/gi)]
+    .filter(match => match[0].includes(assetFile))
+    .length;
+}
+
 const server = createServer();
 try {
   await new Promise((resolve, reject) => {
@@ -116,6 +122,9 @@ try {
       if (!stdout.includes(`data-pure-source="${deck.file}"`)) failures.push(`${deck.file}: Pure source marker was not set`);
       if (!stdout.includes(buildInfo.commitSha)) failures.push(`${deck.file}: exact build commit SHA is missing`);
       if (deck.expectsGpt && !stdout.includes('data-gpt-input-ready="true"')) failures.push(`${deck.file}: Pure GPT control did not register`);
+      if (deck.file === 'bigbus.html' && renderedBackgroundOccurrences(stdout, 'adamhall.jpg') < 2) {
+        failures.push('bigbus.html: opening vertical slide did not render its inherited adamhall.jpg background');
+      }
     } catch (error) {
       failures.push(`${deck.file}: Chrome failed: ${error.message}`);
     }
@@ -123,7 +132,7 @@ try {
   }
 
   if (failures.length) throw new Error(`Pure corpus smoke tests failed:\n- ${failures.join('\n- ')}`);
-  console.log(`Smoke tested all ${decks.length} Pure presentations at commit ${buildInfo.commitSha}: Reveal ready, controls loaded, no local 404s.`);
+  console.log(`Smoke tested all ${decks.length} Pure presentations at commit ${buildInfo.commitSha}: Reveal ready, controls loaded, rendered BigBus stack background verified, no local 404s.`);
 } finally {
   await new Promise(resolve => server.close(resolve));
 }
