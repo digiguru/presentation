@@ -87,9 +87,8 @@ async function copyTheme(theme) {
     await copySafe(legacyAssetsDir, asset, generatedPublic, path.join('assets', asset));
   }
 
-  // Custom compiled themes historically lived at dist/theme/. Once copied to
-  // /themes/, rewrite only their relative asset prefix while preserving the
-  // public /assets/ contract used by every existing presentation.
+  // Presentation-owned custom themes are copied into the Pure output; old
+  // Reveal runtime/theme loaders are never shipped.
   const rewritten = css.replace(/(?:\.\.\/)+assets\//g, '../assets/');
   await writeFile(destination, rewritten, 'utf8');
 }
@@ -173,7 +172,14 @@ export default defineConfig({
   server: {
     fs: {
       allow: [repoRoot]
-    }
+    },
+    proxy: {
+      '/api/prompt': {
+        target: 'https://ai-prompt-writer.vercel.app',
+        changeOrigin: true,
+        rewrite: requestPath => requestPath.replace(/^\/api\/prompt/, '/api'),
+      },
+    },
   },
   build: {
     outDir: path.join(pureRoot, 'dist'),
