@@ -11,14 +11,23 @@
       .build { color: #aaa; margin-bottom: 2rem; }
       code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
       ul { list-style: none; padding: 0; display: grid; gap: 1rem; }
-      li { border: 1px solid #333; border-radius: .75rem; padding: 1rem 1.25rem; }
+      li, .asset-probe { border: 1px solid #333; border-radius: .75rem; padding: 1rem 1.25rem; }
       a { color: #fff; font-size: 1.2rem; font-weight: 700; }
       small { display: block; color: #aaa; margin-top: .45rem; overflow-wrap: anywhere; }
+      .asset-probe { margin-bottom: 2rem; }
+      .asset-probe img { display: block; width: 180px; max-width: 100%; margin-top: 1rem; border-radius: .5rem; }
+      .asset-probe-background { width: 180px; height: 100px; margin-top: 1rem; border-radius: .5rem; background: center / cover no-repeat url('assets/robot-wannabe.png'); }
     </style>
   </head>
   <body>
     <h1>Pure presentations</h1>
     <p class="build">Build commit: <code id="pure-build-commit"><!-- PURE_COMMIT_SHA --></code></p>
+    <section class="asset-probe" aria-label="Asset delivery check">
+      <strong>Asset delivery check</strong>
+      <small>If both previews below render, Vercel is serving presentation assets correctly.</small>
+      <img src="assets/adamhall.jpg" alt="Asset test: Adam Hall">
+      <div class="asset-probe-background" role="img" aria-label="Asset test: robot background"></div>
+    </section>
     <ul id="pure-presentations">
       <!-- PURE_PRESENTATION_LIST -->
     </ul>
