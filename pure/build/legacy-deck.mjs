@@ -14,6 +14,10 @@ const revealRuntimeStyles = [
   /^custom\.css$/i,
   /^js\/pie-component\.css$/i,
 ];
+const supersededExternalScripts = [
+  /googletagmanager\.com\/gtag\/js/i,
+  /cdn\.jsdelivr\.net\/npm\/js-base64/i,
+];
 const scalarRevealOptions = new Set([
   'hash', 'controls', 'progress', 'center', 'touch', 'loop', 'rtl', 'shuffle',
   'keyboard', 'overview', 'embedded', 'help', 'pause', 'showNotes', 'slideNumber',
@@ -27,6 +31,10 @@ function attr(tag, name) {
 function isRuntimePath(value, patterns) {
   const clean = value.split(/[?#]/, 1)[0];
   return patterns.some(pattern => pattern.test(clean));
+}
+
+function withoutSupersededTemplates(html) {
+  return html.replace(/<template\b[^>]*\bid=["']GPT["'][^>]*>[\s\S]*?<\/template>/gi, '');
 }
 
 function extractBalancedObject(source, start) {
@@ -102,7 +110,8 @@ export function extractSlides(html) {
 }
 
 export function extractInlineStyles(html) {
-  return [...html.matchAll(/<style\b[^>]*>[\s\S]*?<\/style>/gi)]
+  const source = withoutSupersededTemplates(html);
+  return [...source.matchAll(/<style\b[^>]*>[\s\S]*?<\/style>/gi)]
     .map(match => match[0])
     .join('\n');
 }
@@ -132,7 +141,8 @@ export function extractExternalStylesheets(html) {
 
 export function extractExternalScripts(html) {
   return (html.match(/<script\b[^>]*\bsrc=["'][^"']+["'][^>]*>\s*<\/script>/gi) || [])
-    .filter(tag => externalUrl.test(attr(tag, 'src') || ''));
+    .filter(tag => externalUrl.test(attr(tag, 'src') || ''))
+    .filter(tag => !supersededExternalScripts.some(pattern => pattern.test(attr(tag, 'src') || '')));
 }
 
 export function extractRevealOptions(html) {
@@ -179,12 +189,13 @@ export function collectLocalReferences(html) {
 }
 
 export function classifyInlineScripts(html) {
-  const result = { analytics: 0, revealRuntime: 0, custom: 0 };
+  const result = { analytics: 0, revealRuntime: 0, legacyGpt: 0, custom: 0 };
   for (const match of html.matchAll(/<script\b(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/gi)) {
     const source = match[1].trim();
     if (!source) continue;
     if (/dataLayer/.test(source) && /\bgtag\s*\(/.test(source)) result.analytics += 1;
     else if (/Reveal\.initialize\s*\(/.test(source)) result.revealRuntime += 1;
+    else if (/customElements\.define\s*\(\s*["']gpt-input["']/.test(source) || (/\bqueryGPT\b/.test(source) && /ai-prompt-writer/.test(source))) result.legacyGpt += 1;
     else result.custom += 1;
   }
   return result;
