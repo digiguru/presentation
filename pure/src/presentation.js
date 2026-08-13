@@ -6,7 +6,6 @@ import Notes from 'reveal.js/plugin/notes';
 import 'reveal.js/reset.css';
 import 'reveal.js/reveal.css';
 import 'reveal.js/plugin/highlight/monokai.css';
-import '../../custom.css';
 import './pure.css';
 
 import { installPresentationRuntime } from './presentation-runtime/index.js';
