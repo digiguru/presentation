@@ -6,6 +6,7 @@
     "dev": "vite --host 0.0.0.0",
     "test": "node --test test/*.test.mjs",
     "build": "vite build && node build/verify-build.mjs",
+    "smoke": "node build/smoke.mjs",
     "check": "npm run test && npm run build"
   },
   "dependencies": {
