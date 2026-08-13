@@ -1,11 +1,12 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { pureDeckNames } from './deck-names.mjs';
+import { discoverPureDeckNames } from './corpus.mjs';
 
 export async function generatePurePages(pureRoot) {
   const shell = await readFile(path.join(pureRoot, 'deck-shell.html'), 'utf8');
-  for (const deckName of pureDeckNames) {
+  const deckNames = await discoverPureDeckNames(pureRoot);
+  for (const deckName of deckNames) {
     await writeFile(path.join(pureRoot, deckName), shell, 'utf8');
   }
-  return pureDeckNames;
+  return deckNames;
 }
