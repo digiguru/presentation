@@ -2,5 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "npm ci",
   "buildCommand": "npm run pure:preview",
-  "outputDirectory": "pure/dist"
+  "outputDirectory": "pure/dist",
+  "rewrites": [
+    {
+      "source": "/api/prompt/:path*",
+      "destination": "https://ai-prompt-writer.vercel.app/api/:path*"
+    }
+  ]
 }
