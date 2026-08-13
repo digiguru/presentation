@@ -1,39 +1,155 @@
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Christmas LEGO Movie Sets - v1.0 - 21/11/2023</title>
+<meta name="presentation-format" content="pure-v1">
+<meta name="presentation-name" content="Christmas LEGO Movie Sets">
+<meta name="presentation-version" content="v1.0">
+<meta name="presentation-date" content="21/11/2023">
+<meta name="presentation-attendance" content="12">
+<meta name="presentation-reveal-classes" content="reveal">
+<meta name="presentation-theme" content="black">
 
-		<title>Breaking into ChatGPT - AI for Product Practitioners - (Product COP - v3.11  - 21/11/2023)</title>
-
-		<link rel="stylesheet" href="christmas-lego-movie-sets.css">
-
-		
-	</head>
-	<body>
-
-
-		<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RZP8CG4KLJ"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.5/base64.min.js"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-RZP8CG4KLJ');
+<script type="application/json" id="presentation-options">
+{
+  "hash": true
+}
 </script>
 
+<style>
+  .christmas-lego-title {
+    font-size: 2.2em;
+    letter-spacing: 0.02em;
+  }
 
-<h1>Christmas Lego Movie Sets</h1>
-<input type="text" id="prompt" placeholder="What's your favourite christmas movie?" title="Type in a name">
-<ul id="output" class="container">
-</ul>
-<div id="lightbox" class="lightbox" onclick="closeLightbox()">
-    <img id="lightboximg" src="" alt="Lightbox Image">
+  .quiz-round {
+    font-size: 0.7em;
+    opacity: 0.75;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+  }
+
+  .quiz-instruction {
+    font-size: 0.75em;
+  }
+
+  .quiz-prompt {
+    display: none;
+  }
+
+  .answer {
+    margin-top: 0.6em;
+    padding: 0.35em 0.6em;
+    border: 2px solid currentColor;
+    border-radius: 0.25em;
+  }
+
+  .score {
+    font-size: 1.4em;
+  }
+</style>
+
+<div class="slides">
+  <section data-state="focus-bg" data-background-gradient="linear-gradient(135deg, #123524 0%, #071a12 45%, #5b1118 100%)">
+    <h1 class="christmas-lego-title">Christmas LEGO Movie Sets</h1>
+    <p>Guess the Christmas movie from the AI-generated brick set.</p>
+    <p>21 November 2023</p>
+  </section>
+
+  <section data-background-gradient="linear-gradient(135deg, #071a12, #123524)">
+    <h2>How to play</h2>
+    <ol>
+      <li>Press <strong>go</strong> to generate the visual clue.</li>
+      <li>Don't type anything into the input box — the movie is hidden in the round.</li>
+      <li>Shout out the movie before the answer appears.</li>
+      <li>One point for each correct answer.</li>
+    </ol>
+    <p class="fragment">There are eight rounds. Arguments about whether <em>Die Hard</em> counts are encouraged.</p>
+  </section>
+
+  <section>
+    <p class="quiz-round">Round 1</p>
+    <h2>Generate the set. Guess the film.</h2>
+    <p class="quiz-instruction">Leave the input blank and press go.</p>
+    <gpt-input data-show-image="true" data-show-input="true">
+      <div slot="context" class="quiz-prompt">Create a festive toy-brick construction-set box-art style visual clue inspired by the most iconic scene from the Christmas film Home Alone. Make the scene recognisable from composition, setting and props, but do not include the movie title, logos, character names, captions, letters or numbers. Avoid exact branded character likenesses. Add playful Christmas details. Output only the image.</div>
+    </gpt-input>
+    <p class="fragment answer">Answer: <strong>Home Alone</strong></p>
+  </section>
+
+  <section>
+    <p class="quiz-round">Round 2</p>
+    <h2>Generate the set. Guess the film.</h2>
+    <p class="quiz-instruction">Leave the input blank and press go.</p>
+    <gpt-input data-show-image="true" data-show-input="true">
+      <div slot="context" class="quiz-prompt">Create a festive toy-brick construction-set box-art style visual clue inspired by the most iconic scene from the Christmas film Elf. Make the scene recognisable from composition, setting and props, but do not include the movie title, logos, character names, captions, letters or numbers. Avoid exact branded character likenesses. Add playful Christmas details. Output only the image.</div>
+    </gpt-input>
+    <p class="fragment answer">Answer: <strong>Elf</strong></p>
+  </section>
+
+  <section>
+    <p class="quiz-round">Round 3</p>
+    <h2>Generate the set. Guess the film.</h2>
+    <p class="quiz-instruction">Leave the input blank and press go.</p>
+    <gpt-input data-show-image="true" data-show-input="true">
+      <div slot="context" class="quiz-prompt">Create a festive toy-brick construction-set box-art style visual clue inspired by the most iconic scene from the Christmas film The Muppet Christmas Carol. Make the scene recognisable from composition, Victorian setting and props, but do not include the movie title, logos, character names, captions, letters or numbers. Avoid exact branded character likenesses. Add playful Christmas details. Output only the image.</div>
+    </gpt-input>
+    <p class="fragment answer">Answer: <strong>The Muppet Christmas Carol</strong></p>
+  </section>
+
+  <section>
+    <p class="quiz-round">Round 4</p>
+    <h2>Generate the set. Guess the film.</h2>
+    <p class="quiz-instruction">Leave the input blank and press go.</p>
+    <gpt-input data-show-image="true" data-show-input="true">
+      <div slot="context" class="quiz-prompt">Create a festive toy-brick construction-set box-art style visual clue inspired by the most iconic scene from the Christmas film The Polar Express. Make the scene recognisable from composition, snowy railway setting and props, but do not include the movie title, logos, character names, captions, letters or numbers. Avoid exact branded character likenesses. Add playful Christmas details. Output only the image.</div>
+    </gpt-input>
+    <p class="fragment answer">Answer: <strong>The Polar Express</strong></p>
+  </section>
+
+  <section>
+    <p class="quiz-round">Round 5</p>
+    <h2>Generate the set. Guess the film.</h2>
+    <p class="quiz-instruction">Leave the input blank and press go.</p>
+    <gpt-input data-show-image="true" data-show-input="true">
+      <div slot="context" class="quiz-prompt">Create a festive toy-brick construction-set box-art style visual clue inspired by the most iconic scene from the Christmas-set action film Die Hard. Make the scene recognisable from composition, skyscraper setting and props, but do not include the movie title, logos, character names, captions, letters or numbers. Avoid exact branded character likenesses. Add subtle Christmas details. Output only the image.</div>
+    </gpt-input>
+    <p class="fragment answer">Answer: <strong>Die Hard</strong></p>
+  </section>
+
+  <section>
+    <p class="quiz-round">Round 6</p>
+    <h2>Generate the set. Guess the film.</h2>
+    <p class="quiz-instruction">Leave the input blank and press go.</p>
+    <gpt-input data-show-image="true" data-show-input="true">
+      <div slot="context" class="quiz-prompt">Create a festive toy-brick construction-set box-art style visual clue inspired by the most iconic scene from the Christmas film Gremlins. Make the scene recognisable from composition, small-town setting and mischievous creature chaos, but do not include the movie title, logos, character names, captions, letters or numbers. Avoid exact branded character likenesses. Add playful Christmas details. Output only the image.</div>
+    </gpt-input>
+    <p class="fragment answer">Answer: <strong>Gremlins</strong></p>
+  </section>
+
+  <section>
+    <p class="quiz-round">Round 7</p>
+    <h2>Generate the set. Guess the film.</h2>
+    <p class="quiz-instruction">Leave the input blank and press go.</p>
+    <gpt-input data-show-image="true" data-show-input="true">
+      <div slot="context" class="quiz-prompt">Create a festive toy-brick construction-set box-art style visual clue inspired by the most iconic scene from the Christmas romantic comedy Love Actually. Make the scene recognisable from composition, London-at-Christmas setting and familiar visual motifs, but do not include the movie title, logos, character names, captions, letters or numbers. Avoid exact branded character likenesses. Output only the image.</div>
+    </gpt-input>
+    <p class="fragment answer">Answer: <strong>Love Actually</strong></p>
+  </section>
+
+  <section>
+    <p class="quiz-round">Round 8</p>
+    <h2>Generate the set. Guess the film.</h2>
+    <p class="quiz-instruction">Leave the input blank and press go.</p>
+    <gpt-input data-show-image="true" data-show-input="true">
+      <div slot="context" class="quiz-prompt">Create a festive toy-brick construction-set box-art style visual clue inspired by the most iconic scene from the classic Christmas film It's a Wonderful Life. Make the scene recognisable from composition, wintry small-town setting and props, but do not include the movie title, logos, character names, captions, letters or numbers. Avoid exact branded character likenesses. Output only the image.</div>
+    </gpt-input>
+    <p class="fragment answer">Answer: <strong>It's a Wonderful Life</strong></p>
+  </section>
+
+  <section data-background-gradient="linear-gradient(135deg, #5b1118, #123524)">
+    <h2>Scores</h2>
+    <p class="score">0–2: Bah humbug.</p>
+    <p class="score fragment">3–5: Respectably festive.</p>
+    <p class="score fragment">6–7: Christmas movie obsessive.</p>
+    <p class="score fragment">8: You are now legally required to own a novelty jumper.</p>
+  </section>
 </div>
-<button id="save">Save</button>
-<script src="christmas-lego-movie-sets.js"></script>
-	</body>
-</html>

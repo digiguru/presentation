@@ -10,8 +10,9 @@ Do not redesign the Pure runtime unless the task explicitly requires it.
 
 ## Architecture
 
-- Root `*.html` files: 25 canonical `pure-v1` content sources.
+- Root `*.html` files: 26 canonical `pure-v1` content sources.
 - `pure/src/`: shared runtime/UI implementation.
+- `pure/src/presentation-runtime/stack-backgrounds.js`: vertical-stack background inheritance for canonical decks.
 - `pure/build/deck-source.mjs`: strict parser for canonical presentation content/configuration.
 - `pure/build/audit-sources.mjs`: source-purity and corpus-footprint audit.
 - `pure/deck.html`: shared output shell used for every deck.
@@ -45,7 +46,7 @@ Sources may contain inline `<style>` blocks and explicitly required external HTT
 
 Do not add `<html>`, `<head>` or `<body>` wrappers, a deck-owned `.reveal` wrapper, `Reveal.initialize(...)`, local `dist/` or `plugin/` runtime links, or local runtime scripts. Shared behaviour belongs in Pure.
 
-Keep backgrounds declarative and every image accessible with an `alt` attribute.
+Keep backgrounds declarative and every image accessible with an `alt` attribute. A `data-background-*` value on an outer vertical stack is inherited by child slides that do not declare an explicit background; explicit child backgrounds always win. Keep the unit and Chrome regression tests for this behaviour intact.
 
 ## Dependency policy
 
@@ -57,10 +58,13 @@ npm run pure:install
 
 This runs `npm ci --prefix pure`. Dependency changes to `pure/package.json` must update `pure/package-lock.json`.
 
+CI and Vercel install the locked Pure dependency graph once before lint/build work. `npm run build` and `npm run lint` therefore assume dependencies are already installed. `npm start`, `npm test` and `npm run pure:check` are self-contained and install the locked dependencies when needed.
+
 ## Canonical commands
 
 ```bash
 npm start
+npm run pure:install
 npm run build
 npm test
 npm run pure:audit
@@ -83,8 +87,8 @@ For runtime, build, dependency or presentation-source changes, require:
 4. Pure dependency audit.
 5. Canonical source-purity/corpus audit.
 6. Pure production build.
-7. Chrome smoke for all 25 built decks.
-8. Exported catalogue plus all 25 decks in Chrome.
+7. Chrome smoke for all 26 built decks, including the rendered BigBus background regression check.
+8. Exported catalogue plus all 26 decks in Chrome.
 
 A browser smoke failure is meaningful even when a static build succeeds.
 
@@ -92,4 +96,4 @@ A browser smoke failure is meaningful even when a static build succeeds.
 
 `.github/workflows/js.yml` validates pull requests and pushes to `master`. A successful `master` build dispatches `digiguru/digiguru.github.io` with the exact presentation commit SHA that passed CI.
 
-`vercel.json` installs with `npm run pure:install`, builds with `npm run build`, and publishes `pure/dist`. Keep Vercel and CI on the same deterministic build path.
+`vercel.json` installs with `npm run pure:install`, builds with `npm run build`, and publishes `pure/dist`. Keep Vercel and CI on the same deterministic build path and do not add a second install inside the build command.
