@@ -75,13 +75,30 @@ test('discoverPresentations discovers, validates and sorts canonical sources', a
     await writeFile(path.join(root, 'earlier.html'), canonicalSource({
       title: 'Earlier', name: 'Earlier', version: 'v1.0', date: '01/01/2025', attendance: 25
     }));
-    await writeFile(path.join(root, 'legacy.html'), '<div class="reveal"><div class="slides"><section>Ignored legacy source</section></div></div>');
+    await writeFile(path.join(root, 'not-a-deck.html'), '<html><body>Ignored non-presentation HTML</body></html>');
 
     const presentations = await discoverPresentations({ root });
     assert.deepEqual(presentations, [
       { name: 'Earlier', version: 'v1.0', date: '01/01/2025', url: 'earlier.html', attendance: 25 },
       { name: 'Later', version: 'v2.0', date: '02/01/2025', url: 'later.html', attendance: undefined }
     ]);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test('discoverPresentations rejects presentation-shaped legacy sources', async () => {
+  const root = await mkdtemp(path.join(tmpdir(), 'presentation-legacy-'));
+  try {
+    await writeFile(
+      path.join(root, 'legacy.html'),
+      '<div class="reveal"><div class="slides"><section>Legacy source</section></div></div>'
+    );
+
+    await assert.rejects(
+      discoverPresentations({ root }),
+      /must declare presentation-format="pure-v1"/
+    );
   } finally {
     await rm(root, { recursive: true, force: true });
   }
