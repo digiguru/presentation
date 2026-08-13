@@ -1,30 +1,13 @@
-import { cp, mkdir, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
+import { execFile } from 'node:child_process';
+import { cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
+import { promisify } from 'node:util';
 import { fileURLToPath } from 'node:url';
 
 export const defaultRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const execFileAsync = promisify(execFile);
 const excludedRootHtml = new Set(['index.html', 'demo.html', 'test.html']);
-const excludedTopLevel = new Set([
-  '.git',
-  '.github',
-  'node_modules',
-  'scripts',
-  'test',
-  'examples',
-  'legacy-presentations.yml',
-  'presentations.yml',
-  'PRESENTATIONS.md',
-  'README.md',
-  'CLAUDE.md',
-  'LICENSE',
-  'package.json',
-  'package-lock.json',
-  'gulpfile.js',
-  '.gitignore',
-  '.npmignore',
-  '.node-version'
-]);
 
 function argValue(name) {
   const index = process.argv.indexOf(name);
@@ -74,9 +57,7 @@ export function parseLegacyYaml(text) {
     }
 
     const property = rawLine.match(/^\s{2}([a-zA-Z_]+):\s*(.*)$/);
-    if (current && property) {
-      current[property[1]] = property[2].trim();
-    }
+    if (current && property) current[property[1]] = property[2].trim();
   }
 
   if (current) entries.push(current);
@@ -107,9 +88,7 @@ export function parsePresentationDate(value) {
     parsed.getUTCFullYear() !== year
     || parsed.getUTCMonth() !== month - 1
     || parsed.getUTCDate() !== day
-  ) {
-    return undefined;
-  }
+  ) return undefined;
 
   return timestamp;
 }
@@ -146,11 +125,7 @@ export function toYaml(presentations) {
       `  date: ${yamlString(presentation.date)}`,
       `  url: ${yamlString(presentation.url)}`
     ];
-
-    if (presentation.attendance !== undefined) {
-      lines.push(`  attendance: ${presentation.attendance}`);
-    }
-
+    if (presentation.attendance !== undefined) lines.push(`  attendance: ${presentation.attendance}`);
     lines.push('');
     return lines;
   });
@@ -194,96 +169,74 @@ export async function discoverPresentations({
     const date = meta(html, 'presentation-date') || title?.match(/\b(\d{1,2}\/\d{1,2}\/\d{4})\b/)?.[1] || legacy?.date;
     const rawAttendance = meta(html, 'presentation-attendance') ?? legacy?.attendance;
 
-    const missing = [
-      ['name', name],
-      ['version', version],
-      ['date', date]
-    ].filter(([, value]) => !value).map(([field]) => field);
-
+    const missing = [['name', name], ['version', version], ['date', date]]
+      .filter(([, value]) => !value).map(([field]) => field);
     if (missing.length) {
       errors.push(`${entry.name}: missing ${missing.join(', ')}. Add presentation-* meta tags or include vX.Y and DD/MM/YYYY in <title>.`);
       continue;
     }
 
-    if (!isValidVersion(version)) {
-      errors.push(`${entry.name}: invalid version ${JSON.stringify(version)}; expected vX.Y (for example v6.2).`);
-    }
-
+    if (!isValidVersion(version)) errors.push(`${entry.name}: invalid version ${JSON.stringify(version)}; expected vX.Y (for example v6.2).`);
     const dateTimestamp = parsePresentationDate(date);
-    if (dateTimestamp === undefined) {
-      errors.push(`${entry.name}: invalid date ${JSON.stringify(date)}; expected a real DD/MM/YYYY calendar date.`);
-    }
+    if (dateTimestamp === undefined) errors.push(`${entry.name}: invalid date ${JSON.stringify(date)}; expected a real DD/MM/YYYY calendar date.`);
 
     const attendance = normaliseAttendance(rawAttendance);
     if (rawAttendance !== undefined && rawAttendance !== null && rawAttendance !== '' && rawAttendance !== '?' && attendance === undefined) {
       errors.push(`${entry.name}: invalid attendance ${JSON.stringify(rawAttendance)}; expected a non-negative integer.`);
     }
 
-    if (!isValidVersion(version) || dateTimestamp === undefined || (rawAttendance !== undefined && rawAttendance !== null && rawAttendance !== '' && rawAttendance !== '?' && attendance === undefined)) {
-      continue;
-    }
-
+    if (!isValidVersion(version) || dateTimestamp === undefined || (rawAttendance !== undefined && rawAttendance !== null && rawAttendance !== '' && rawAttendance !== '?' && attendance === undefined)) continue;
     presentations.push({ name, version, date, url: entry.name, attendance, dateTimestamp });
   }
 
-  if (errors.length) {
-    throw new Error(`Presentation metadata validation failed:\n- ${errors.join('\n- ')}`);
-  }
-
-  if (!presentations.length) {
-    throw new Error('No Reveal presentation HTML files were discovered.');
-  }
+  if (errors.length) throw new Error(`Presentation metadata validation failed:\n- ${errors.join('\n- ')}`);
+  if (!presentations.length) throw new Error('No Reveal presentation HTML files were discovered.');
 
   presentations.sort((a, b) => a.dateTimestamp - b.dateTimestamp || a.url.localeCompare(b.url));
   return presentations.map(({ dateTimestamp, ...presentation }) => presentation);
 }
 
-function isWithinPath(parent, candidate) {
-  const relative = path.relative(parent, candidate);
-  return relative === '' || (relative !== '..' && !relative.startsWith(`..${path.sep}`) && !path.isAbsolute(relative));
+export async function buildPure({ root = defaultRoot } = {}) {
+  await execFileAsync('npm', ['run', 'pure:preview'], {
+    cwd: root,
+    env: process.env,
+    maxBuffer: 20 * 1024 * 1024
+  });
+  return path.join(root, 'pure', 'dist');
 }
 
-export async function exportSite(outputDir, presentations, { root = defaultRoot } = {}) {
+export async function exportSite(outputDir, presentations, {
+  root = defaultRoot,
+  builtSiteDir = path.join(root, 'pure', 'dist')
+} = {}) {
   const resolvedOutput = path.resolve(outputDir);
-  const deckUrls = new Set(presentations.map(presentation => presentation.url));
+  const resolvedBuiltSite = path.resolve(builtSiteDir);
+  if (resolvedOutput === resolvedBuiltSite || resolvedBuiltSite.startsWith(`${resolvedOutput}${path.sep}`)) {
+    throw new Error('Export destination must not contain the Pure build directory.');
+  }
+
+  const manifest = JSON.parse(await readFile(path.join(resolvedBuiltSite, 'presentations.json'), 'utf8'));
+  const expectedUrls = presentations.map(presentation => presentation.url).sort();
+  const builtUrls = manifest.map(presentation => presentation.url).sort();
+  if (JSON.stringify(builtUrls) !== JSON.stringify(expectedUrls)) {
+    throw new Error(`Pure build presentation set does not match metadata discovery. Expected ${expectedUrls.length}, found ${builtUrls.length}.`);
+  }
 
   await rm(resolvedOutput, { recursive: true, force: true });
-  await mkdir(resolvedOutput, { recursive: true });
+  await mkdir(path.dirname(resolvedOutput), { recursive: true });
+  await cp(resolvedBuiltSite, resolvedOutput, { recursive: true });
 
-  async function copyEntry(source, destination, relativePath) {
-    if (isWithinPath(resolvedOutput, path.resolve(source))) return;
-
-    const info = await stat(source);
-    const parts = relativePath.split(path.sep);
-    const topLevel = parts[0];
-
-    if (excludedTopLevel.has(topLevel)) return;
-
-    if (info.isDirectory()) {
-      await mkdir(destination, { recursive: true });
-      const children = await readdir(source);
-      for (const child of children) {
-        await copyEntry(path.join(source, child), path.join(destination, child), path.join(relativePath, child));
-      }
-      return;
-    }
-
-    if (relativePath.endsWith('.html') && parts.length === 1 && !deckUrls.has(relativePath)) return;
-
-    await cp(source, destination);
+  for (const url of expectedUrls) {
+    await readFile(path.join(resolvedOutput, url));
   }
-
-  for (const entry of await readdir(root)) {
-    await copyEntry(path.join(root, entry), path.join(resolvedOutput, entry), entry);
-  }
+  await readFile(path.join(resolvedOutput, 'build-info.json'));
+  await readFile(path.join(resolvedOutput, 'presentations.json'));
 }
 
 export async function runCli() {
   const presentations = await discoverPresentations();
 
-  if (hasArg('--check')) {
-    console.log(`Validated ${presentations.length} presentation files.`);
-  }
+  if (hasArg('--check')) console.log(`Validated ${presentations.length} presentation files.`);
 
   const manifestPath = argValue('--manifest');
   if (manifestPath) {
@@ -295,13 +248,12 @@ export async function runCli() {
 
   const exportPath = argValue('--export');
   if (exportPath) {
-    await exportSite(exportPath, presentations);
-    console.log(`Exported presentation site to ${path.resolve(exportPath)}`);
+    const builtSiteDir = await buildPure();
+    await exportSite(exportPath, presentations, { builtSiteDir });
+    console.log(`Exported Pure presentation site to ${path.resolve(exportPath)}`);
   }
 
-  if (!hasArg('--check') && !manifestPath && !exportPath) {
-    console.log(toYaml(presentations));
-  }
+  if (!hasArg('--check') && !manifestPath && !exportPath) console.log(toYaml(presentations));
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
