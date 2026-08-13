@@ -8,6 +8,7 @@ Stage 6 removed the inherited framework/build stack. Stage 7 migrated all 25 pre
 
 - Root `*.html` files are canonical `pure-v1` presentation sources.
 - `pure/src/` contains the shared runtime and UI.
+- `pure/src/presentation-runtime/stack-backgrounds.js` preserves shared backgrounds declared on vertical stacks while respecting explicit child backgrounds.
 - `pure/build/deck-source.mjs` reads canonical content/configuration.
 - `pure/build/audit-sources.mjs` rejects historical runtime wiring and checks the corpus capability/theme footprint.
 - `pure/deck.html` is the shared HTML shell for every built deck.
@@ -23,12 +24,20 @@ Presentation sources contain content and declarative configuration, not their ow
 
 Use the Node version pinned by `.node-version`.
 
+Start the development server with:
+
 ```bash
-npm run pure:install
 npm start
 ```
 
-`pure:install` runs `npm ci --prefix pure`, so local, CI and Vercel builds use the committed lockfile.
+`npm start` performs a deterministic `npm ci --prefix pure` from the committed lockfile before starting Vite.
+
+For a fresh production build:
+
+```bash
+npm run pure:install
+npm run build
+```
 
 Useful checks:
 
@@ -42,7 +51,7 @@ npm run pure:smoke
 npm run presentations:smoke
 ```
 
-`npm run build` produces the static product in `pure/dist/`.
+`npm run build` produces the static product in `pure/dist/` and assumes the locked Pure dependencies are already installed. `npm test`, `npm start` and `npm run pure:check` are self-contained and install them when needed.
 
 ## Canonical presentation source format
 
@@ -82,6 +91,8 @@ Every image needs an `alt` attribute. Keep backgrounds declarative:
 <section data-background-image="assets/example.png" data-background-size="1696px 928px">
 ```
 
+A background declared on the outer section of a vertical stack is inherited by children that do not declare their own background. Explicit child backgrounds win. Unit tests cover this rule and the Chrome corpus smoke verifies the rendered BigBus opening background so this regression cannot silently return.
+
 Shared runtime behaviour belongs in `pure/`; presentation-specific content belongs in the root source file.
 
 ## Build and export
@@ -100,7 +111,7 @@ The generated YAML is an export artifact only; there is no repository-owned pres
 
 GitHub Actions validates workflow syntax, repository tooling, all 25 canonical metadata records, accessibility, ESLint, the locked dependency graph, source purity/capability preservation, the production build, all 25 built decks in Chrome, and the exported catalogue plus all 25 exported decks in Chrome.
 
-After a successful push to `master`, the workflow dispatches `digiguru/digiguru.github.io` with the exact presentation SHA that passed CI.
+CI installs the locked Pure dependency graph once per job and reuses it for lint/build/smoke work. After a successful push to `master`, the workflow dispatches `digiguru/digiguru.github.io` with the exact presentation SHA that passed CI.
 
 Vercel uses the same deterministic path from `vercel.json`:
 
@@ -109,6 +120,8 @@ install: npm run pure:install
 build:   npm run build
 output:  pure/dist
 ```
+
+The Vercel install step runs `npm ci --prefix pure` once; the build step does not reinstall dependencies.
 
 ## Dependencies and security
 
