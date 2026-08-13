@@ -5,7 +5,7 @@
   "description": "Digiguru presentation source and Pure Reveal.js runtime",
   "license": "MIT",
   "scripts": {
-    "lint": "npm run pure:install && npm --prefix pure run lint",
+    "lint": "npm run pure:install && ./pure/node_modules/.bin/eslint scripts test/*.test.mjs pure/src pure/build pure/test pure/*.mjs",
     "test": "npm run lint && npm run test:tooling && npm run pure:check",
     "test:tooling": "node --test test/*.test.mjs",
     "start": "npm run pure:install && npm run pure:dev",
