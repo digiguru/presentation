@@ -16,6 +16,6 @@
   },
   "devDependencies": {
     "eslint": "10.8.1",
-    "vite": "8.1.5"
+    "vite": "8.2.1"
   }
 }
