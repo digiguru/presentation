@@ -9,6 +9,8 @@ log/*.log
 tmp/**
 node_modules/
 .sass-cache
-pure/.pure-pages/
+pure/*.html
+!pure/index.html
+!pure/deck.html
 pure/.pure-public/
 pure/dist/
