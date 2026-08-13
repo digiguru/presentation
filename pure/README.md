@@ -1,6 +1,6 @@
 # Pure presentation runtime
 
-`pure/` is the only presentation runtime in this repository. It builds the 25 canonical `pure-v1` presentation sources with official `reveal.js@6.0.1` and Vite.
+`pure/` is the only presentation runtime in this repository. It builds the 26 canonical `pure-v1` presentation sources with official `reveal.js@6.0.1` and Vite.
 
 For the repository-wide architecture, source contract, validation and deployment flow, see the root [`README.md`](../README.md).
 
@@ -10,7 +10,7 @@ For the repository-wide architecture, source contract, validation and deployment
 - `src/presentation-runtime/` contains shared behaviours such as focus backgrounds, GPT input, dynamic slide insertion and vertical-stack background inheritance.
 - `build/deck-source.mjs` parses canonical presentation sources.
 - `build/audit-sources.mjs` rejects historical runtime wiring and verifies the expected corpus footprint.
-- `build/verify-build.mjs` verifies the generated manifest and all 25 built decks.
+- `build/verify-build.mjs` verifies the generated manifest and all 26 built decks.
 - `build/smoke.mjs` opens every built deck in headless Chrome and verifies Reveal readiness, source/commit markers, GPT registration, rendered BigBus background behaviour and local asset requests.
 - `deck.html` is the shared shell used for every presentation.
 - `themes/AND.css` is the optional AND theme layered on top of the standard Reveal theme.
