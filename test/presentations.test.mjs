@@ -134,7 +134,10 @@ test('exportSite copies only a validated Pure build artifact', async () => {
     assert.match(await readFile(path.join(outputDir, 'talk.html'), 'utf8'), /Pure/);
     assert.equal(await readFile(path.join(outputDir, '_runtime', 'runtime.js'), 'utf8'), 'console.log("pure runtime");\n');
     assert.equal((await readdir(outputDir)).includes('legacy-runtime.js'), false);
-    assert.deepEqual(JSON.parse(await readFile(path.join(outputDir, 'presentations.json'), 'utf8')), presentations);
+    assert.deepEqual(
+      JSON.parse(await readFile(path.join(outputDir, 'presentations.json'), 'utf8')),
+      JSON.parse(JSON.stringify(presentations))
+    );
   } finally {
     await rm(root, { recursive: true, force: true });
   }
