@@ -9,10 +9,7 @@ import 'reveal.js/plugin/highlight/monokai.css';
 import '../../custom.css';
 import './stage1.css';
 
-import {
-  installLegacyControls,
-  installPresentationRuntime,
-} from './presentation-runtime/index.js';
+import { installPresentationRuntime } from './presentation-runtime/index.js';
 
 function readCompatibilityConfig() {
   const element = document.querySelector('#legacy-deck-config');
@@ -54,7 +51,6 @@ const deck = new Reveal(revealRoot, {
 });
 
 installPresentationRuntime(deck, compatibility.capabilities);
-await installLegacyControls(deck, compatibility.capabilities);
 await deck.initialize();
 
 document.documentElement.dataset.compatibilitySource = compatibility.source || 'unknown';
