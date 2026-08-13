@@ -10,7 +10,7 @@ Do not redesign the Pure runtime unless the task explicitly requires it.
 
 ## Architecture
 
-- Root `*.html` files: 25 canonical `pure-v1` content sources.
+- Root `*.html` files: 26 canonical `pure-v1` content sources.
 - `pure/src/`: shared runtime/UI implementation.
 - `pure/src/presentation-runtime/stack-backgrounds.js`: vertical-stack background inheritance for canonical decks.
 - `pure/build/deck-source.mjs`: strict parser for canonical presentation content/configuration.
@@ -87,8 +87,8 @@ For runtime, build, dependency or presentation-source changes, require:
 4. Pure dependency audit.
 5. Canonical source-purity/corpus audit.
 6. Pure production build.
-7. Chrome smoke for all 25 built decks, including the rendered BigBus background regression check.
-8. Exported catalogue plus all 25 decks in Chrome.
+7. Chrome smoke for all 26 built decks, including the rendered BigBus background regression check.
+8. Exported catalogue plus all 26 decks in Chrome.
 
 A browser smoke failure is meaningful even when a static build succeeds.
 
