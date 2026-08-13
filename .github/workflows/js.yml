@@ -28,6 +28,9 @@ jobs:
       - name: Validate Stage 1 clean runtime
         run: npm run stage1:check
 
+      - name: Smoke test Stage 1 in Chrome
+        run: npm run stage1:smoke
+
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
