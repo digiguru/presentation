@@ -14,12 +14,12 @@ assert.equal(manifest.length, buildInfo.presentationCount);
 assert.equal(manifest.length, 25);
 assert.ok(indexHtml.includes(buildInfo.commitSha));
 
-let supersededGptScripts = 0;
 for (const presentation of manifest) {
   assert.ok(indexHtml.includes(presentation.url));
-  assert.equal(presentation.inlineScripts.custom, 0);
-  assert.equal(presentation.localSupportScripts.length, 0);
-  supersededGptScripts += presentation.inlineScripts.legacyGpt || 0;
+  assert.equal(presentation.sourceFormat, 'pure-v1');
+  assert.ok(Array.isArray(presentation.themes));
+  assert.equal(typeof presentation.capabilities, 'object');
+  assert.ok(Array.isArray(presentation.localReferences));
 
   const html = await readFile(path.join(dist, presentation.url), 'utf8');
   assert.ok(html.includes('Pure · Reveal.js 6.0.1'));
@@ -30,5 +30,4 @@ for (const presentation of manifest) {
   }
 }
 
-assert.equal(supersededGptScripts, 3);
-console.log(`Verified all ${manifest.length} Pure presentations at ${buildInfo.commitSha}.`);
+console.log(`Verified all ${manifest.length} canonical Pure presentations at ${buildInfo.commitSha}.`);

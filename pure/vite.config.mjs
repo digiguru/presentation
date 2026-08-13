@@ -1,21 +1,14 @@
-import { cpSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { discoverPresentations } from '../scripts/presentations.mjs';
 import config from './vite.pure.config.mjs';
 
 const pureRoot = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(pureRoot, '..');
 const publicRoot = path.join(pureRoot, '.pure-public');
 const shell = readFileSync(path.join(pureRoot, 'deck.html'), 'utf8');
-const ignoredHtml = new Set(['index.html', 'demo.html', 'test.html']);
-
-const deckNames = readdirSync(repoRoot)
-  .filter(fileName => fileName.endsWith('.html') && !ignoredHtml.has(fileName))
-  .filter(fileName => {
-    const source = readFileSync(path.join(repoRoot, fileName), 'utf8');
-    return /class\s*=\s*["'][^"']*\breveal\b[^"']*["']/i.test(source)
-      && /class\s*=\s*["'][^"']*\bslides\b[^"']*["']/i.test(source);
-  });
+const deckNames = (await discoverPresentations({ root: repoRoot })).map(presentation => presentation.url);
 
 for (const deckName of deckNames) {
   writeFileSync(path.join(pureRoot, deckName), shell, 'utf8');

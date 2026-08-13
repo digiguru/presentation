@@ -1,22 +1,25 @@
 # Digiguru presentations
 
-This repository contains Digiguru's presentation sources and the **Pure** Reveal.js runtime. Pure is the only maintained runtime/build path. The inherited Reveal.js source tree, Gulp/Rollup build, QUnit tests and Puppeteer tooling were removed in Stage 6.
+This repository contains Digiguru's presentation content and the **Pure** Reveal.js runtime. Pure is the only runtime/build path.
 
-## Current architecture
+Stage 6 removed the inherited framework/build stack. Stage 7 migrated all 25 presentation sources to the canonical `pure-v1` content format and removed the historical HTML compatibility parser and frozen metadata registry.
 
-- The 25 root-level `*.html` files are presentation sources.
-- `pure/` contains the shared Vite/Reveal.js runtime, build logic and tests.
-- `pure/package.json` plus committed `pure/package-lock.json` define the runtime dependency graph.
-- `pure/build/legacy-deck.mjs` is an intentional compatibility parser for historical source HTML. It extracts slide content/options and ignores obsolete historical runtime wiring.
-- `legacy-presentations.yml` contains compatibility metadata for historical decks; it is not a registry for new presentations.
-- `scripts/presentations.mjs` discovers decks, validates metadata and exports the validated Pure artifact.
-- `scripts/presentation-accessibility.mjs` validates presentation accessibility.
-- `scripts/smoke-presentations.mjs` browser-tests the exported site.
-- `pure/dist/` is generated output and must not be edited by hand.
+## Architecture
 
-Pure is the product. The legacy parser is only an input compatibility boundary.
+- Root `*.html` files are canonical `pure-v1` presentation sources.
+- `pure/src/` contains the shared runtime and UI.
+- `pure/build/deck-source.mjs` reads canonical content/configuration.
+- `pure/build/audit-sources.mjs` rejects historical runtime wiring and checks the corpus capability/theme footprint.
+- `pure/deck.html` is the shared HTML shell for every built deck.
+- `scripts/presentations.mjs` discovers sources, validates metadata and exports the built artifact.
+- `scripts/presentation-accessibility.mjs` validates accessibility.
+- `scripts/smoke-presentations.mjs` browser-tests the exported website artifact.
+- `pure/package.json` and `pure/package-lock.json` define the npm dependency graph.
+- `pure/dist/` is generated output; never edit it manually.
 
-## Setup and commands
+Presentation sources contain content and declarative configuration, not their own runtime.
+
+## Setup and validation
 
 Use the Node version pinned by `.node-version`.
 
@@ -25,7 +28,7 @@ npm run pure:install
 npm start
 ```
 
-`pure:install` uses `npm ci --prefix pure`, so local, CI and Vercel installs use the committed Pure lockfile.
+`pure:install` runs `npm ci --prefix pure`, so local, CI and Vercel builds use the committed lockfile.
 
 Useful checks:
 
@@ -34,39 +37,72 @@ npm test
 npm run pure:audit
 npm run presentations:check
 npm run presentations:accessibility
+npm --prefix pure run audit:sources
 npm run pure:smoke
 npm run presentations:smoke
 ```
 
-`npm run build` produces the static product in `pure/dist/`. The Chrome smoke tests require Chrome/Chromium; GitHub Actions provides it.
+`npm run build` produces the static product in `pure/dist/`.
 
-## Presentation sources
+## Canonical presentation source format
 
-Presentations are discovered automatically from root HTML files. A typical title supplies metadata directly:
+Every presentation declares metadata and content explicitly:
 
 ```html
-<title>My new talk - v6.2 - 11/08/2026</title>
+<!doctype html>
+<title>My new talk</title>
+<meta name="presentation-format" content="pure-v1">
+<meta name="presentation-name" content="My new talk">
+<meta name="presentation-version" content="v6.2">
+<meta name="presentation-date" content="11/08/2026">
+<meta name="presentation-attendance" content="25">
+<meta name="presentation-reveal-classes" content="reveal">
+<meta name="presentation-theme" content="black">
+
+<script type="application/json" id="presentation-options">
+{
+  "hash": true
+}
+</script>
+
+<div class="slides">
+  <section>...</section>
+</div>
 ```
 
-For exceptional titles use the `presentation-name`, `presentation-version`, `presentation-date` and optional `presentation-attendance` meta tags. New presentations should not add compatibility entries to `legacy-presentations.yml`.
+`presentation-name`, `presentation-version` and `presentation-date` are required. `presentation-attendance` is optional. Multiple `presentation-theme` tags are allowed.
 
-Every image needs an `alt` attribute. Backgrounds should be declarative, for example:
+Sources may contain inline `<style>` blocks and explicitly required external HTTP(S) styles/scripts. Reveal configuration belongs in the JSON `presentation-options` block.
+
+Do not add document wrappers, a deck-owned `.reveal` wrapper, local Reveal/plugin runtime links, or executable deck-owned initialization code. `npm --prefix pure run audit:sources` guards against those historical patterns.
+
+Every image needs an `alt` attribute. Keep backgrounds declarative:
 
 ```html
 <section data-background-image="assets/example.png" data-background-size="1696px 928px">
 ```
 
-Do not reintroduce a deck-owned Reveal.js runtime. Shared runtime behaviour belongs in `pure/`; deck content belongs in the source HTML.
+Shared runtime behaviour belongs in `pure/`; presentation-specific content belongs in the root source file.
 
-## Build, CI and deployment
+## Build and export
 
-The Pure build discovers all presentation sources, parses them through the compatibility boundary, renders them through the shared Pure shell, preserves required presentation assets, and emits `build-info.json` plus `presentations.json`.
+The Pure build discovers canonical sources, loads them through `deck-source.mjs`, renders every deck through the shared Pure shell, preserves required assets, and emits `build-info.json` plus `presentations.json`.
 
-GitHub Actions validates tooling, metadata, accessibility, linting, the Pure dependency graph, the production build, all 25 Pure decks in Chrome, and the exported-site catalogue plus all 25 exported decks. Browser smoke checks require Reveal to reach ready state and reject missing local resources.
+The website-facing exporter remains:
 
-After a successful push to `master`, the workflow dispatches `digiguru/digiguru.github.io` with the exact presentation SHA that passed CI. The website exports only the validated Pure artifact.
+```bash
+node scripts/presentations.mjs --manifest /path/to/presentations.yml --export /path/to/site
+```
 
-Vercel uses the same path declared in `vercel.json`:
+The generated YAML is an export artifact only; there is no repository-owned presentation registry. Metadata lives in each source file.
+
+## CI and deployment
+
+GitHub Actions validates workflow syntax, repository tooling, all 25 canonical metadata records, accessibility, ESLint, the locked dependency graph, source purity/capability preservation, the production build, all 25 built decks in Chrome, and the exported catalogue plus all 25 exported decks in Chrome.
+
+After a successful push to `master`, the workflow dispatches `digiguru/digiguru.github.io` with the exact presentation SHA that passed CI.
+
+Vercel uses the same deterministic path from `vercel.json`:
 
 ```text
 install: npm run pure:install
@@ -74,12 +110,8 @@ build:   npm run build
 output:  pure/dist
 ```
 
-The Pure index exposes its build commit SHA so preview deployments can be matched to the branch revision being reviewed.
-
 ## Dependencies and security
 
-Runtime/build npm dependencies belong in `pure/package.json`; dependency changes must update `pure/package-lock.json`. The old Puppeteer/QUnit tree and its historical `extract-zip` finding are no longer part of the current dependency graph. `npm run pure:audit` checks the dependencies that actually ship/build Pure.
+Runtime/build npm dependencies belong in `pure/package.json`; dependency changes must update `pure/package-lock.json`. `npm run pure:audit` audits the dependency graph that actually builds and runs Pure.
 
-## Future cleanup
-
-`pure/build/legacy-deck.mjs` and `legacy-presentations.yml` remain deliberately. A future Stage 7 can migrate all 25 source decks to a simpler canonical content format and then remove the compatibility layer. Keep that migration separate from dependency, documentation and routine runtime work.
+There is no inherited framework dependency tree and no presentation compatibility runtime to maintain.

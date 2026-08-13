@@ -1,36 +1,21 @@
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Breaking into ChatGPT - Becoming AI Enabled Humans - (Tenzing - v3.6  - 13/07/2023)</title>
+<meta name="presentation-format" content="pure-v1">
+<meta name="presentation-name" content="Tenzing">
+<meta name="presentation-version" content="v3.6">
+<meta name="presentation-date" content="13/07/2023">
+<meta name="presentation-attendance" content="50">
+<meta name="presentation-reveal-classes" content="reveal">
+<meta name="presentation-theme" content="black">
 
-		<title>Breaking into ChatGPT - Becoming AI Enabled Humans - (Tenzing - v3.6  - 13/07/2023)</title>
-
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
-		<link rel="stylesheet" href="custom.css">
-
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-		
-	</head>
-	<body>
-		<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RZP8CG4KLJ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-RZP8CG4KLJ');
+<script type="application/json" id="presentation-options">
+{
+  "hash": true
+}
 </script>
 
-
-
-		<div class="reveal">
-			<div class="slides">
-				<section data-background-image="assets/robot-future2.png">
+<div class="slides">
+<section data-background-image="assets/robot-future2.png">
 					<section data-auto-animate>
 						<h1 class="standout">ChatGPT & Tenzing</h1>
 						<iframe width="1400" height="480" data-src="https://wall.sli.do/event/acRqZwFdRgWAZqmJGiNwyb?section=90453de2-1f6c-4ef4-a132-9baffb4c6dc9" frameborder="0" allowfullscreen="true" title="Slido"></iframe>
@@ -551,90 +536,4 @@ So I don't have to log in every month to pay manually</pre>
 					</section>
 				</section>
 			</div>
-		</div>
-<!--
-		<aside class="notes">
-			Welcome everyone to the presentation! Today, we will be discussing Adam Hall's journey from a former Agile Coach to an amateur artist and a talkative technophile. Be prepared for an exciting story!
-			</aside>
-			<aside class="notes">
-			As we dive deeper into Adam's journey, we come across a pivotal moment when OpenAI announced its revolutionary language model, GPT-3. This event sparked widespread interest and engagement across various social media platforms.
-			</aside>
-			<aside class="notes">
-			GPT-3 caught the attention of not only tech enthusiasts but also influential media outlets like Bloomberg News, further amplifying its impact.
-			</aside>
-			<aside class="notes">
-			OpenAI then proceeded to invite people to try out GPT-3, providing an opportunity for users to experience the power of this groundbreaking AI technology.
-			</aside>
-			<aside class="notes">
-			As people started experimenting with GPT-3, they found it could be used in various creative ways, such as generating rap lyrics or even mimicking the Joker's response to a question about Twitter management.
-			</aside>
-			<aside class="notes">
-			GPT-3's versatility also extended to more practical applications, like writing user stories for product teams in an engaging and efficient manner.
-			</aside>
-			<aside class="notes">
-			The AI's potential to generate content, like intros to blog posts about sprint planning, became increasingly evident as users continued to explore its capabilities.
-			</aside>
-			<aside class="notes">
-			When given specific instructions, GPT-3 could even tailor its output to match the desired tone or style, such as writing a blog post intro in the voice of an angry gangster.
-			</aside>
-			<aside class="notes">
-			GPT-3's ability to adapt to various styles and tones made it especially useful for prioritizing tasks on a to-do list while maintaining an entertaining and engaging persona.
-			</aside>
-			<aside class="notes">
-			However, GPT-3 was not without its flaws. Bias could still be an issue, as demonstrated by the character bios generated for a careworker and a Director of Technology.
-			</aside>
-			<aside class="notes">
-			GPT-3's potential for spreading misinformation also became a growing concern as users continued to experiment with its capabilities.
-			</aside>
-			<aside class="notes">
-			Despite these concerns, GPT-3's ability to write code and integrate with other applications, like a Jira app, showcased its immense potential for transforming various industries.
-			</aside>
-			<aside class="notes">
-			GPT-3 could even be used to give AI a distinct personality, such as mimicking the voice of the Joker, further demonstrating its versatility and adaptability.
-			</aside>
-			<aside class="notes">
-			As we look towards the future and the development of GPT-4, we can expect significant improvements in content understanding, output length, and even image recognition capabilities.
-			</aside>
--->
-		<script src="dist/reveal.js"></script>
-		<script src="js/gpt-component.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			
-			
-			Reveal.initialize({
-				hash: true,
-				// Learn about plugins: https://revealjs.com/plugins/
-				//parallaxBackgroundImage: 'assets/adamhall.jpg', 
-				//parallaxBackgroundSize: "1578px 1578px",
-				//parallaxBackgroundHorizontal: 0,
-				
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-
-			Reveal.on( 'slidechanged', event => {
-				const current = event.currentSlide;
-				const background = event.currentSlide.slideBackgroundContentElement.closest(".stack").querySelector(".slide-background-content")
-				console.log("SLIDE", event.currentSlide);
-				if(event.currentSlide.dataset.state == "focus-bg") {
-					//Reveal.dispatchEvent("focus-bg")
-					background.classList.add("focus");
-					background.classList.remove("blur");
-					
-				} else {// if(event.currentSlide.dataset.state == "blur-bg") {
-					background.classList.add("blur");
-					background.classList.remove("focus");
-					
-					//Reveal.dispatchEvent("blur-bg")
-				}
-				// event.previousSlide, event.currentSlide, event.indexh, event.indexv
-			} );
-
-		
-		
-			 
-		</script>
-	</body>
-</html>
+</div>

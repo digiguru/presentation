@@ -3,7 +3,7 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
-import { attr, defaultRoot, isRevealDeck } from './presentations.mjs';
+import { attr, defaultRoot, isCanonicalPresentationSource } from './presentations.mjs';
 
 const excludedRootHtml = new Set(['index.html', 'demo.html', 'test.html']);
 
@@ -140,7 +140,7 @@ export async function processPresentationAccessibility({ root = defaultRoot, wri
   for (const file of files) {
     const filePath = path.join(root, file);
     const source = await readFile(filePath, 'utf8');
-    if (!isRevealDeck(source)) continue;
+    if (!isCanonicalPresentationSource(source)) continue;
     deckCount += 1;
 
     if (write) {

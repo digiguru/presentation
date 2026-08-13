@@ -5,22 +5,36 @@ import path from 'node:path';
 import test from 'node:test';
 
 import {
-  cleanName,
   discoverPresentations,
   exportSite,
+  isCanonicalPresentationSource,
   isValidVersion,
   normaliseAttendance,
-  parseLegacyYaml,
   parsePresentationDate,
   toYaml
 } from '../scripts/presentations.mjs';
 
-function revealDeck(title, extraHead = '') {
+function canonicalSource({
+  title = 'Test talk',
+  name = 'Test Talk',
+  version = 'v1.0',
+  date = '01/01/2025',
+  attendance,
+  extraMeta = '',
+} = {}) {
+  const attendanceMeta = attendance === undefined
+    ? ''
+    : `<meta name="presentation-attendance" content="${attendance}">`;
   return `<!doctype html>
-<html>
-<head><title>${title}</title>${extraHead}</head>
-<body><div class="reveal"><div class="slides"><section><h1>Test</h1></section></div></div></body>
-</html>`;
+<title>${title}</title>
+<meta name="presentation-format" content="pure-v1">
+<meta name="presentation-name" content="${name}">
+<meta name="presentation-version" content="${version}">
+<meta name="presentation-date" content="${date}">
+${attendanceMeta}${extraMeta}
+<script type="application/json" id="presentation-options">{}</script>
+<div class="slides"><section><h1>Test</h1></section></div>
+`;
 }
 
 test('parsePresentationDate accepts real dates including leap days', () => {
@@ -46,28 +60,22 @@ test('normaliseAttendance accepts only non-negative integers', () => {
   assert.equal(normaliseAttendance('lots'), undefined);
 });
 
-test('parseLegacyYaml creates a URL-keyed compatibility registry', () => {
-  const registry = parseLegacyYaml(`- name: Old Talk\n  version: v1.2\n  date: 01/02/2020\n  url: old.html\n  attendance: 12\n`);
-  assert.deepEqual(registry.get('old.html'), {
-    name: 'Old Talk',
-    version: 'v1.2',
-    date: '01/02/2020',
-    url: 'old.html',
-    attendance: '12'
-  });
+test('canonical source detection requires pure-v1 plus slides', () => {
+  assert.equal(isCanonicalPresentationSource(canonicalSource()), true);
+  assert.equal(isCanonicalPresentationSource('<div class="reveal"><div class="slides"></div></div>'), false);
+  assert.equal(isCanonicalPresentationSource('<meta name="presentation-format" content="pure-v1">'), false);
 });
 
-test('cleanName removes version/date suffixes but preserves legacy names', () => {
-  assert.equal(cleanName('A Useful Talk - v6.2 - 11/08/2026'), 'A Useful Talk');
-  assert.equal(cleanName('Ignored', { name: 'Historic Display Name' }), 'Historic Display Name');
-});
-
-test('discoverPresentations discovers, validates and sorts Reveal decks', async () => {
+test('discoverPresentations discovers, validates and sorts canonical sources', async () => {
   const root = await mkdtemp(path.join(tmpdir(), 'presentation-metadata-'));
   try {
-    await writeFile(path.join(root, 'later.html'), revealDeck('Later - v2.0 - 02/01/2025'));
-    await writeFile(path.join(root, 'earlier.html'), revealDeck('Earlier - v1.0 - 01/01/2025', '<meta name="presentation-attendance" content="25">'));
-    await writeFile(path.join(root, 'not-a-deck.html'), '<html><head><title>Ignored</title></head><body>No Reveal containers</body></html>');
+    await writeFile(path.join(root, 'later.html'), canonicalSource({
+      title: 'Later', name: 'Later', version: 'v2.0', date: '02/01/2025'
+    }));
+    await writeFile(path.join(root, 'earlier.html'), canonicalSource({
+      title: 'Earlier', name: 'Earlier', version: 'v1.0', date: '01/01/2025', attendance: 25
+    }));
+    await writeFile(path.join(root, 'not-a-deck.html'), '<html><body>Ignored non-presentation HTML</body></html>');
 
     const presentations = await discoverPresentations({ root });
     assert.deepEqual(presentations, [
@@ -79,16 +87,33 @@ test('discoverPresentations discovers, validates and sorts Reveal decks', async 
   }
 });
 
+test('discoverPresentations rejects presentation-shaped legacy sources', async () => {
+  const root = await mkdtemp(path.join(tmpdir(), 'presentation-legacy-'));
+  try {
+    await writeFile(
+      path.join(root, 'legacy.html'),
+      '<div class="reveal"><div class="slides"><section>Legacy source</section></div></div>'
+    );
+
+    await assert.rejects(
+      discoverPresentations({ root }),
+      /must declare presentation-format="pure-v1"/
+    );
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
 test('discoverPresentations rejects invalid explicit metadata', async () => {
   const root = await mkdtemp(path.join(tmpdir(), 'presentation-invalid-'));
   try {
-    await writeFile(
-      path.join(root, 'bad.html'),
-      revealDeck(
-        'Bad metadata',
-        '<meta name="presentation-name" content="Bad"><meta name="presentation-version" content="6"><meta name="presentation-date" content="31/02/2026"><meta name="presentation-attendance" content="many">'
-      )
-    );
+    await writeFile(path.join(root, 'bad.html'), canonicalSource({
+      title: 'Bad metadata',
+      name: 'Bad',
+      version: '6',
+      date: '31/02/2026',
+      attendance: 'many'
+    }));
 
     await assert.rejects(
       discoverPresentations({ root }),

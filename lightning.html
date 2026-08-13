@@ -1,31 +1,14 @@
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Fun with ChatGPT - Consulting - v3.2  - 22/03/2023</title>
+<meta name="presentation-format" content="pure-v1">
+<meta name="presentation-name" content="Lightning Talk">
+<meta name="presentation-version" content="v3.2">
+<meta name="presentation-date" content="22/03/2023">
+<meta name="presentation-attendance" content="10">
+<meta name="presentation-reveal-classes" content="reveal">
+<meta name="presentation-theme" content="black">
 
-		<title>Fun with ChatGPT - Consulting - v3.2  - 22/03/2023</title>
-
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
-		<!--<link rel="stylesheet" href="custom.css">-->
-
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-		
-	</head>
-	<body>
-		<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RZP8CG4KLJ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-RZP8CG4KLJ');
-</script>
-		<style>
+<style>
 			.blur {
 				filter: brightness(25%) blur(4px);
 			}
@@ -36,210 +19,15 @@
   cursor: pointer;
 }
 		</style>
-		<script>
-window.addEventListener("DOMContentLoaded", (event) => {
-	const collapsibles = document.getElementsByClassName("collapsible");
-	[...collapsibles].forEach(collapsible => {
-		collapsible.addEventListener("click", () => {
-			const content = collapsible.nextElementSibling;
-			content.style.display = content.style.display === "none" ? "block" : "none";
-		});
-	})
-});
 
-			// Defines the custom element with our appropriate name, <apocalyptic-warning>
-async function queryGPT (context, messages, input, output, processVoice) {
-	try {
-		const post = {
-			system: context,
-			examples: messages,
-			prompt: input
-		}
-		const response = await fetch('https://ai-prompt-writer.vercel.app/api/raw', {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(post)
-		});
-		const data = await response.json();
-		const outputData = data.output;
-		
-		console.log(outputData);
-		
-		if(output) output.value = outputData;
-		if(processVoice) getAudio(outputData, output);
-		
-		return data;
-	} catch (ex) {
-		console.error(ex);
-		if(output) output.value = ex;
-	}
+<script type="application/json" id="presentation-options">
+{
+  "hash": true
 }
+</script>
 
-//Perform the API call
-async function fetchAudio(input) {
-	const response = await fetch('https://ai-prompt-writer.vercel.app/api/voice', {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({input})
-	});
-	return await response.blob();
-}
-
-async function getAudio(input, output) {
-	//Create temp link to the audio element
-	const link = document.createElement("a");
-	link.innerText = "loading audio...";
-	output.parentNode.appendChild(link);
-
-	var blob = await fetchAudio(input);
-	var blobURL = URL.createObjectURL(blob);
-	var audio0 = new Audio(blobURL);
-	audio0.play();
-	link.innerText = "download";
-	link.download = "voice.mp3";
-	link.href = blobURL;
-}
-
-customElements.define("gpt-input",
-
- 
-	// Ensures that we have all the default properties and methods of a built in HTML element
-	class extends HTMLElement {
-
-		// Called anytime a new custom element is created
-		constructor() {
-
-			// Calls the parent constructor, i.e. the constructor for `HTMLElement`, so that everything is set up exactly as we would for creating a built in HTML element
-			super();
-
-			// Grabs the <template> and stores it in `warning`
-			let rawTemplate = document.getElementById("GPT");
-
-			// Stores the contents of the template in `mywarning`
-			let myTemplate = rawTemplate.content;
-
-			const shadowRoot = this.attachShadow({mode: "open"}).appendChild(myTemplate.cloneNode(true));
-			console.log("constructed");
-			this.sendGPT = this.sendGPT.bind(this);
-			
-		}
-		sendGPT() {
-			const { shadowRoot } = this;
-			const showConversation = this.getAttribute("data-show-conversation") === 'true';
-			const processVoice = this.getAttribute("data-process-voice") === 'true';
-			const contextValue = shadowRoot.querySelector('.context')?.assignedNodes()[0].innerText;
-			const inputValue = shadowRoot.querySelector('#input').value;
-			let messages = [];
-			const output = shadowRoot.querySelector('.output');
-			output.value = "";
-			output.setAttribute('placeholder', "...loading...");
-			console.log("sendGPT", contextValue, inputValue, output);
-			if(showConversation) {
-				console.log(shadowRoot?.querySelector('.context-conversation'));
-				var conversation = shadowRoot?.querySelector('.context-conversation')?.assignedNodes()[0];
-				console.log(conversation);
-				messages = [...conversation.children].map(x => x.innerText);
-				console.log(messages);
-			}
-
-			queryGPT(contextValue, messages, inputValue, output, processVoice);
-		}
-		connectedCallback() {
-			const { shadowRoot } = this;
-			const button = shadowRoot.querySelector('button');
-			
-			button.addEventListener('click', this.sendGPT);
-			console.log("attr", this.getAttribute("data-show-conversation"), shadowRoot, this);//.getAttribute('data-show-input'));
-			if(this.getAttribute("data-show-input") !== 'true') {
-				shadowRoot.querySelectorAll(".input").forEach(x => x.setAttribute('class', "hidden"));
-			}
-			if(this.getAttribute("data-show-conversation") !== 'true') {
-				shadowRoot.querySelectorAll(".conversation").forEach(x => x.setAttribute('class', "hidden"));
-			}
-		}
-	}
-);
-		</script>
-		
-	
-
-		<template id="GPT" data-show-input="true">
-			<style>
-				
-
-				.hidden {
-					display: none;
-				}
-				
-
- .gpt-form {
-    display: grid;
-    grid-template-columns: 20px 1fr;
-    grid-gap: 20px;
-    align-items: start;
-    font-family: Arial, sans-serif;
-  }
-
-  label {
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    font-weight:lighter;
-    font-size: 0.8rem;
-    text-align: top;
-  }
-
-  .hidden {
-    display: none;
-  }
-
-  textarea.input {
-    font-size: 1.6rem;
-    width: 100%;
-    resize: vertical;
-  }
-
-  button {
-    width: 100%;
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1.2rem;
-  }
-
-  button:hover {
-    background-color: #45a049;
-  }
-
-  textarea.output {
-    width: 100%;
-    resize: vertical;
-    min-height: 229px;
-    font-size: 1rem;
-  }
-			</style>
-			<div class="gpt-form">
-				<label>Context</label>
-				<div><slot class="context" name="context">Example</slot></div>
-				<label class="conversation">Chat</label>
-				<div class="conversation"><slot class="context-conversation" name="conversation">Example</slot></div>
-				<label class="input">Input</label>
-				<textarea class="input" style="font-size: 1.6rem;" placeholder="your input" id="input"></textarea>
-				<label></label><button>go</button>
-				<label>Output</label>
-				<textarea id="output" style="font-size: 1rem;" class="output"></textarea>
-			</div>
-		</template>
-
-		<div class="reveal">
-			<div class="slides">
-				<section data-background="black">
+<div class="slides">
+<section data-background="black">
 				<section data-background="black">
 					<h1>Iteration 3</h1>
 					<p>(first iteration made 8 days ago)</p>
@@ -703,34 +491,4 @@ So I don't have to log in every month to pay manually</pre>
 					</section>
 				</section>
 			</div>
-		</div>
-
-
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			
-			
-			Reveal.initialize({
-				hash: true,
-				// Learn about plugins: https://revealjs.com/plugins/
-				
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-			Reveal.addEventListener( 'blur-bg', function() {
-				[...document.getElementsByClassName("backgrounds")].forEach(x => {
-					x.classList.add("blur")
-				})
-			});
-			Reveal.addEventListener( 'focus-bg', function() {
-				[...document.getElementsByClassName("backgrounds")].forEach(x => {
-					x.classList.remove("blur")
-				})
-			});
-			
-			 
-		</script>
-	</body>
-</html>
+</div>
