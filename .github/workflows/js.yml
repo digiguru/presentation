@@ -28,6 +28,13 @@ jobs:
       - name: Validate Pure presentation runtime
         run: npm run pure:check
 
+      - name: Capture generated Pure lockfile for migration
+        uses: actions/upload-artifact@v4
+        with:
+          name: pure-package-lock
+          path: pure/package-lock.json
+          if-no-files-found: error
+
       - name: Smoke test Pure in Chrome
         run: npm run pure:smoke
 
