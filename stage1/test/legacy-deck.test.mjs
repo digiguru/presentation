@@ -3,17 +3,26 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
+import { auditLegacyDecks, summariseCompatibility } from '../build/audit-legacy-decks.mjs';
 import {
   collectAssetPaths,
+  collectLocalReferences,
+  extractExternalScripts,
+  extractExternalStylesheets,
   extractInlineStyles,
+  extractRevealOptions,
   extractSlides,
+  extractThemes,
   loadLegacyDeck,
-  rewriteLegacyAssets
+  rewriteLegacyAssets,
 } from '../build/legacy-deck.mjs';
 
-const stage1Root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const repoRoot = path.resolve(stage1Root, '..');
-const representativeDeck = path.join(repoRoot, 'ai-connections.html');
+const stageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const repoRoot = path.resolve(stageRoot, '..');
+
+function deckPath(name) {
+  return path.join(repoRoot, name);
+}
 
 test('extractSlides handles nested divs without truncating the deck', () => {
   const html = '<div class="reveal"><div class="slides"><section><div>one</div></section><section>two</section></div></div>';
@@ -27,13 +36,29 @@ test('asset collection is deterministic and rejects traversal-like matches', () 
   );
 });
 
-test('legacy asset references are moved behind the Stage 1 public boundary', () => {
+test('compatibility extraction preserves themes, external dependencies and safe support files', () => {
+  const html = `
+    <link rel="stylesheet" href="dist/theme/black.css">
+    <link rel="stylesheet" href="dist/theme/AND.css">
+    <link rel="stylesheet" href="https://example.com/font.css">
+    <script src="https://example.com/chart.js"></script>
+    <a href="output/example.html">output</a>
+    <script>Reveal.initialize({ hash: true, controls: false, transition: 'fade' });</script>`;
+
+  assert.deepEqual(extractThemes(html), ['black', 'AND']);
+  assert.equal(extractExternalStylesheets(html).length, 1);
+  assert.equal(extractExternalScripts(html).length, 1);
+  assert.deepEqual(collectLocalReferences(html), ['output/example.html']);
+  assert.deepEqual(extractRevealOptions(html), { hash: true, controls: false, transition: 'fade' });
+});
+
+test('legacy asset references are moved behind the compatibility public boundary', () => {
   assert.equal(rewriteLegacyAssets('assets/example.png'), 'legacy-assets/example.png');
 });
 
-test('representative ai-connections deck can be consumed by the clean runtime', async () => {
-  const source = await readFile(representativeDeck, 'utf8');
-  const deck = await loadLegacyDeck(representativeDeck);
+test('ai-connections remains consumable by the clean runtime', async () => {
+  const source = await readFile(deckPath('ai-connections.html'), 'utf8');
+  const deck = await loadLegacyDeck(deckPath('ai-connections.html'));
 
   assert.match(deck.slides, /Connect the AIs/);
   assert.match(deck.slides, /class="fragment fade-up"/);
@@ -43,4 +68,29 @@ test('representative ai-connections deck can be consumed by the clean runtime', 
   assert.ok(deck.assets.includes('feedback-16th-may.png'));
   assert.ok(extractInlineStyles(source).includes('.pie'));
   assert.doesNotMatch(deck.slides, /dist\/reveal\.js/);
+});
+
+test('BigBus exercises the richer Stage 2 compatibility surface', async () => {
+  const deck = await loadLegacyDeck(deckPath('bigbus.html'));
+
+  assert.deepEqual(deck.themes, ['black', 'AND']);
+  assert.match(deck.revealClasses, /\bbackground\b/);
+  assert.equal(deck.options.hash, true);
+  assert.equal(deck.capabilities.gptInput, true);
+  assert.equal(deck.capabilities.focusBackground, true);
+  assert.ok(deck.externalStylesheets.some(tag => /font-awesome/i.test(tag)));
+  assert.ok(deck.externalScripts.some(tag => /js-base64/i.test(tag)));
+  assert.ok(deck.externalScripts.some(tag => /chart\.js/i.test(tag)));
+  assert.ok(deck.localReferences.includes('output/bigbus.html'));
+});
+
+test('all discovered presentations can be inventoried before Stage 3 migration', async () => {
+  const decks = await auditLegacyDecks();
+  const summary = summariseCompatibility(decks);
+
+  assert.ok(summary.total >= 25, `Expected the full legacy deck corpus, got ${summary.total}`);
+  assert.ok(summary.themes.black > 0);
+  assert.ok(summary.capabilities.focusBackground > 0);
+  assert.ok(Array.isArray(summary.customInlineDecks));
+  assert.ok(Array.isArray(summary.localSupportScriptDecks));
 });
