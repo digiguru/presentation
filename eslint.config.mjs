@@ -1,5 +1,3 @@
-import globals from 'globals';
-
 const sharedRules = {
   curly: 'off',
   eqeqeq: 'error',
@@ -23,26 +21,10 @@ export default [
     ],
   },
   {
-    files: ['pure/src/**/*.js'],
+    files: ['pure/src/**/*.js', 'scripts/**/*.mjs', 'test/*.test.mjs', 'pure/**/*.mjs'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
-      globals: {
-        ...globals.browser,
-        ...globals.es2021,
-      },
-    },
-    rules: sharedRules,
-  },
-  {
-    files: ['scripts/**/*.mjs', 'test/*.test.mjs', 'pure/**/*.mjs'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      globals: {
-        ...globals.node,
-        ...globals.es2021,
-      },
     },
     rules: sharedRules,
   },
