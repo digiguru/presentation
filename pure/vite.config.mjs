@@ -50,13 +50,13 @@ async function copyTheme(theme) {
   const source = path.join(legacyThemesDir, `${theme}.css`);
   const css = await readFile(source, 'utf8');
   for (const asset of collectAssetPaths(css)) {
-    await copySafe(legacyAssetsDir, asset, generatedPublic, path.join('legacy-assets', asset));
+    await copySafe(legacyAssetsDir, asset, generatedPublic, path.join('assets', asset));
   }
 
-  // Custom compiled themes historically lived at dist/theme/, so their
-  // ../../assets/ URLs resolve differently once moved into /themes/. Keep the
-  // theme source unchanged and rewrite only that presentation-owned asset root.
-  const rewritten = css.replace(/(?:\.\.\/)+assets\//g, '../legacy-assets/');
+  // Custom compiled themes historically lived at dist/theme/. Once copied to
+  // /themes/, rewrite only their relative asset prefix while preserving the
+  // public /assets/ contract used by every existing presentation.
+  const rewritten = css.replace(/(?:\.\.\/)+assets\//g, '../assets/');
   await writeFile(destination, rewritten, 'utf8');
 }
 
@@ -65,7 +65,7 @@ for (const deckName of compatibilityDeckNames) {
   decks.set(deckName, deck);
 
   for (const asset of deck.assets) {
-    await copySafe(legacyAssetsDir, asset, generatedPublic, path.join('legacy-assets', asset));
+    await copySafe(legacyAssetsDir, asset, generatedPublic, path.join('assets', asset));
   }
 
   for (const supportFile of deck.localReferences) {
