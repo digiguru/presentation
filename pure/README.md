@@ -1,44 +1,49 @@
 # Pure presentation runtime
 
-`pure/` is the clean presentation runtime built on official `reveal.js@6.0.1` and Vite.
+`pure/` is the only presentation runtime in this repository. It builds the 25 canonical `pure-v1` presentation sources with official `reveal.js@6.0.1` and Vite.
 
-The top-level presentation HTML files remain content sources during the migration. Pure reads their slides, themes, supported Reveal options and content dependencies at build time, but the generated site runs the Pure runtime rather than the repository's old Reveal/GPT implementation.
+For the repository-wide architecture, source contract, validation and deployment flow, see the root [`README.md`](../README.md).
 
-## Stage 3 corpus
+## What lives here
 
-Pure now discovers and builds the complete current presentation corpus: 25 presentations.
+- `src/presentation.js` initializes Reveal and the shared presentation runtime.
+- `src/presentation-runtime/` contains shared behaviours such as focus backgrounds, GPT input, dynamic slide insertion and vertical-stack background inheritance.
+- `build/deck-source.mjs` parses canonical presentation sources.
+- `build/audit-sources.mjs` rejects historical runtime wiring and verifies the expected corpus footprint.
+- `build/verify-build.mjs` verifies the generated manifest and all 25 built decks.
+- `build/smoke.mjs` opens every built deck in headless Chrome and verifies Reveal readiness, source/commit markers, GPT registration, rendered BigBus background behaviour and local asset requests.
+- `deck.html` is the shared shell used for every presentation.
+- `themes/AND.css` is the optional AND theme layered on top of the standard Reveal theme.
+- `package.json` and `package-lock.json` are the complete runtime/build dependency graph.
+- `dist/` is generated output and must not be edited or committed.
 
-A single checked-in `deck.html` provides the page shell. `vite.config.mjs` generates the individual entry pages before Vite starts, preserving existing URLs such as `/bigbus.html` without maintaining a wrapper file for every presentation.
+## Background compatibility rule
 
-The generated index lists every presentation and the exact Git commit SHA. Each deck also includes the same SHA and source name in its generated page.
+Some canonical sources intentionally put a shared `data-background-*` value on the outer section of a vertical slide stack. Reveal 6 treats each vertical child as a separate background target, so `src/presentation-runtime/stack-backgrounds.js` copies stack background settings to children that do not define their own background before Reveal initializes.
 
-## Pure runtime
+Explicit child backgrounds always win. This behaviour is covered by unit tests and by a real Chrome regression assertion against the BigBus opening background.
 
-Presentation-specific behaviour lives under `src/presentation-runtime/`:
+## Commands
 
-- focus/background behaviour
-- dynamic slide insertion
-- the Pure `<gpt-input>` component and bundled template
+From the repository root:
 
-GPT requests use the same-origin `/api/prompt/*` boundary. Pure does not require the old global Reveal object or the old GPT component files.
+```bash
+npm start
+npm test
+npm run pure:audit
+npm run build
+npm run pure:smoke
+```
 
-The audit found historical inline GPT implementations in `agile-reading.html`, `lightning.html` and `nationwide.html`. Pure classifies those as superseded and does not carry them into generated presentation pages. The current corpus has zero unported custom inline scripts and zero non-standard local support scripts.
+`npm start`, `npm test` and `npm run pure:check` perform a deterministic `npm ci --prefix pure` when they need a self-contained environment. CI and Vercel install the locked dependencies once, then run lint/build commands without reinstalling them.
 
-## Current compatibility audit
+For direct Pure work after dependencies are installed:
 
-- presentations: 25
-- black theme: 25
-- custom AND theme: 3
-- focus backgrounds: 25
-- GPT input: 23
-- iframes: 19
-- canvases: 6
-- historical GPT implementations superseded: 3
-- unported custom runtime scripts: 0
-- non-standard local runtime scripts: 0
+```bash
+npm --prefix pure run test
+npm --prefix pure run audit:sources
+npm --prefix pure run build
+npm --prefix pure run smoke
+```
 
-## Validation
-
-`pure:check` audits and builds the complete corpus and verifies every generated presentation in the manifest. `pure:smoke` opens all 25 built presentations in headless Chrome and verifies Reveal readiness, commit/source markers, expected GPT registration and local asset requests.
-
-Vercel previews publish `pure/dist` directly. Stage 3 does not yet replace the old exporter, update `digiguru.github.io`, or remove the old Reveal/Gulp/QUnit stack; those remain Stages 4–6.
+There is no legacy Reveal fork, compatibility parser, Gulp/Rollup stack, QUnit/Puppeteer suite or repository-owned presentation registry to maintain.
