@@ -14,7 +14,6 @@ import {
   extractSlides,
   extractThemes,
   loadLegacyDeck,
-  rewriteLegacyAssets,
 } from '../build/legacy-deck.mjs';
 
 const pureRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -52,8 +51,10 @@ test('compatibility extraction preserves themes, external dependencies and safe 
   assert.deepEqual(extractRevealOptions(html), { hash: true, controls: false, transition: 'fade' });
 });
 
-test('legacy asset references are moved behind the Pure public boundary', () => {
-  assert.equal(rewriteLegacyAssets('assets/example.png'), 'legacy-assets/example.png');
+test('Pure preserves the existing public assets contract', async () => {
+  const deck = await loadLegacyDeck(deckPath('ai-connections.html'));
+  assert.match(deck.slides, /data-background-image="assets\//);
+  assert.doesNotMatch(deck.slides, /legacy-assets\//);
 });
 
 test('ai-connections remains consumable by Pure', async () => {
@@ -63,7 +64,7 @@ test('ai-connections remains consumable by Pure', async () => {
   assert.match(deck.slides, /Connect the AIs/);
   assert.match(deck.slides, /class="fragment fade-up"/);
   assert.match(deck.slides, /data-auto-animate/);
-  assert.match(deck.slides, /data-background-image="legacy-assets\//);
+  assert.match(deck.slides, /data-background-image="assets\//);
   assert.ok(deck.assets.includes('adamhall.jpg'));
   assert.ok(deck.assets.includes('feedback-16th-may.png'));
   assert.ok(extractInlineStyles(source).includes('.pie'));
