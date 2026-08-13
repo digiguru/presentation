@@ -10,7 +10,7 @@ The adapter now reads real conventions from each legacy deck instead of assuming
 
 - Reveal root classes and a safe subset of per-deck `Reveal.initialize` options
 - standard Reveal themes from the official package
-- custom compiled themes such as `AND.css` as presentation-owned compatibility assets
+- custom compiled themes such as `AND.css` as presentation-owned compatibility assets, including their referenced images
 - inline deck CSS
 - external stylesheets and scripts such as Font Awesome, Chart.js and Base64
 - referenced `assets/` files and local support files such as `output/bigbus.html`
@@ -23,7 +23,28 @@ Three real decks are built and browser-smoked through this adapter:
 - `anti-ai.html` — an older conventional deck
 - `bigbus.html` — a richer deck with the custom AND theme, external dependencies and `<gpt-input>`
 
-The old GPT component still expects a singleton `Reveal` global. Stage 2 contains a narrowly scoped compatibility bridge that exposes the new Reveal 6 deck instance only for decks that actually contain `<gpt-input>`. This is transitional: the control itself will become a first-class `presentation-runtime` module before the old stack is removed.
+## Presentation runtime boundary
+
+The compatibility audit showed that 23 of the 25 current decks contain `<gpt-input>`, so Stage 2 ports that control instead of carrying a global-Reveal shim into Stage 3.
+
+`src/presentation-runtime/gpt-input.js` now owns the GPT custom element and receives the Reveal deck instance explicitly. Its HTML template is bundled at build time from `gpt-input.html`; the clean build no longer ships or runtime-fetches `js/gpt-component.js` or `js/gpt-component.html`, and it does not expose `window.Reveal`.
+
+The focus/background behaviour and dynamic-slide helper remain in the same explicit `presentation-runtime` boundary, giving the eventual two-repository design one clear home for presentation-specific behaviour while Reveal.js remains an external dependency.
+
+## Compatibility audit findings
+
+The Stage 2 audit currently discovers 25 presentations:
+
+- black theme: 25 decks
+- custom AND theme: 3 decks
+- focus-background behaviour: 25 decks
+- GPT input: 23 decks
+- iframes: 19 decks
+- canvases: 6 decks
+- custom inline scripts needing explicit Stage 3 review: only `agile-reading.html`, `lightning.html`, and `nationwide.html`
+- non-standard local support scripts: none
+
+This gives Stage 3 a concrete migration checklist rather than requiring another discovery pass.
 
 ## Compare old and compatibility runtimes
 
@@ -68,4 +89,4 @@ The legacy compatibility audit does not execute arbitrary old inline JavaScript.
 
 ## Still deliberately deferred
 
-Stage 3 will migrate the complete deck corpus into the new presentation structure using this adapter and its audit as the migration checklist. Later stages will replace the old exporter, wire the new build into `digiguru.github.io`, port/remove remaining transitional control shims and finally delete/archive-clean the Reveal fork and inherited QUnit/Puppeteer machinery.
+Stage 3 will migrate the complete deck corpus into the new presentation structure using this adapter and its audit as the migration checklist. Later stages will replace the old exporter, wire the new build into `digiguru.github.io`, clean up any now-unused external deck dependencies and finally delete/archive-clean the Reveal fork and inherited QUnit/Puppeteer machinery.
