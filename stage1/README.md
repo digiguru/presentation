@@ -1,54 +1,71 @@
-# Stage 1: clean presentation runtime
+# Stages 1–2: clean runtime and legacy compatibility
 
-This directory is an intentionally isolated proof of the two-repository architecture.
+This directory remains intentionally isolated from the production presentation/export path while the two-repository architecture is evaluated.
 
-It does **not** replace the current presentation build or website export. The existing Reveal.js fork remains the production path while this branch is evaluated.
+Stage 1 proved that the presentations can run on the official `reveal.js@6.0.1` package with Vite instead of maintaining Reveal framework source in this repository. Stage 2 adds a compatibility adapter so existing deck HTML can be consumed with minimal rewriting.
 
-## What this proves
+## What Stage 2 adds
 
-- Reveal.js is consumed as the official `reveal.js@6.0.1` package rather than maintained as framework source in this repository.
-- Vite owns the clean presentation build.
-- Presentation-specific behaviour has an explicit runtime boundary in `src/presentation-runtime/` instead of patching the global Reveal object.
-- `ai-connections.html` is used as the representative deck because it exercises nested slides, fragments, background images, auto-animate, custom CSS and the custom focus/blur background behaviour.
-- The Stage 1 build consumes the existing deck content at build time, so the old and new versions can be compared without duplicating or editing the source presentation yet. Moving presentation source into the new structure is deliberately Stage 2 work.
+The adapter now reads real conventions from each legacy deck instead of assuming every presentation is identical:
 
-## Compare before and after
+- Reveal root classes and a safe subset of per-deck `Reveal.initialize` options
+- standard Reveal themes from the official package
+- custom compiled themes such as `AND.css` as presentation-owned compatibility assets
+- inline deck CSS
+- external stylesheets and scripts such as Font Awesome, Chart.js and Base64
+- referenced `assets/` files and local support files such as `output/bigbus.html`
+- capability detection for focus backgrounds, GPT input, pie charts, Markdown, canvases and iframes
+- classification of legacy inline scripts and non-standard local scripts for Stage 3 review
 
-Run the existing presentation server in one terminal:
+Three real decks are built and browser-smoked through this adapter:
+
+- `ai-connections.html` — the Stage 1 baseline
+- `anti-ai.html` — an older conventional deck
+- `bigbus.html` — a richer deck with the custom AND theme, external dependencies and `<gpt-input>`
+
+The old GPT component still expects a singleton `Reveal` global. Stage 2 contains a narrowly scoped compatibility bridge that exposes the new Reveal 6 deck instance only for decks that actually contain `<gpt-input>`. This is transitional: the control itself will become a first-class `presentation-runtime` module before the old stack is removed.
+
+## Compare old and compatibility runtimes
+
+Run the existing presentation server:
 
 ```bash
 npm start
 ```
 
-Open the existing deck using the URL printed by the Gulp server, for example:
+For example, open:
 
 ```text
-http://localhost:8000/ai-connections.html
+http://localhost:8000/bigbus.html
 ```
 
-Then run the Stage 1 runtime in another terminal:
+Then run the compatibility runtime:
 
 ```bash
 npm run stage1:install
 npm run stage1:dev
 ```
 
-Open:
+Open the matching deck:
 
 ```text
-http://localhost:5173/ai-connections.html
+http://localhost:5173/bigbus.html
 ```
 
-The Stage 1 version has a small `Stage 1 · Reveal.js 6.0.1` badge in the top-right corner so it is obvious which runtime you are viewing.
+The compatibility versions have a `Stage 2 · Reveal.js 6.0.1` badge in the top-right corner.
 
 ## Validation
 
 ```bash
 npm run stage1:check
+npm run stage1:smoke
+npm --prefix stage1 run audit:legacy
 ```
 
-This runs focused source/extraction tests, a Vite production build and post-build checks that ensure the representative deck and its assets were emitted without falling back to legacy Reveal runtime paths.
+`stage1:check` runs unit/extraction tests, audits the complete legacy presentation corpus, builds all Stage 2 compatibility pages and verifies the output. `stage1:smoke` opens all three compatibility decks in headless Chrome and checks that Reveal reaches `ready`, expected controls register and no local request returns 404.
 
-## Deliberately deferred
+The legacy compatibility audit does not execute arbitrary old inline JavaScript. It inventories custom scripts instead, so Stage 3 can migrate them explicitly rather than silently losing behaviour.
 
-Stages 2–6 will handle migrating all deck source, porting the remaining custom components such as GPT input, replacing the legacy exporter, wiring the new build into `digiguru.github.io`, and finally deleting/archive-cleaning the old Reveal.js fork machinery.
+## Still deliberately deferred
+
+Stage 3 will migrate the complete deck corpus into the new presentation structure using this adapter and its audit as the migration checklist. Later stages will replace the old exporter, wire the new build into `digiguru.github.io`, port/remove remaining transitional control shims and finally delete/archive-clean the Reveal fork and inherited QUnit/Puppeteer machinery.
