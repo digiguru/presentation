@@ -31,7 +31,7 @@ cpSync(
   { recursive: true }
 );
 
-const customTheme = readFileSync(path.join(repoRoot, 'dist', 'theme', 'AND.css'), 'utf8');
+const customTheme = readFileSync(path.join(pureRoot, 'themes', 'AND.css'), 'utf8');
 writeFileSync(
   path.join(publicRoot, 'themes', 'AND.css'),
   customTheme.replace(/(?:\.\.\/)+assets\//g, '../assets/'),
