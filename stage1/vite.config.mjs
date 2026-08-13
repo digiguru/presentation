@@ -1,8 +1,8 @@
-import { copyFile, mkdir, rm } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
-import { loadLegacyDeck } from './build/legacy-deck.mjs';
+import { collectAssetPaths, loadLegacyDeck } from './build/legacy-deck.mjs';
 
 const stageRoot = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(stageRoot, '..');
@@ -12,6 +12,7 @@ const officialThemesDir = path.join(stageRoot, 'node_modules', 'reveal.js', 'dis
 const legacyThemesDir = path.join(repoRoot, 'dist', 'theme');
 const compatibilityDeckNames = ['ai-connections.html', 'anti-ai.html', 'bigbus.html'];
 const decks = new Map();
+const copiedThemes = new Set();
 
 await rm(generatedPublic, { recursive: true, force: true });
 
@@ -33,15 +34,30 @@ async function copySafe(sourceRoot, relativePath, destinationRoot, destinationPa
 }
 
 async function copyTheme(theme) {
+  if (copiedThemes.has(theme)) return;
+  copiedThemes.add(theme);
+
   const destination = path.join(generatedPublic, 'themes', `${theme}.css`);
   await mkdir(path.dirname(destination), { recursive: true });
 
   try {
     await copyFile(path.join(officialThemesDir, `${theme}.css`), destination);
+    return;
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
-    await copyFile(path.join(legacyThemesDir, `${theme}.css`), destination);
   }
+
+  const source = path.join(legacyThemesDir, `${theme}.css`);
+  const css = await readFile(source, 'utf8');
+  for (const asset of collectAssetPaths(css)) {
+    await copySafe(legacyAssetsDir, asset, generatedPublic, path.join('legacy-assets', asset));
+  }
+
+  // Custom compiled themes historically lived at dist/theme/, so their
+  // ../../assets/ URLs resolve differently once moved into /themes/. Keep the
+  // theme source unchanged and rewrite only that presentation-owned asset root.
+  const rewritten = css.replace(/(?:\.\.\/)+assets\//g, '../legacy-assets/');
+  await writeFile(destination, rewritten, 'utf8');
 }
 
 for (const deckName of compatibilityDeckNames) {
