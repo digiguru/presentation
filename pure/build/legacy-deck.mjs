@@ -208,10 +208,6 @@ export function extractCapabilities(html) {
   };
 }
 
-export function rewriteLegacyAssets(html) {
-  return html.replaceAll('assets/', 'legacy-assets/');
-}
-
 export async function loadLegacyDeck(filePath) {
   const html = await readFile(filePath, 'utf8');
   const slides = extractSlides(html);
@@ -220,8 +216,8 @@ export async function loadLegacyDeck(filePath) {
   return {
     title: extractTitle(html),
     revealClasses: extractRevealClasses(html),
-    slides: rewriteLegacyAssets(slides),
-    styles: rewriteLegacyAssets(styles),
+    slides,
+    styles,
     assets: collectAssetPaths(`${slides}\n${styles}`),
     localReferences: collectLocalReferences(slides),
     themes: extractThemes(html),
