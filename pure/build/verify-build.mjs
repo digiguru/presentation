@@ -13,7 +13,7 @@ const expectedDecks = {
 for (const [file, content] of Object.entries(expectedDecks)) {
   const html = await readFile(path.join(root, 'dist', file), 'utf8');
   assert.match(html, content, `${file} should contain its legacy deck content`);
-  assert.match(html, /Stage 2 · Reveal\.js 6\.0\.1/, `${file} should identify the compatibility runtime`);
+  assert.match(html, /Pure · Reveal\.js 6\.0\.1/, `${file} should identify the Pure runtime`);
   assert.doesNotMatch(html, /src=["']dist\/reveal\.js|src=["']plugin\/notes\/notes\.js|src=["']js\/gpt-component\.js/, `${file} must not load forked/legacy runtime scripts`);
   assert.match(html, /_runtime\/.+\.js/, `${file} should load a Vite runtime bundle`);
 }
@@ -33,4 +33,4 @@ await access(path.join(root, 'dist', 'output', 'bigbus.html'));
 await assert.rejects(access(path.join(root, 'dist', 'js', 'gpt-component.js')));
 await assert.rejects(access(path.join(root, 'dist', 'js', 'gpt-component.html')));
 
-console.log('Verified Stage 2 multi-deck Reveal 6 compatibility build without legacy GPT runtime files.');
+console.log('Verified Pure multi-deck Reveal 6 build without legacy GPT runtime files.');

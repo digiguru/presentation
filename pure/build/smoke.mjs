@@ -124,11 +124,11 @@ try {
       });
 
       if (!revealIsReady(stdout)) failures.push(`${deck.file}: Reveal did not reach ready`);
-      if (!stdout.includes(`data-compatibility-source="${deck.file}"`)) {
-        failures.push(`${deck.file}: compatibility source marker was not set`);
+      if (!stdout.includes(`data-pure-source="${deck.file}"`)) {
+        failures.push(`${deck.file}: Pure source marker was not set`);
       }
       if (deck.expectsGpt && !stdout.includes('data-gpt-input-ready="true"')) {
-        failures.push(`${deck.file}: legacy <gpt-input> compatibility control did not register`);
+        failures.push(`${deck.file}: Pure <gpt-input> control did not register`);
       }
     } catch (error) {
       failures.push(`${deck.file}: Chrome failed: ${error.message}`);
@@ -137,9 +137,9 @@ try {
     for (const missing of server.missingRequests) failures.push(`${deck.file}: local request returned 404: ${missing}`);
   }
 
-  if (failures.length) throw new Error(`Stage 2 compatibility smoke tests failed:\n- ${failures.join('\n- ')}`);
+  if (failures.length) throw new Error(`Pure presentation smoke tests failed:\n- ${failures.join('\n- ')}`);
 
-  console.log(`Smoke tested ${decks.length} Stage 2 decks: Reveal ready, controls loaded, no local 404s.`);
+  console.log(`Smoke tested ${decks.length} Pure decks: Reveal ready, controls loaded, no local 404s.`);
 } finally {
   await new Promise(resolve => server.close(resolve));
 }

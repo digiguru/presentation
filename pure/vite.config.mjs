@@ -4,11 +4,11 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import { collectAssetPaths, loadLegacyDeck } from './build/legacy-deck.mjs';
 
-const stageRoot = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(stageRoot, '..');
-const generatedPublic = path.join(stageRoot, '.stage1-public');
+const pureRoot = path.dirname(fileURLToPath(import.meta.url));
+const repoRoot = path.resolve(pureRoot, '..');
+const generatedPublic = path.join(pureRoot, '.pure-public');
 const legacyAssetsDir = path.join(repoRoot, 'assets');
-const officialThemesDir = path.join(stageRoot, 'node_modules', 'reveal.js', 'dist', 'theme');
+const officialThemesDir = path.join(pureRoot, 'node_modules', 'reveal.js', 'dist', 'theme');
 const legacyThemesDir = path.join(repoRoot, 'dist', 'theme');
 const compatibilityDeckNames = ['ai-connections.html', 'anti-ai.html', 'bigbus.html'];
 const decks = new Map();
@@ -83,9 +83,9 @@ function safeJson(value) {
   return JSON.stringify(value).replaceAll('<', '\\u003c');
 }
 
-function compatibilityDeckPlugin() {
+function pureDeckPlugin() {
   return {
-    name: 'digiguru-stage2-compatibility',
+    name: 'digiguru-pure-compatibility',
     transformIndexHtml: {
       order: 'pre',
       handler(html, context) {
@@ -117,23 +117,23 @@ function compatibilityDeckPlugin() {
 }
 
 export default defineConfig({
-  root: stageRoot,
+  root: pureRoot,
   base: './',
   publicDir: generatedPublic,
-  plugins: [compatibilityDeckPlugin()],
+  plugins: [pureDeckPlugin()],
   server: {
     fs: {
       allow: [repoRoot]
     }
   },
   build: {
-    outDir: path.join(stageRoot, 'dist'),
+    outDir: path.join(pureRoot, 'dist'),
     emptyOutDir: true,
     assetsDir: '_runtime',
     rollupOptions: {
       input: Object.fromEntries(compatibilityDeckNames.map(deckName => [
         path.basename(deckName, '.html'),
-        path.join(stageRoot, deckName),
+        path.join(pureRoot, deckName),
       ]))
     }
   }

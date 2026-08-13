@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  stage1:
+  pure:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -25,11 +25,11 @@ jobs:
         with:
           node-version-file: .node-version
 
-      - name: Validate Stage 1 clean runtime
-        run: npm run stage1:check
+      - name: Validate Pure presentation runtime
+        run: npm run pure:check
 
-      - name: Smoke test Stage 1 in Chrome
-        run: npm run stage1:smoke
+      - name: Smoke test Pure in Chrome
+        run: npm run pure:smoke
 
   build:
     runs-on: ubuntu-latest

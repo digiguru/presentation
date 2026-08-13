@@ -17,8 +17,8 @@ import {
   rewriteLegacyAssets,
 } from '../build/legacy-deck.mjs';
 
-const stageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const repoRoot = path.resolve(stageRoot, '..');
+const pureRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const repoRoot = path.resolve(pureRoot, '..');
 
 function deckPath(name) {
   return path.join(repoRoot, name);
@@ -52,11 +52,11 @@ test('compatibility extraction preserves themes, external dependencies and safe 
   assert.deepEqual(extractRevealOptions(html), { hash: true, controls: false, transition: 'fade' });
 });
 
-test('legacy asset references are moved behind the compatibility public boundary', () => {
+test('legacy asset references are moved behind the Pure public boundary', () => {
   assert.equal(rewriteLegacyAssets('assets/example.png'), 'legacy-assets/example.png');
 });
 
-test('ai-connections remains consumable by the clean runtime', async () => {
+test('ai-connections remains consumable by Pure', async () => {
   const source = await readFile(deckPath('ai-connections.html'), 'utf8');
   const deck = await loadLegacyDeck(deckPath('ai-connections.html'));
 
@@ -70,7 +70,7 @@ test('ai-connections remains consumable by the clean runtime', async () => {
   assert.doesNotMatch(deck.slides, /dist\/reveal\.js/);
 });
 
-test('BigBus exercises the richer Stage 2 compatibility surface', async () => {
+test('BigBus exercises the richer Pure compatibility surface', async () => {
   const deck = await loadLegacyDeck(deckPath('bigbus.html'));
 
   assert.deepEqual(deck.themes, ['black', 'AND']);
@@ -84,7 +84,7 @@ test('BigBus exercises the richer Stage 2 compatibility surface', async () => {
   assert.ok(deck.localReferences.includes('output/bigbus.html'));
 });
 
-test('all discovered presentations can be inventoried before Stage 3 migration', async () => {
+test('all discovered presentations can be inventoried before full Pure migration', async () => {
   const decks = await auditLegacyDecks();
   const summary = summariseCompatibility(decks);
 

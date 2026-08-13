@@ -20,9 +20,9 @@ export default [
       'node_modules/**',
       'plugin/**/*.js',
       'output/**',
-      'stage1/dist/**',
-      'stage1/node_modules/**',
-      'stage1/.stage1-public/**',
+      'pure/dist/**',
+      'pure/node_modules/**',
+      'pure/.pure-public/**',
     ],
   },
   {
@@ -51,7 +51,7 @@ export default [
     rules: sharedRules,
   },
   {
-    files: ['stage1/src/**/*.js'],
+    files: ['pure/src/**/*.js'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
@@ -78,7 +78,7 @@ export default [
     rules: sharedRules,
   },
   {
-    files: ['scripts/**/*.mjs', 'stage1/**/*.mjs'],
+    files: ['scripts/**/*.mjs', 'pure/**/*.mjs'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',

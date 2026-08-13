@@ -7,7 +7,7 @@ import 'reveal.js/reset.css';
 import 'reveal.js/reveal.css';
 import 'reveal.js/plugin/highlight/monokai.css';
 import '../../custom.css';
-import './stage1.css';
+import './pure.css';
 
 import { installPresentationRuntime } from './presentation-runtime/index.js';
 
@@ -22,7 +22,7 @@ function readCompatibilityConfig() {
 }
 
 const revealRoot = document.querySelector('.reveal');
-if (!revealRoot) throw new Error('Stage 2 presentation is missing its .reveal root.');
+if (!revealRoot) throw new Error('Pure presentation is missing its .reveal root.');
 
 const compatibility = readCompatibilityConfig();
 const deck = new Reveal(revealRoot, {
@@ -53,6 +53,6 @@ const deck = new Reveal(revealRoot, {
 installPresentationRuntime(deck, compatibility.capabilities);
 await deck.initialize();
 
-document.documentElement.dataset.compatibilitySource = compatibility.source || 'unknown';
+document.documentElement.dataset.pureSource = compatibility.source || 'unknown';
 document.documentElement.dataset.revealReady = String(deck.isReady());
-window.stage2Deck = deck;
+window.pureDeck = deck;
