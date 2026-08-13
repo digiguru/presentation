@@ -4,63 +4,126 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import { loadLegacyDeck } from './build/legacy-deck.mjs';
 
-const stage1Root = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(stage1Root, '..');
-const legacyDeckPath = path.join(repoRoot, 'ai-connections.html');
-const generatedPublic = path.join(stage1Root, '.stage1-public');
+const stageRoot = path.dirname(fileURLToPath(import.meta.url));
+const repoRoot = path.resolve(stageRoot, '..');
+const generatedPublic = path.join(stageRoot, '.stage1-public');
 const legacyAssetsDir = path.join(repoRoot, 'assets');
-const deck = await loadLegacyDeck(legacyDeckPath);
+const officialThemesDir = path.join(stageRoot, 'node_modules', 'reveal.js', 'dist', 'theme');
+const legacyThemesDir = path.join(repoRoot, 'dist', 'theme');
+const compatibilityDeckNames = ['ai-connections.html', 'anti-ai.html', 'bigbus.html'];
+const decks = new Map();
 
 await rm(generatedPublic, { recursive: true, force: true });
 
-for (const asset of deck.assets) {
-  const source = path.resolve(legacyAssetsDir, asset);
-  const destination = path.resolve(generatedPublic, 'legacy-assets', asset);
-  const relative = path.relative(legacyAssetsDir, source);
-
+async function copySafe(sourceRoot, relativePath, destinationRoot, destinationPath = relativePath) {
+  const source = path.resolve(sourceRoot, relativePath);
+  const relative = path.relative(sourceRoot, source);
   if (relative.startsWith('..') || path.isAbsolute(relative)) {
-    throw new Error(`Legacy asset escapes assets directory: ${asset}`);
+    throw new Error(`Compatibility file escapes source root: ${relativePath}`);
+  }
+
+  const destination = path.resolve(destinationRoot, destinationPath);
+  const destinationRelative = path.relative(destinationRoot, destination);
+  if (destinationRelative.startsWith('..') || path.isAbsolute(destinationRelative)) {
+    throw new Error(`Compatibility file escapes public root: ${destinationPath}`);
   }
 
   await mkdir(path.dirname(destination), { recursive: true });
   await copyFile(source, destination);
 }
 
-function stage1DeckPlugin() {
+async function copyTheme(theme) {
+  const destination = path.join(generatedPublic, 'themes', `${theme}.css`);
+  await mkdir(path.dirname(destination), { recursive: true });
+
+  try {
+    await copyFile(path.join(officialThemesDir, `${theme}.css`), destination);
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+    await copyFile(path.join(legacyThemesDir, `${theme}.css`), destination);
+  }
+}
+
+for (const deckName of compatibilityDeckNames) {
+  const deck = await loadLegacyDeck(path.join(repoRoot, deckName));
+  decks.set(deckName, deck);
+
+  for (const asset of deck.assets) {
+    await copySafe(legacyAssetsDir, asset, generatedPublic, path.join('legacy-assets', asset));
+  }
+
+  for (const supportFile of deck.localReferences) {
+    await copySafe(repoRoot, supportFile, generatedPublic);
+  }
+
+  for (const theme of deck.themes) await copyTheme(theme);
+}
+
+if ([...decks.values()].some(deck => deck.capabilities.gptInput)) {
+  await copySafe(repoRoot, 'js/gpt-component.js', generatedPublic);
+  await copySafe(repoRoot, 'js/gpt-component.html', generatedPublic);
+}
+
+function htmlForTags(tags) {
+  return tags.join('\n');
+}
+
+function safeJson(value) {
+  return JSON.stringify(value).replaceAll('<', '\\u003c');
+}
+
+function compatibilityDeckPlugin() {
   return {
-    name: 'digiguru-stage1-deck',
+    name: 'digiguru-stage2-compatibility',
     transformIndexHtml: {
       order: 'pre',
       handler(html, context) {
-        if (!context.filename.endsWith('ai-connections.html')) return html;
+        const deckName = path.basename(context.filename);
+        const deck = decks.get(deckName);
+        if (!deck) return html;
+
+        const themeStyles = deck.themes
+          .map(theme => `<link rel="stylesheet" href="themes/${theme}.css">`)
+          .join('\n');
+        const config = {
+          source: deckName,
+          options: deck.options,
+          capabilities: deck.capabilities,
+        };
 
         return html
           .replace('<!-- LEGACY_TITLE -->', deck.title)
+          .replace('<!-- LEGACY_THEME_STYLES -->', themeStyles)
+          .replace('<!-- LEGACY_EXTERNAL_STYLES -->', htmlForTags(deck.externalStylesheets))
           .replace('<!-- LEGACY_INLINE_STYLES -->', deck.styles)
-          .replace('<!-- LEGACY_SLIDES -->', deck.slides);
+          .replace('<!-- LEGACY_EXTERNAL_SCRIPTS -->', htmlForTags(deck.externalScripts))
+          .replace('<!-- LEGACY_REVEAL_CLASSES -->', deck.revealClasses)
+          .replace('<!-- LEGACY_SLIDES -->', deck.slides)
+          .replace('<!-- LEGACY_CONFIG -->', safeJson(config));
       }
     }
   };
 }
 
 export default defineConfig({
-  root: stage1Root,
+  root: stageRoot,
   base: './',
   publicDir: generatedPublic,
-  plugins: [stage1DeckPlugin()],
+  plugins: [compatibilityDeckPlugin()],
   server: {
     fs: {
       allow: [repoRoot]
     }
   },
   build: {
-    outDir: path.join(stage1Root, 'dist'),
+    outDir: path.join(stageRoot, 'dist'),
     emptyOutDir: true,
     assetsDir: '_runtime',
     rollupOptions: {
-      input: {
-        'ai-connections': path.join(stage1Root, 'ai-connections.html')
-      }
+      input: Object.fromEntries(compatibilityDeckNames.map(deckName => [
+        path.basename(deckName, '.html'),
+        path.join(stageRoot, deckName),
+      ]))
     }
   }
 });
