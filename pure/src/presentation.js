@@ -10,23 +10,23 @@ import './pure.css';
 
 import { installPresentationRuntime } from './presentation-runtime/index.js';
 
-function readCompatibilityConfig() {
-  const element = document.querySelector('#legacy-deck-config');
+function readPureConfig() {
+  const element = document.querySelector('#pure-deck-config');
   if (!element) return { options: {}, capabilities: {} };
   try {
     return JSON.parse(element.textContent || '{}');
   } catch (error) {
-    throw new Error(`Could not parse legacy deck compatibility config: ${error.message}`);
+    throw new Error(`Could not parse Pure deck config: ${error.message}`);
   }
 }
 
 const revealRoot = document.querySelector('.reveal');
 if (!revealRoot) throw new Error('Pure presentation is missing its .reveal root.');
 
-const compatibility = readCompatibilityConfig();
+const pureConfig = readPureConfig();
 const deck = new Reveal(revealRoot, {
   hash: true,
-  ...compatibility.options,
+  ...pureConfig.options,
   plugins: [Markdown, Highlight, Notes],
   autoAnimateStyles: [
     'opacity',
@@ -49,9 +49,9 @@ const deck = new Reveal(revealRoot, {
   ]
 });
 
-installPresentationRuntime(deck, compatibility.capabilities);
+installPresentationRuntime(deck, pureConfig.capabilities);
 await deck.initialize();
 
-document.documentElement.dataset.pureSource = compatibility.source || 'unknown';
+document.documentElement.dataset.pureSource = pureConfig.source || 'unknown';
 document.documentElement.dataset.revealReady = String(deck.isReady());
 window.pureDeck = deck;
