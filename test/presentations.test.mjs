@@ -112,21 +112,45 @@ test('toYaml emits numeric attendance without quotes', () => {
   assert.doesNotMatch(yaml, /attendance: "12"/);
 });
 
-test('exportSite can write inside the source root without recursively copying itself', async () => {
+test('exportSite copies only a validated Pure build artifact', async () => {
   const root = await mkdtemp(path.join(tmpdir(), 'presentation-export-'));
+  const builtSiteDir = path.join(root, 'pure-dist');
   const outputDir = path.join(root, 'preview-site');
+  const presentations = [
+    { name: 'Preview Talk', version: 'v1.0', date: '11/08/2026', url: 'talk.html', attendance: undefined }
+  ];
 
   try {
-    await writeFile(path.join(root, 'talk.html'), revealDeck('Preview Talk - v1.0 - 11/08/2026'));
-    await mkdir(path.join(root, 'dist'), { recursive: true });
-    await writeFile(path.join(root, 'dist', 'runtime.js'), 'console.log("runtime");\n');
+    await mkdir(path.join(builtSiteDir, '_runtime'), { recursive: true });
+    await writeFile(path.join(builtSiteDir, 'talk.html'), '<html><meta name="build-commit" content="abc"><body>Pure</body></html>');
+    await writeFile(path.join(builtSiteDir, 'index.html'), '<html>Pure index</html>');
+    await writeFile(path.join(builtSiteDir, '_runtime', 'runtime.js'), 'console.log("pure runtime");\n');
+    await writeFile(path.join(builtSiteDir, 'build-info.json'), JSON.stringify({ commitSha: 'abc', presentationCount: 1 }));
+    await writeFile(path.join(builtSiteDir, 'presentations.json'), JSON.stringify(presentations));
+    await writeFile(path.join(root, 'legacy-runtime.js'), 'must not be exported');
 
-    const presentations = await discoverPresentations({ root });
-    await exportSite(outputDir, presentations, { root });
+    await exportSite(outputDir, presentations, { root, builtSiteDir });
 
-    assert.match(await readFile(path.join(outputDir, 'talk.html'), 'utf8'), /class="reveal"/);
-    assert.equal(await readFile(path.join(outputDir, 'dist', 'runtime.js'), 'utf8'), 'console.log("runtime");\n');
-    assert.equal((await readdir(outputDir)).includes('preview-site'), false);
+    assert.match(await readFile(path.join(outputDir, 'talk.html'), 'utf8'), /Pure/);
+    assert.equal(await readFile(path.join(outputDir, '_runtime', 'runtime.js'), 'utf8'), 'console.log("pure runtime");\n');
+    assert.equal((await readdir(outputDir)).includes('legacy-runtime.js'), false);
+    assert.deepEqual(JSON.parse(await readFile(path.join(outputDir, 'presentations.json'), 'utf8')), presentations);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test('exportSite rejects a Pure build whose presentation manifest is stale', async () => {
+  const root = await mkdtemp(path.join(tmpdir(), 'presentation-export-stale-'));
+  const builtSiteDir = path.join(root, 'pure-dist');
+  try {
+    await mkdir(builtSiteDir, { recursive: true });
+    await writeFile(path.join(builtSiteDir, 'presentations.json'), JSON.stringify([{ url: 'wrong.html' }]));
+
+    await assert.rejects(
+      exportSite(path.join(root, 'out'), [{ url: 'talk.html' }], { root, builtSiteDir }),
+      /does not match metadata discovery/
+    );
   } finally {
     await rm(root, { recursive: true, force: true });
   }
