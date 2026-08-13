@@ -9,5 +9,5 @@ log/*.log
 tmp/**
 node_modules/
 .sass-cache
-stage1/.stage1-public/
-stage1/dist/
+pure/.pure-public/
+pure/dist/
