@@ -1,12 +1,20 @@
 import templateHtml from './gpt-input.html?raw';
 import { addSlide } from './slides.js';
 
-const baseURL = 'https://ai-prompt-writer.vercel.app/';
-const imageURL = `${baseURL}api/image`;
-const textURL = `${baseURL}api/raw`;
-const streamURL = `${baseURL}api/stream`;
-const audioURL = `${baseURL}api/voice`;
+const apiBase = '/api/prompt';
+const imageURL = `${apiBase}/image`;
+const textURL = `${apiBase}/raw`;
+const streamURL = `${apiBase}/stream`;
+const audioURL = `${apiBase}/voice`;
 let uniqueId = 0;
+
+async function parseJsonResponse(response) {
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`GPT request failed (${response.status}): ${body || response.statusText}`);
+  }
+  return response.json();
+}
 
 async function fetchImage(prompt) {
   const response = await fetch(imageURL, {
@@ -14,7 +22,7 @@ async function fetchImage(prompt) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ prompt }),
   });
-  return response.json();
+  return parseJsonResponse(response);
 }
 
 async function fetchText(context, messages, input) {
@@ -23,7 +31,7 @@ async function fetchText(context, messages, input) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ system: context, examples: messages, prompt: input }),
   });
-  return response.json();
+  return parseJsonResponse(response);
 }
 
 async function fetchTextStream(context, messages, input, onChunk) {
@@ -32,6 +40,12 @@ async function fetchTextStream(context, messages, input, onChunk) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ system: context, examples: messages, prompt: input }),
   });
+
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`GPT stream failed (${response.status}): ${body || response.statusText}`);
+  }
+  if (!response.body) throw new Error('GPT stream response did not contain a body.');
 
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
@@ -54,6 +68,10 @@ async function fetchAudio(input, voice) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ input }),
   });
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`GPT voice request failed (${response.status}): ${body || response.statusText}`);
+  }
   return response.blob();
 }
 
@@ -77,10 +95,8 @@ async function getAudio(input, voice, output) {
 
 async function queryImage(prompt, imgTag) {
   try {
-    // Preserve the current presentation behaviour: image generation is still
-    // using the test image rather than calling the production image endpoint.
-    const data = { output: 'https://picsum.photos/200/300?random=1' };
-    if (imgTag) {
+    const data = await fetchImage(prompt);
+    if (imgTag && data.output) {
       imgTag.src = data.output;
       imgTag.classList.remove('hidden');
     }
