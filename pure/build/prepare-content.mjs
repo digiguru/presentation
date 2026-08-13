@@ -1,26 +1,25 @@
-import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { cp, mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const pureRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const repoRoot = path.resolve(pureRoot, '..');
-const publicRoot = path.join(pureRoot, '.pure-public');
+const outputRoot = path.join(pureRoot, 'dist');
 
-await rm(publicRoot, { recursive: true, force: true });
-await mkdir(path.join(publicRoot, 'themes'), { recursive: true });
-await cp(path.join(repoRoot, 'assets'), path.join(publicRoot, 'assets'), { recursive: true });
-await cp(path.join(repoRoot, 'output'), path.join(publicRoot, 'output'), { recursive: true });
+await mkdir(path.join(outputRoot, 'themes'), { recursive: true });
+await cp(path.join(repoRoot, 'assets'), path.join(outputRoot, 'assets'), { recursive: true, force: true });
+await cp(path.join(repoRoot, 'output'), path.join(outputRoot, 'output'), { recursive: true, force: true });
 await cp(
   path.join(pureRoot, 'node_modules', 'reveal.js', 'dist', 'theme'),
-  path.join(publicRoot, 'themes'),
-  { recursive: true }
+  path.join(outputRoot, 'themes'),
+  { recursive: true, force: true }
 );
 
 const customTheme = await readFile(path.join(repoRoot, 'dist', 'theme', 'AND.css'), 'utf8');
 await writeFile(
-  path.join(publicRoot, 'themes', 'AND.css'),
+  path.join(outputRoot, 'themes', 'AND.css'),
   customTheme.replace(/(?:\.\.\/)+assets\//g, '../assets/'),
   'utf8'
 );
 
-console.log('Prepared Pure presentation assets, output files and themes.');
+console.log('Copied presentation assets, output files and themes into the Pure build.');
