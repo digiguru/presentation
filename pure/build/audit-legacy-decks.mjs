@@ -3,24 +3,24 @@ import { fileURLToPath } from 'node:url';
 import { discoverPresentations } from '../../scripts/presentations.mjs';
 import { loadLegacyDeck } from './legacy-deck.mjs';
 
-const stageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const repoRoot = path.resolve(stageRoot, '..');
+const pureRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const repoRoot = path.resolve(pureRoot, '..');
 
 export async function auditLegacyDecks(root = repoRoot) {
   const presentations = await discoverPresentations({ root });
   const decks = [];
 
   for (const presentation of presentations) {
-    const legacy = await loadLegacyDeck(path.join(root, presentation.url));
+    const source = await loadLegacyDeck(path.join(root, presentation.url));
     decks.push({
       file: presentation.url,
-      themes: legacy.themes,
-      capabilities: legacy.capabilities,
-      externalStylesheets: legacy.externalStylesheets.length,
-      externalScripts: legacy.externalScripts.length,
-      localReferences: legacy.localReferences,
-      localSupportScripts: legacy.localSupportScripts,
-      inlineScripts: legacy.inlineScripts,
+      themes: source.themes,
+      capabilities: source.capabilities,
+      externalStylesheets: source.externalStylesheets.length,
+      externalScripts: source.externalScripts.length,
+      localReferences: source.localReferences,
+      localSupportScripts: source.localSupportScripts,
+      inlineScripts: source.inlineScripts,
     });
   }
 
@@ -30,6 +30,7 @@ export async function auditLegacyDecks(root = repoRoot) {
 export function summariseCompatibility(decks) {
   const themeCounts = new Map();
   const capabilityCounts = {};
+  const legacyGptInlineDecks = [];
   const customInlineDecks = [];
   const localSupportScriptDecks = [];
 
@@ -38,6 +39,7 @@ export function summariseCompatibility(decks) {
     for (const [capability, enabled] of Object.entries(deck.capabilities)) {
       if (enabled) capabilityCounts[capability] = (capabilityCounts[capability] || 0) + 1;
     }
+    if (deck.inlineScripts.legacyGpt) legacyGptInlineDecks.push(`${deck.file} (${deck.inlineScripts.legacyGpt})`);
     if (deck.inlineScripts.custom) customInlineDecks.push(`${deck.file} (${deck.inlineScripts.custom})`);
     if (deck.localSupportScripts.length) {
       localSupportScriptDecks.push(`${deck.file}: ${deck.localSupportScripts.join(', ')}`);
@@ -48,18 +50,21 @@ export function summariseCompatibility(decks) {
     total: decks.length,
     themes: Object.fromEntries([...themeCounts.entries()].sort(([a], [b]) => a.localeCompare(b))),
     capabilities: Object.fromEntries(Object.entries(capabilityCounts).sort(([a], [b]) => a.localeCompare(b))),
+    legacyGptInlineDecks,
     customInlineDecks,
     localSupportScriptDecks,
   };
 }
 
 function printSummary(summary) {
-  console.log(`Compatibility-audited ${summary.total} legacy presentations.`);
+  console.log(`Compatibility-audited ${summary.total} presentation sources.`);
   console.log(`Themes: ${Object.entries(summary.themes).map(([name, count]) => `${name}=${count}`).join(', ') || 'none'}`);
   console.log(`Capabilities: ${Object.entries(summary.capabilities).map(([name, count]) => `${name}=${count}`).join(', ') || 'none'}`);
-  console.log(`Decks with custom inline scripts requiring Stage 3 review: ${summary.customInlineDecks.length}`);
+  console.log(`Historical inline GPT implementations superseded by Pure: ${summary.legacyGptInlineDecks.length}`);
+  for (const deck of summary.legacyGptInlineDecks) console.log(`  - ${deck}`);
+  console.log(`Unported custom inline scripts: ${summary.customInlineDecks.length}`);
   for (const deck of summary.customInlineDecks) console.log(`  - ${deck}`);
-  console.log(`Decks with non-standard local support scripts: ${summary.localSupportScriptDecks.length}`);
+  console.log(`Non-standard local support scripts: ${summary.localSupportScriptDecks.length}`);
   for (const deck of summary.localSupportScriptDecks) console.log(`  - ${deck}`);
 }
 
