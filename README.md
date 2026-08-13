@@ -1,125 +1,85 @@
 # Digiguru presentations
 
-This repository is the source of truth for Digiguru presentation content and the **Pure** runtime. Pure uses the official `reveal.js` npm package and Vite. The inherited Reveal/Gulp runtime remains only as temporary regression coverage until the final cleanup stage.
+This repository contains Digiguru's presentation sources and the **Pure** Reveal.js runtime. Pure is the only maintained runtime/build path. The inherited Reveal.js source tree, Gulp/Rollup build, QUnit tests and Puppeteer tooling were removed in Stage 6.
 
-## Local setup
+## Current architecture
 
-Use the Node version pinned in `.node-version`:
+- The 25 root-level `*.html` files are presentation sources.
+- `pure/` contains the shared Vite/Reveal.js runtime, build logic and tests.
+- `pure/package.json` plus committed `pure/package-lock.json` define the runtime dependency graph.
+- `pure/build/legacy-deck.mjs` is an intentional compatibility parser for historical source HTML. It extracts slide content/options and ignores obsolete historical runtime wiring.
+- `legacy-presentations.yml` contains compatibility metadata for historical decks; it is not a registry for new presentations.
+- `scripts/presentations.mjs` discovers decks, validates metadata and exports the validated Pure artifact.
+- `scripts/presentation-accessibility.mjs` validates presentation accessibility.
+- `scripts/smoke-presentations.mjs` browser-tests the exported site.
+- `pure/dist/` is generated output and must not be edited by hand.
+
+Pure is the product. The legacy parser is only an input compatibility boundary.
+
+## Setup and commands
+
+Use the Node version pinned by `.node-version`.
 
 ```bash
-npm ci
+npm run pure:install
 npm start
 ```
 
-The normal product commands are:
+`pure:install` uses `npm ci --prefix pure`, so local, CI and Vercel installs use the committed Pure lockfile.
+
+Useful checks:
 
 ```bash
-npm start       # Pure Vite development server
-npm run build   # build Pure into pure/dist
-npm test        # lint, tooling tests and Pure validation/build
-```
-
-The inherited framework commands are explicitly legacy:
-
-```bash
-npm run start:legacy
-npm run build:legacy
-npm run test:legacy
-```
-
-Do not use those legacy commands for new runtime work.
-
-Before opening a PR, run:
-
-```bash
-npm run presentations:check
-npm run presentations:assets
-npm run presentations:accessibility
 npm test
+npm run pure:audit
+npm run presentations:check
+npm run presentations:accessibility
+npm run pure:smoke
 npm run presentations:smoke
 ```
 
-`presentations:smoke` requires Chrome/Chromium. GitHub Actions provides Chrome, so Codespaces without a browser can rely on CI for that check.
+`npm run build` produces the static product in `pure/dist/`. The Chrome smoke tests require Chrome/Chromium; GitHub Actions provides it.
 
-## Adding a presentation
+## Presentation sources
 
-Create a root-level `.html` file containing Reveal `reveal` and `slides` containers. Presentations are discovered automatically; there is no registry to update.
-
-The easiest metadata convention is:
+Presentations are discovered automatically from root HTML files. A typical title supplies metadata directly:
 
 ```html
 <title>My new talk - v6.2 - 11/08/2026</title>
 ```
 
-The filename becomes the published URL. For unusual titles use `presentation-name`, `presentation-version`, `presentation-date`, and optional `presentation-attendance` meta tags.
+For exceptional titles use the `presentation-name`, `presentation-version`, `presentation-date` and optional `presentation-attendance` meta tags. New presentations should not add compatibility entries to `legacy-presentations.yml`.
 
-Run `npm run presentations:check` to validate metadata. `legacy-presentations.yml` is frozen compatibility data for historical presentations; do not add new entries.
-
-## Pure runtime
-
-Pure lives under `pure/`. The build discovers the presentation corpus, renders every deck through the shared `pure/deck.html` shell, preserves existing `assets/...`, `themes/...` and `output/...` URLs, and emits `build-info.json` plus `presentations.json`.
-
-Presentation backgrounds should be declarative:
+Every image needs an `alt` attribute. Backgrounds should be declarative, for example:
 
 ```html
 <section data-background-image="assets/example.png" data-background-size="1696px 928px">
 ```
 
-Do not add presentation-specific `Reveal.configure()` listeners to switch backgrounds.
+Do not reintroduce a deck-owned Reveal.js runtime. Shared runtime behaviour belongs in `pure/`; deck content belongs in the source HTML.
 
-Every `<img>` must have an `alt` attribute. Validate presentation assets and accessibility with:
+## Build, CI and deployment
 
-```bash
-npm run presentations:assets
-npm run presentations:accessibility
-```
+The Pure build discovers all presentation sources, parses them through the compatibility boundary, renders them through the shared Pure shell, preserves required presentation assets, and emits `build-info.json` plus `presentations.json`.
 
-## Build and export
+GitHub Actions validates tooling, metadata, accessibility, linting, the Pure dependency graph, the production build, all 25 Pure decks in Chrome, and the exported-site catalogue plus all 25 exported decks. Browser smoke checks require Reveal to reach ready state and reject missing local resources.
 
-`npm run build` is the product build and writes the static site to `pure/dist/`.
+After a successful push to `master`, the workflow dispatches `digiguru/digiguru.github.io` with the exact presentation SHA that passed CI. The website exports only the validated Pure artifact.
 
-The website-facing CLI remains:
-
-```bash
-node scripts/presentations.mjs --manifest /path/to/presentations.yml --export /path/to/site
-```
-
-Export builds Pure and copies **only the validated Pure artifact**. It no longer copies the repository tree or inherited Reveal/Gulp implementation. The exporter verifies that `presentations.json` matches metadata discovery and that every expected presentation exists.
-
-## Tests and CI
-
-During migration the workflow has two layers. The Pure job validates the product and opens all decks in Chrome. The main build job validates tooling/content, builds Pure, then temporarily builds/tests the inherited runtime as regression coverage before smoke-testing the exported Pure site.
+Vercel uses the same path declared in `vercel.json`:
 
 ```text
-npm run build         -> Pure product
-npm run build:legacy  -> temporary inherited framework regression build
+install: npm run pure:install
+build:   npm run build
+output:  pure/dist
 ```
 
-The exported-site smoke test validates `index.html` as a catalogue and then opens every deck listed by `presentations.json`, failing on missing local requests or Reveal not reaching `ready`.
+The Pure index exposes its build commit SHA so preview deployments can be matched to the branch revision being reviewed.
 
-The known high-severity `extract-zip` audit finding comes through the retained QUnit/Puppeteer stack. It remains visible and non-blocking until the final legacy cleanup removes that stack.
+## Dependencies and security
 
-## Vercel previews
+Runtime/build npm dependencies belong in `pure/package.json`; dependency changes must update `pure/package-lock.json`. The old Puppeteer/QUnit tree and its historical `extract-zip` finding are no longer part of the current dependency graph. `npm run pure:audit` checks the dependencies that actually ship/build Pure.
 
-`vercel.json` runs:
+## Future cleanup
 
-```bash
-npm ci
-npm run build
-```
-
-and publishes `pure/dist`. It also provides the same-origin `/api/prompt/*` boundary used by the Pure GPT control.
-
-The Pure index shows the exact build commit SHA. Check that SHA when reviewing a preview so a stale immutable Vercel deployment is not mistaken for the latest branch build.
-
-## Website deployment
-
-A successful push to `master` dispatches `digiguru/digiguru.github.io` with the exact presentation commit SHA that passed CI. The website checks out that SHA, generates its manifest, exports the validated Pure artifact and deploys it.
-
-`WEBSITE_DISPATCH_TOKEN` should remain narrowly scoped to `digiguru.github.io` with **Actions — Read and write**, stored only as an Actions secret.
-
-## Reveal.js relationship
-
-Pure uses Reveal.js as a dependency, not as repository-owned product code. The inherited Reveal/Gulp/QUnit source remains temporarily for migration regression coverage only. New product behaviour belongs in Pure or presentation content.
-
-The final cleanup stage will remove the unused framework source, Gulp/QUnit/Puppeteer dependencies and legacy package metadata after the website integration proves the Pure export end to end.
+`pure/build/legacy-deck.mjs` and `legacy-presentations.yml` remain deliberately. A future Stage 7 can migrate all 25 source decks to a simpler canonical content format and then remove the compatibility layer. Keep that migration separate from dependency, documentation and routine runtime work.
