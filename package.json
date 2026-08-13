@@ -8,7 +8,7 @@
   "module": "dist/reveal.esm.js",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint js scripts gulpfile.js",
+    "lint": "eslint js scripts stage1 gulpfile.js",
     "test": "npm run lint && npm run test:tooling && gulp qunit",
     "test:tooling": "node --test test/*.test.mjs",
     "start": "gulp serve",
@@ -19,7 +19,12 @@
     "presentations:assets": "node scripts/check-presentation-assets.mjs",
     "presentations:accessibility": "node scripts/presentation-accessibility.mjs",
     "presentations:accessibility:fix": "node scripts/presentation-accessibility.mjs --write",
-    "presentations:smoke": "node scripts/smoke-presentations.mjs"
+    "presentations:smoke": "node scripts/smoke-presentations.mjs",
+    "stage1:install": "npm --prefix stage1 install --no-package-lock --ignore-scripts --no-audit --no-fund",
+    "stage1:dev": "npm --prefix stage1 run dev",
+    "stage1:test": "npm --prefix stage1 run test",
+    "stage1:build": "npm --prefix stage1 run build",
+    "stage1:check": "npm run stage1:install && npm --prefix stage1 run check"
   },
   "author": {
     "name": "Hakim El Hattab",
