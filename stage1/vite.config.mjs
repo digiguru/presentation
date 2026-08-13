@@ -75,11 +75,6 @@ for (const deckName of compatibilityDeckNames) {
   for (const theme of deck.themes) await copyTheme(theme);
 }
 
-if ([...decks.values()].some(deck => deck.capabilities.gptInput)) {
-  await copySafe(repoRoot, 'js/gpt-component.js', generatedPublic);
-  await copySafe(repoRoot, 'js/gpt-component.html', generatedPublic);
-}
-
 function htmlForTags(tags) {
   return tags.join('\n');
 }
