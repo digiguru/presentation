@@ -12,12 +12,24 @@ const expectedDecks = {
   'bigbus.html': /AI with BigBus/i,
 };
 
+const buildInfo = JSON.parse(await readFile(path.join(dist, 'build-info.json'), 'utf8'));
+assert.match(buildInfo.commitSha, /^[0-9a-f]{40}$/i, 'Pure builds must record the exact 40-character Git commit SHA');
+
+const indexHtml = await readFile(path.join(dist, 'index.html'), 'utf8');
+assert.match(indexHtml, new RegExp(buildInfo.commitSha, 'i'), 'Pure index must display the build commit SHA');
+for (const file of Object.keys(expectedDecks)) {
+  assert.match(indexHtml, new RegExp(file.replace('.', '\\.')), `Pure index must list ${file}`);
+  assert.ok(indexHtml.includes(`${file} · commit <code>${buildInfo.commitSha}</code>`), `${file} must show the build commit on the Pure index`);
+}
+
 const referencedAssets = new Set();
 
 for (const [file, content] of Object.entries(expectedDecks)) {
   const html = await readFile(path.join(dist, file), 'utf8');
   assert.match(html, content, `${file} should contain its legacy deck content`);
   assert.match(html, /Pure · Reveal\.js 6\.0\.1/, `${file} should identify the Pure runtime`);
+  assert.ok(html.includes(`<meta name="build-commit" content="${buildInfo.commitSha}">`), `${file} should expose the exact build commit SHA`);
+  assert.match(html, new RegExp(`Pure · Reveal\\.js 6\\.0\\.1 · ${buildInfo.commitSha.slice(0, 8)}`), `${file} should visibly identify its build commit`);
   assert.doesNotMatch(html, /src=["']dist\/reveal\.js|src=["']plugin\/notes\/notes\.js|src=["']js\/gpt-component\.js/, `${file} must not load forked/legacy runtime scripts`);
   assert.doesNotMatch(html, /legacy-assets\//, `${file} should preserve the existing assets/ URL contract`);
   assert.match(html, /_runtime\/.+\.js/, `${file} should load a Vite runtime bundle`);
@@ -43,4 +55,4 @@ await access(path.join(dist, 'output', 'bigbus.html'));
 await assert.rejects(access(path.join(dist, 'js', 'gpt-component.js')));
 await assert.rejects(access(path.join(dist, 'js', 'gpt-component.html')));
 
-console.log(`Verified Pure Reveal 6 build and ${referencedAssets.size} referenced presentation assets.`);
+console.log(`Verified Pure Reveal 6 build ${buildInfo.commitSha} and ${referencedAssets.size} referenced presentation assets.`);
