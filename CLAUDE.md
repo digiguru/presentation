@@ -1,119 +1,85 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for coding agents working in this repository.
 
-## Project Overview
+## Product boundary
 
-This repository contains a collection of HTML presentations built on reveal.js, a powerful open-source presentation framework. The project includes:
+This repository contains Digiguru presentation sources and the **Pure** Reveal.js runtime. Pure is the only maintained runtime/build path. Do not recreate or depend on the deleted Reveal.js framework fork, Gulp/Rollup build, QUnit suite, Puppeteer tooling, `/js`, `/plugin`, `/css` or inherited `/dist` structure.
 
-- **HTML Presentations**: Individual `.html` files (one per presentation) in the root directory
-- **Presentation Registry**: `presentations.yml` tracks all presentations with metadata (name, version, date, attendance)
-- **reveal.js Framework**: Core framework source in `/js`, `/plugin`, `/css`
-- **Assets**: Images and other media in `/assets`
-- **Build System**: Gulp-based build pipeline with Rollup for bundling
-
-## Development Environment
-
-### Setup
-```bash
-npm install  # Install dependencies
-```
-
-### Running the Server
-```bash
-npm start    # Runs `gulp serve` on port 8000 (default)
-```
-The server watches for changes and reloads automatically. Access presentations at `http://localhost:8000/presentation-name.html`
-
-Alternative: `python -m http.server 3000` for a simple Python server on port 3000 (noted in README).
-
-### Building
-```bash
-npm run build  # Compiles JS and CSS, generates dist/ artifacts
-```
-This runs `gulp build`, which:
-- Bundles reveal.js in ES5 (UMD) and ES6 (ESM) formats to `/dist`
-- Compiles Sass themes to `/dist/theme`
-- Minifies and autoprefixes CSS
-- Minifies JavaScript with Terser
-
-### Testing & Linting
-```bash
-npm test       # Runs eslint and QUnit tests
-npm run build  # CI also runs this before tests
-```
+Do not redesign the Pure runtime unless the task explicitly requires it.
 
 ## Architecture
 
-### Presentation Files
-Each `.html` file in the root is a standalone presentation:
-- Embeds reveal.js and custom CSS
-- Can have associated `.css` and `.js` files (e.g., `presentation-name.css`, `presentation-name.js`)
-- Example: `christmas-lego-movie-sets.html` has `christmas-lego-movie-sets.css` and `christmas-lego-movie-sets.js`
+- Root `*.html` files: 25 historical presentation sources.
+- `pure/src/`: shared runtime/UI implementation.
+- `pure/build/`: source parsing, compatibility audit, build verification and Chrome smoke tests.
+- `pure/build/legacy-deck.mjs`: intentional compatibility boundary that reads historical Reveal-style source HTML and extracts supported content/options while ignoring obsolete runtime references.
+- `pure/package.json` and `pure/package-lock.json`: the runtime/build dependency graph.
+- `legacy-presentations.yml`: historical compatibility metadata only.
+- `scripts/presentations.mjs`: source discovery, metadata validation and website export.
+- `scripts/presentation-accessibility.mjs`: accessibility validation.
+- `scripts/smoke-presentations.mjs`: exported-site Chrome smoke test.
+- `pure/dist/`: generated product output; never edit manually.
 
-### presentations.yml Registry
-Maintains metadata for all presentations:
-- **Version scheme**: `vX.Y` where X = last digit of year (3=2023, 4=2024, 5=2025) and Y = sequential talk index
-- **Fields**: name, version, date (DD/MM/YYYY), url (filename), attendance
-- **Purpose**: Tracking presentation history and analytics
-- When adding a new presentation, update `presentations.yml` per the `PRESENTATIONS.md` guide
+The legacy parser does not mean there is a legacy runtime. Pure owns runtime behaviour for every deck.
 
-### reveal.js Framework Structure
-- `/js`: Core JavaScript (controllers, components, utils)
-- `/plugin`: Optional plugins (highlight, markdown, notes, search, math, zoom)
-- `/css`: Base reveal.js styles and theme source files (in `/css/theme/source/*.scss`)
-- `/dist`: Compiled output (JavaScript and CSS bundles)
+## Dependency policy
 
-### Build Pipeline
-- **Input**: `/js/**/*.js`, `/css/**/*.scss`, `/plugin/**/plugin.js`
-- **Processing**: Rollup (with Babel for ES5 transpiling), Sass compilation, Terser minification
-- **Output**: `/dist/reveal.js`, `/dist/reveal.esm.js`, `/dist/reveal.css`, `/dist/theme/*.css`
+Use the committed Pure lockfile. The canonical install is:
 
-## Common Tasks
+```bash
+npm run pure:install
+```
 
-### Adding a New Presentation
-1. Create a new `.html` file in the root (e.g., `my-talk.html`)
-2. Add an entry to `presentations.yml` following the format in `PRESENTATIONS.md`
-3. Optionally create associated `.css` and `.js` files if custom styling/scripting is needed
-4. Test locally: `npm start` then open `http://localhost:8000/my-talk.html`
+which runs `npm ci --prefix pure`. Do not use `npm install --no-package-lock`, delete the lockfile, or add a second root dependency graph without an architectural reason.
 
-### Updating reveal.js Framework
-- Modify source files in `/js`, `/plugin`, `/css`
-- Run `npm run build` to regenerate `/dist` artifacts
-- All presentations will use the built framework when deployed
+When changing `pure/package.json`, regenerate and commit `pure/package-lock.json`, then run the full validation suite.
 
-### Adding reveal.js Plugins
-- Plugins live in `/plugin/**/plugin.js`
-- Each plugin is bundled separately into `/dist/plugin/*`
-- Include in presentations via `<script>` tags linking to the built plugin files in `/dist/plugin`
+## Canonical commands
 
-### Modifying Themes
-- Sass theme sources are in `/css/theme/source/*.scss`
-- Edit the relevant `.scss` file
-- Run `npm run build` to compile to `/dist/theme/*.css`
-- Presentations reference themes from `/dist/theme`
+```bash
+npm start                         # install and start Pure Vite dev server
+npm run build                     # install and build Pure into pure/dist
+npm test                          # lint, tooling tests and Pure validation/build
+npm run pure:audit                # npm security audit for Pure dependencies
+npm run presentations:check       # validate discovery and metadata
+npm run presentations:accessibility
+npm run pure:smoke                # Chrome smoke of all 25 Pure decks
+npm run presentations:smoke       # exported-site catalogue + all-deck Chrome smoke
+```
 
-## Deployment
+Use the Node version in `.node-version`.
 
-The project is deployed via GitHub Pages to `art.digiguru.co.uk/presentation/*`
+## Presentation changes
 
-**CI/CD**: GitHub Actions workflow (`.github/workflows/*.yml`) runs on every push:
-1. Checks out code
-2. Installs dependencies with npm
-3. Runs `npm run build`
-4. Runs `npm test` (linting + unit tests)
+Presentation sources are discovered automatically. Prefer metadata in the source title or presentation meta tags; do not add new entries to `legacy-presentations.yml` unless a task specifically concerns historical compatibility data.
 
-Ensure all tests pass before merging to keep the deployment clean.
+Keep backgrounds declarative and ensure every image has an `alt` attribute. Do not add deck-specific runtime copies or old Reveal initialization code for new behaviour. Shared behaviour belongs in Pure.
 
-## Code Style & Quality
+Historical source files may still contain dead runtime links and old `Reveal.initialize(...)` calls. `legacy-deck.mjs` handles those deliberately. Do not clean them up incidentally while doing dependency, docs or routine runtime work.
 
-- **Linting**: ESLint with custom configuration in `package.json` (no curly-bracket requirement, requires `eqeqeq`)
-- **Testing**: QUnit tests (see `/test` directory)
-- Run `npm test` to check both linting and tests before commits
+## Validation expectations
 
-## Notes for Future Work
+For runtime, build, dependency or presentation-source changes, run or require CI coverage for:
 
-- The repository is based on reveal.js v4.4.0 (see `package.json`)
-- When modifying reveal.js source, be aware that built files in `/dist` need to be regenerated
-- The presentations.yml file should be kept in sync with actual presentation files in the root
-- Attendance data in presentations.yml can be updated as numbers become available (currently many marked with `?`)
+1. Repository tooling tests.
+2. Presentation metadata and accessibility checks.
+3. ESLint.
+4. `npm audit` of the Pure dependency graph.
+5. Pure unit/compatibility checks and production build.
+6. Chrome smoke for all 25 built Pure decks.
+7. Exported-site smoke for the catalogue and all 25 decks.
+
+A browser smoke failure is meaningful even if the static build succeeds.
+
+## CI, Vercel and website deployment
+
+`.github/workflows/js.yml` validates pull requests and pushes to `master`. A successful `master` build dispatches `digiguru/digiguru.github.io` with the exact presentation commit SHA that passed CI.
+
+`vercel.json` installs with `npm run pure:install`, builds with `npm run build`, and publishes `pure/dist`. Keep Vercel on the same deterministic install/build path as CI.
+
+## Future Stage 7
+
+A later, separate migration may normalize all 25 presentation sources into a simpler canonical format and then remove or rename `legacy-deck.mjs`; `legacy-presentations.yml` can disappear once its historical metadata lives in the sources.
+
+Treat that as a dedicated migration. Do not mix compatibility-layer removal into unrelated cleanup because it makes regressions harder to isolate.

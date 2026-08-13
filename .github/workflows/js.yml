@@ -28,6 +28,9 @@ jobs:
       - name: Validate Pure presentation runtime
         run: npm run pure:check
 
+      - name: Audit Pure dependencies
+        run: npm run pure:audit
+
       - name: Smoke test Pure in Chrome
         run: npm run pure:smoke
 
