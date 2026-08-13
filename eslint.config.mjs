@@ -20,6 +20,9 @@ export default [
       'node_modules/**',
       'plugin/**/*.js',
       'output/**',
+      'pure/dist/**',
+      'pure/node_modules/**',
+      'pure/.pure-public/**',
     ],
   },
   {
@@ -48,6 +51,18 @@ export default [
     rules: sharedRules,
   },
   {
+    files: ['pure/src/**/*.js'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: {
+        ...globals.browser,
+        ...globals.es2021,
+      },
+    },
+    rules: sharedRules,
+  },
+  {
     files: ['gulpfile.js'],
     languageOptions: {
       ecmaVersion: 'latest',
@@ -63,7 +78,7 @@ export default [
     rules: sharedRules,
   },
   {
-    files: ['scripts/**/*.mjs'],
+    files: ['scripts/**/*.mjs', 'pure/**/*.mjs'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',

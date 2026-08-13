@@ -8,18 +8,25 @@
   "module": "dist/reveal.esm.js",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint js scripts gulpfile.js",
+    "lint": "eslint js scripts pure gulpfile.js",
     "test": "npm run lint && npm run test:tooling && gulp qunit",
     "test:tooling": "node --test test/*.test.mjs",
     "start": "gulp serve",
     "build": "gulp build",
-    "preview:build": "npm run build && node scripts/presentations.mjs --export preview-site && node scripts/presentation-index.mjs preview-site",
+    "preview:build": "npm run pure:preview",
     "audit": "npm audit --audit-level=high",
     "presentations:check": "node scripts/presentations.mjs --check",
     "presentations:assets": "node scripts/check-presentation-assets.mjs",
     "presentations:accessibility": "node scripts/presentation-accessibility.mjs",
     "presentations:accessibility:fix": "node scripts/presentation-accessibility.mjs --write",
-    "presentations:smoke": "node scripts/smoke-presentations.mjs"
+    "presentations:smoke": "node scripts/smoke-presentations.mjs",
+    "pure:install": "npm --prefix pure install --no-package-lock --ignore-scripts --no-audit --no-fund",
+    "pure:dev": "npm --prefix pure run dev",
+    "pure:test": "npm --prefix pure run test",
+    "pure:build": "npm --prefix pure run build",
+    "pure:smoke": "npm --prefix pure run smoke",
+    "pure:check": "npm run pure:install && npm --prefix pure run check",
+    "pure:preview": "npm run pure:install && npm --prefix pure run build"
   },
   "author": {
     "name": "Hakim El Hattab",
