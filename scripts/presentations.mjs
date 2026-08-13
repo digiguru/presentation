@@ -102,9 +102,12 @@ export function toYaml(presentations) {
   return [...header, ...body].join('\n');
 }
 
+function hasSlidesContainer(html) {
+  return /class\s*=\s*["'][^"']*\bslides\b[^"']*["']/i.test(html);
+}
+
 export function isCanonicalPresentationSource(html) {
-  return meta(html, 'presentation-format') === 'pure-v1'
-    && /class\s*=\s*["'][^"']*\bslides\b[^"']*["']/i.test(html);
+  return meta(html, 'presentation-format') === 'pure-v1' && hasSlidesContainer(html);
 }
 
 export async function discoverPresentations({ root = defaultRoot } = {}) {
@@ -116,7 +119,11 @@ export async function discoverPresentations({ root = defaultRoot } = {}) {
     if (!entry.isFile() || !entry.name.endsWith('.html') || excludedRootHtml.has(entry.name)) continue;
 
     const html = await readFile(path.join(root, entry.name), 'utf8');
-    if (!isCanonicalPresentationSource(html)) continue;
+    if (!hasSlidesContainer(html)) continue;
+    if (meta(html, 'presentation-format') !== 'pure-v1') {
+      errors.push(`${entry.name}: presentation sources with a .slides container must declare presentation-format="pure-v1".`);
+      continue;
+    }
 
     const title = titleOf(html);
     const name = meta(html, 'presentation-name');
