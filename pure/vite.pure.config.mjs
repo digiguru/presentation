@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import { discoverPresentations } from '../scripts/presentations.mjs';
-import { loadLegacyDeck } from './build/legacy-deck.mjs';
+import { loadDeckSource } from './build/deck-source.mjs';
 import { promptProxy } from './build/dev-proxy.mjs';
 
 const pureRoot = path.dirname(fileURLToPath(import.meta.url));
@@ -13,7 +13,7 @@ const deckNames = presentations.map(presentation => presentation.url);
 const decks = new Map();
 
 for (const presentation of presentations) {
-  decks.set(presentation.url, await loadLegacyDeck(path.join(repoRoot, presentation.url)));
+  decks.set(presentation.url, await loadDeckSource(path.join(repoRoot, presentation.url)));
 }
 
 function resolveCommitSha() {
@@ -53,21 +53,13 @@ const manifest = presentations.map(presentation => {
   const deck = decks.get(presentation.url);
   return {
     ...presentation,
+    sourceFormat: 'pure-v1',
     title: deck.title,
     themes: deck.themes,
     capabilities: deck.capabilities,
     localReferences: deck.localReferences,
-    localSupportScripts: deck.localSupportScripts,
-    inlineScripts: deck.inlineScripts,
   };
 });
-
-const unported = manifest.filter(presentation => (
-  presentation.inlineScripts.custom > 0 || presentation.localSupportScripts.length > 0
-));
-if (unported.length) {
-  throw new Error(`Pure has unported presentation runtime code: ${unported.map(presentation => presentation.url).join(', ')}`);
-}
 
 function purePlugin() {
   return {
