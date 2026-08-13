@@ -10,6 +10,11 @@ const execFileAsync = promisify(execFile);
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
 const ignoredMissingPaths = new Set(['/favicon.ico']);
+const decks = [
+  { file: 'ai-connections.html' },
+  { file: 'anti-ai.html' },
+  { file: 'bigbus.html', expectsGpt: true },
+];
 
 function findChrome() {
   const candidates = [
@@ -75,51 +80,66 @@ function revealIsReady(dom) {
   });
 }
 
-const missingRequests = new Set();
-const server = createServer((req, res) => {
-  serve(req, res, missingRequests).catch(error => {
-    console.error(error);
-    res.writeHead(500).end('Internal server error');
-  });
-});
+const server = createServer();
 
 try {
   await new Promise((resolve, reject) => {
+    server.on('request', (req, res) => {
+      const missingRequests = server.missingRequests;
+      serve(req, res, missingRequests).catch(error => {
+        console.error(error);
+        res.writeHead(500).end('Internal server error');
+      });
+    });
     server.once('error', reject);
     server.listen(0, '127.0.0.1', resolve);
   });
 
   const chrome = findChrome();
   const address = server.address();
-  const url = `http://127.0.0.1:${address.port}/ai-connections.html`;
-  const { stdout } = await execFileAsync(chrome, [
-    '--headless=new',
-    '--no-sandbox',
-    '--disable-dev-shm-usage',
-    '--disable-gpu',
-    '--disable-background-networking',
-    '--disable-default-apps',
-    '--disable-extensions',
-    '--disable-sync',
-    '--metrics-recording-only',
-    '--virtual-time-budget=3000',
-    '--dump-dom',
-    url
-  ], {
-    encoding: 'utf8',
-    maxBuffer: 10 * 1024 * 1024,
-    timeout: 30000
-  });
+  const failures = [];
 
-  if (!revealIsReady(stdout)) {
-    throw new Error('Stage 1 Reveal deck did not reach the ready state.');
+  for (const deck of decks) {
+    server.missingRequests = new Set();
+    const url = `http://127.0.0.1:${address.port}/${deck.file}`;
+
+    try {
+      const { stdout } = await execFileAsync(chrome, [
+        '--headless=new',
+        '--no-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+        '--disable-background-networking',
+        '--disable-default-apps',
+        '--disable-extensions',
+        '--disable-sync',
+        '--metrics-recording-only',
+        '--virtual-time-budget=5000',
+        '--dump-dom',
+        url
+      ], {
+        encoding: 'utf8',
+        maxBuffer: 20 * 1024 * 1024,
+        timeout: 30000
+      });
+
+      if (!revealIsReady(stdout)) failures.push(`${deck.file}: Reveal did not reach ready`);
+      if (!stdout.includes(`data-compatibility-source="${deck.file}"`)) {
+        failures.push(`${deck.file}: compatibility source marker was not set`);
+      }
+      if (deck.expectsGpt && !stdout.includes('data-gpt-input-ready="true"')) {
+        failures.push(`${deck.file}: legacy <gpt-input> compatibility control did not register`);
+      }
+    } catch (error) {
+      failures.push(`${deck.file}: Chrome failed: ${error.message}`);
+    }
+
+    for (const missing of server.missingRequests) failures.push(`${deck.file}: local request returned 404: ${missing}`);
   }
 
-  if (missingRequests.size) {
-    throw new Error(`Stage 1 local requests returned 404: ${[...missingRequests].join(', ')}`);
-  }
+  if (failures.length) throw new Error(`Stage 2 compatibility smoke tests failed:\n- ${failures.join('\n- ')}`);
 
-  console.log('Smoke tested Stage 1 deck in headless Chrome: Reveal ready, no local 404s.');
+  console.log(`Smoke tested ${decks.length} Stage 2 decks: Reveal ready, controls loaded, no local 404s.`);
 } finally {
   await new Promise(resolve => server.close(resolve));
 }
