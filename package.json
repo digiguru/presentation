@@ -24,6 +24,7 @@
     "stage1:dev": "npm --prefix stage1 run dev",
     "stage1:test": "npm --prefix stage1 run test",
     "stage1:build": "npm --prefix stage1 run build",
+    "stage1:smoke": "npm --prefix stage1 run smoke",
     "stage1:check": "npm run stage1:install && npm --prefix stage1 run check"
   },
   "author": {
