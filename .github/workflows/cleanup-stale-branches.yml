@@ -1,0 +1,58 @@
+name: Clean up stale branches
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - .github/workflows/cleanup-stale-branches.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Delete obsolete branches
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          branches=(
+            "agent/final-repository-cleanup"
+            "agent/fix-vertical-stack-backgrounds"
+            "agent/pure-deterministic-install"
+            "agent/stage1-two-repo-runtime"
+            "agent/stage2-legacy-compatibility"
+            "agent/stage3-migrate-all-presentations"
+            "agent/stage4-pure-exporter"
+            "agent/stage5-pages-integration"
+            "agent/stage6-remove-reveal-fork"
+            "agent/stage-7-canonical-sources"
+            "agent/stage-7-canonical-sources-final"
+            "chore/vercel-preview-deployments"
+            "experiment/reveal-6-migration"
+            "feat/presentation-index"
+            "fix/reveal-upstream-bug-backports"
+            "fix/vercel-preview-export-recursion"
+            "security/reveal-xss-backports"
+            "docs/production-build-readme"
+          )
+
+          for branch in "${branches[@]}"; do
+            if gh api "repos/${REPOSITORY}/git/ref/heads/${branch}" >/dev/null 2>&1; then
+              echo "Deleting ${branch}"
+              gh api --method DELETE "repos/${REPOSITORY}/git/refs/heads/${branch}"
+            else
+              echo "Already absent: ${branch}"
+            fi
+          done
+
+          echo "Remaining branches:"
+          gh api --paginate "repos/${REPOSITORY}/branches?per_page=100" --jq '.[].name'

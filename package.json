@@ -31,6 +31,7 @@
   "bugs": {
     "url": "https://github.com/digiguru/presentation/issues"
   },
+  "homepage": "https://art.digiguru.co.uk/presentation/",
   "engines": {
     "node": ">=24.11.0 <25"
   },
