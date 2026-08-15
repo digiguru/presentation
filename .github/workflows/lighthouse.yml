@@ -1,0 +1,131 @@
+name: Lighthouse production audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/lighthouse.yml
+  deployment_status:
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  audit:
+    name: Audit production release
+    if: >-
+      github.event_name == 'pull_request' ||
+      github.event_name == 'workflow_dispatch' ||
+      (
+        github.event_name == 'deployment_status' &&
+        github.event.deployment_status.state == 'success' &&
+        (
+          github.event.deployment.environment == 'Production' ||
+          github.event.deployment.environment == 'production' ||
+          github.event.deployment.ref == 'main' ||
+          github.event.deployment.ref == 'master'
+        )
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Wait for successful CI on deployed commit
+        if: github.event_name == 'deployment_status'
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const sha = context.payload.deployment.sha;
+            const gateName = 'tests';
+            const maxAttempts = 60;
+            const delayMs = 10_000;
+
+            for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+              const { data } = await github.rest.actions.listWorkflowRunsForRepo({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                head_sha: sha,
+                event: 'push',
+                per_page: 100,
+              });
+
+              const gate = data.workflow_runs.find(run => run.name === gateName);
+
+              if (gate?.status === 'completed') {
+                if (gate.conclusion === 'success') {
+                  core.info(`${gateName} passed for ${sha}: ${gate.html_url}`);
+                  return;
+                }
+
+                core.setFailed(`${gateName} completed with ${gate.conclusion} for ${sha}: ${gate.html_url}`);
+                return;
+              }
+
+              core.info(`Waiting for ${gateName} on ${sha} (${attempt}/${maxAttempts})`);
+              await new Promise(resolve => setTimeout(resolve, delayMs));
+            }
+
+            core.setFailed(`Timed out waiting for ${gateName} to complete successfully for ${sha}`);
+
+      - name: Audit production with Lighthouse
+        id: lighthouse
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            https://presentation-pi-ecru.vercel.app/
+          uploadArtifacts: true
+          temporaryPublicStorage: false
+
+      - name: Publish Lighthouse job summary
+        env:
+          LIGHTHOUSE_RESULTS_PATH: ${{ steps.lighthouse.outputs.resultsPath }}
+          AUDIT_URL: https://presentation-pi-ecru.vercel.app/
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+
+          const resultsPath = process.env.LIGHTHOUSE_RESULTS_PATH;
+          const summaryPath = process.env.GITHUB_STEP_SUMMARY;
+
+          if (!resultsPath) throw new Error('Lighthouse action did not expose resultsPath');
+
+          const files = fs.readdirSync(resultsPath).filter(file => /^lhr-.*\.json$/.test(file));
+          if (files.length === 0) throw new Error(`No Lighthouse JSON reports found in ${resultsPath}`);
+
+          const reports = files.map(file => JSON.parse(fs.readFileSync(path.join(resultsPath, file), 'utf8')));
+          reports.sort((a, b) => new Date(a.fetchTime || 0) - new Date(b.fetchTime || 0));
+
+          const report = reports.at(-1);
+          const score = name => Math.round((report.categories?.[name]?.score ?? 0) * 100);
+          const metric = name => report.audits?.[name]?.displayValue ?? 'n/a';
+          const auditedAt = report.fetchTime
+            ? new Date(report.fetchTime).toISOString().replace('T', ' ').replace('.000Z', ' UTC')
+            : 'unknown';
+
+          const markdown = [
+            '## 🔦 Production Lighthouse', '',
+            `**URL:** [${process.env.AUDIT_URL}](${process.env.AUDIT_URL})  `,
+            `**Audited:** ${auditedAt}`, '',
+            '| Category | Score |', '|---|---:|',
+            `| Performance | **${score('performance')}** |`,
+            `| Accessibility | **${score('accessibility')}** |`,
+            `| Best Practices | **${score('best-practices')}** |`,
+            `| SEO | **${score('seo')}** |`, '',
+            '| Metric | Result |', '|---|---:|',
+            `| First Contentful Paint | ${metric('first-contentful-paint')} |`,
+            `| Largest Contentful Paint | ${metric('largest-contentful-paint')} |`,
+            `| Total Blocking Time | ${metric('total-blocking-time')} |`,
+            `| Cumulative Layout Shift | ${metric('cumulative-layout-shift')} |`,
+            `| Speed Index | ${metric('speed-index')} |`, '',
+            '> Full HTML and JSON reports are attached to this workflow run as the `lighthouse-results` artifact.', ''
+          ].join('\n');
+
+          fs.appendFileSync(summaryPath, markdown);
+          NODE
