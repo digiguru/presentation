@@ -37,7 +37,7 @@ jobs:
 
       - name: Wait for successful CI on deployed commit
         if: github.event_name == 'deployment_status'
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
